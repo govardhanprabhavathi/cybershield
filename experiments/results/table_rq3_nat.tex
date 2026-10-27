@@ -1,0 +1,14 @@
+% Table: RQ3 NAT Disambiguation and Session Preservation
+\begin{table}[htbp]
+\centering
+\caption{RQ3: Legitimate Session Preservation (LSPR) Under Shared-IP NAT Storms}
+\label{tab:rq3_nat}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Defense System} & \textbf{Legit Reqs} & \textbf{Preserved} & \textbf{LSPR (\%)} & \textbf{ACR (\%)} & \textbf{FPR (\%)} \\
+\midrule
+    Naive IP-Based WAF & 200 & 0 & 0.00\% & 97.00\% & 100.00\% \\
+    CyberShield Dual-Plane & 200 & 200 & 100.00\% & 100.00\% & 0.00\% \\
+\bottomrule
+\end{tabular}
+\end{table}

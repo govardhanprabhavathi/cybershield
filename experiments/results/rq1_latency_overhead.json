@@ -1,0 +1,47 @@
+{
+  "experiment_id": "EXP-1-LATENCY",
+  "title": "RQ1: Runtime Latency Overhead & Throughput Scalability",
+  "sample_size": 20,
+  "comparators": {
+    "Vanilla Unprotected": {
+      "mean_ms": 0.15,
+      "std_ms": 0.0,
+      "p50_ms": 0.15,
+      "p95_ms": 0.15,
+      "p99_ms": 0.15,
+      "min_ms": 0.15,
+      "max_ms": 0.15,
+      "sub_2ms_compliance": true
+    },
+    "Naive Signature WAF": {
+      "mean_ms": 0.46,
+      "std_ms": 0.0,
+      "p50_ms": 0.46,
+      "p95_ms": 0.46,
+      "p99_ms": 0.46,
+      "min_ms": 0.45,
+      "max_ms": 0.46,
+      "sub_2ms_compliance": true
+    },
+    "Synchronous LLM-in-the-Loop": {
+      "mean_ms": 1112.92,
+      "std_ms": 175.06,
+      "p50_ms": 1127.03,
+      "p95_ms": 1385.99,
+      "p99_ms": 1385.99,
+      "min_ms": 678.41,
+      "max_ms": 1385.99,
+      "sub_2ms_compliance": false
+    },
+    "CyberShield Dual-Plane": {
+      "mean_ms": 1.25,
+      "std_ms": 0.0,
+      "p50_ms": 1.25,
+      "p95_ms": 1.25,
+      "p99_ms": 1.25,
+      "min_ms": 1.25,
+      "max_ms": 1.25,
+      "sub_2ms_compliance": true
+    }
+  }
+}

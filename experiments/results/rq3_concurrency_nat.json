@@ -1,0 +1,50 @@
+{
+  "experiment_id": "EXP-3-CONCURRENCY-NAT",
+  "title": "RQ3: Multi-Tenant & NAT-Masked Session Containment Under Attack Storms",
+  "parameters": {
+    "legitimate_shoppers": 50,
+    "attacker_threads": 25,
+    "requests_per_shopper": 4,
+    "requests_per_attacker": 4,
+    "nat_ip": "198.51.100.42"
+  },
+  "naive_ip_waf": {
+    "paradigm": "Naive IP-Based Perimeter WAF",
+    "shared_nat_ip": "198.51.100.42",
+    "total_legitimate_requests": 200,
+    "legitimate_requests_allowed": 0,
+    "legitimate_requests_blocked": 200,
+    "total_attacker_requests": 100,
+    "attacker_requests_contained": 97,
+    "attacker_requests_escaped": 3,
+    "lspr_percentage": 0.0,
+    "acr_percentage": 97.0,
+    "fpr_percentage": 100.0,
+    "ip_block_triggered": true,
+    "elapsed_ms": 0.01
+  },
+  "cybershield": {
+    "paradigm": "CyberShield Session-Aware Graduated Containment",
+    "shared_nat_ip": "198.51.100.42",
+    "total_legitimate_requests": 200,
+    "legitimate_requests_allowed": 200,
+    "legitimate_requests_blocked": 0,
+    "total_attacker_requests": 100,
+    "attacker_requests_contained": 100,
+    "attacker_requests_escaped": 0,
+    "lspr_percentage": 100.0,
+    "acr_percentage": 100.0,
+    "fpr_percentage": 0.0,
+    "zero_fp_achieved": true,
+    "lspr_target_achieved": true,
+    "total_concurrent_sessions": 75,
+    "total_requests": 300,
+    "elapsed_ms": 5.76,
+    "latency": {
+      "mean_ms": 1.25,
+      "p50_ms": 1.25,
+      "p95_ms": 1.26,
+      "p99_ms": 1.28
+    }
+  }
+}

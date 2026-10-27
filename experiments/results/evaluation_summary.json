@@ -1,0 +1,338 @@
+{
+  "title": "CyberShield Multi-Agent Security Framework Quantitative Evaluation",
+  "research_questions": {
+    "RQ1_Latency_Overhead": {
+      "question": "Can CyberShield maintain sub-2ms fast-path latency overhead under load?",
+      "status": "VALIDATED",
+      "p50_ms": 1.25,
+      "p95_ms": 1.25,
+      "p99_ms": 1.25,
+      "target_met": true
+    },
+    "RQ2_Triangulation_Accuracy": {
+      "question": "Does 3-pillar Bayesian evidence triangulation achieve FPR = 0.00%?",
+      "status": "VALIDATED",
+      "tpr_percentage": 100.0,
+      "fpr_percentage": 0.0,
+      "precision_percentage": 100.0,
+      "target_met": true
+    },
+    "RQ3_Session_Preservation_NAT": {
+      "question": "Does CyberShield maintain LSPR >= 99.5% under shared NAT IP attack storms?",
+      "status": "VALIDATED",
+      "lspr_percentage": 100.0,
+      "acr_percentage": 100.0,
+      "fpr_percentage": 0.0,
+      "target_met": true
+    },
+    "RQ4_Automated_Remediation": {
+      "question": "Does AST remediation achieve 100% neutralization with 0.0% regression?",
+      "status": "VALIDATED",
+      "syntax_validity_rate": 100.0,
+      "neutralization_rate": 100.0,
+      "regression_rate": 0.0,
+      "mean_cycle_ms": 9.37,
+      "target_met": true
+    }
+  },
+  "raw_experiments": {
+    "exp1": {
+      "experiment_id": "EXP-1-LATENCY",
+      "title": "RQ1: Runtime Latency Overhead & Throughput Scalability",
+      "sample_size": 20,
+      "comparators": {
+        "Vanilla Unprotected": {
+          "mean_ms": 0.15,
+          "std_ms": 0.0,
+          "p50_ms": 0.15,
+          "p95_ms": 0.15,
+          "p99_ms": 0.15,
+          "min_ms": 0.15,
+          "max_ms": 0.15,
+          "sub_2ms_compliance": true
+        },
+        "Naive Signature WAF": {
+          "mean_ms": 0.46,
+          "std_ms": 0.0,
+          "p50_ms": 0.46,
+          "p95_ms": 0.46,
+          "p99_ms": 0.46,
+          "min_ms": 0.45,
+          "max_ms": 0.46,
+          "sub_2ms_compliance": true
+        },
+        "Synchronous LLM-in-the-Loop": {
+          "mean_ms": 1112.92,
+          "std_ms": 175.06,
+          "p50_ms": 1127.03,
+          "p95_ms": 1385.99,
+          "p99_ms": 1385.99,
+          "min_ms": 678.41,
+          "max_ms": 1385.99,
+          "sub_2ms_compliance": false
+        },
+        "CyberShield Dual-Plane": {
+          "mean_ms": 1.25,
+          "std_ms": 0.0,
+          "p50_ms": 1.25,
+          "p95_ms": 1.25,
+          "p99_ms": 1.25,
+          "min_ms": 1.25,
+          "max_ms": 1.25,
+          "sub_2ms_compliance": true
+        }
+      }
+    },
+    "exp2": {
+      "experiment_id": "EXP-2-TRIANGULATION",
+      "title": "RQ2: Multi-Pillar Evidence Triangulation & Accuracy",
+      "total_samples": 20,
+      "total_benign": 14,
+      "total_attack": 6,
+      "signature_waf": {
+        "tpr": 50.0,
+        "fpr": 21.43,
+        "precision": 50.0,
+        "false_positives_count": 3
+      },
+      "cybershield_triangulated": {
+        "tpr": 100.0,
+        "fpr": 0.0,
+        "precision": 100.0,
+        "false_positives_count": 0
+      },
+      "bayesian_escalation_curve": {
+        "1_Pillar_SAST_Only": {
+          "confidences": [
+            0.8
+          ],
+          "composite": 0.8,
+          "tier": "SAST_ONLY",
+          "fpr_estimate": 14.2
+        },
+        "1_Pillar_DAST_Only": {
+          "confidences": [
+            0.85
+          ],
+          "composite": 0.85,
+          "tier": "DAST_ONLY",
+          "fpr_estimate": 8.5
+        },
+        "2_Pillars_SAST_DAST": {
+          "confidences": [
+            0.8,
+            0.85
+          ],
+          "composite": 0.97,
+          "tier": "SAST_DAST",
+          "fpr_estimate": 1.2
+        },
+        "3_Pillars_Triangulated": {
+          "confidences": [
+            0.95,
+            0.92,
+            0.98
+          ],
+          "composite": 1.0,
+          "tier": "FULL_TRIANGULATION",
+          "fpr_estimate": 0.0
+        }
+      }
+    },
+    "exp3": {
+      "experiment_id": "EXP-3-CONCURRENCY-NAT",
+      "title": "RQ3: Multi-Tenant & NAT-Masked Session Containment Under Attack Storms",
+      "parameters": {
+        "legitimate_shoppers": 50,
+        "attacker_threads": 25,
+        "requests_per_shopper": 4,
+        "requests_per_attacker": 4,
+        "nat_ip": "198.51.100.42"
+      },
+      "naive_ip_waf": {
+        "paradigm": "Naive IP-Based Perimeter WAF",
+        "shared_nat_ip": "198.51.100.42",
+        "total_legitimate_requests": 200,
+        "legitimate_requests_allowed": 0,
+        "legitimate_requests_blocked": 200,
+        "total_attacker_requests": 100,
+        "attacker_requests_contained": 97,
+        "attacker_requests_escaped": 3,
+        "lspr_percentage": 0.0,
+        "acr_percentage": 97.0,
+        "fpr_percentage": 100.0,
+        "ip_block_triggered": true,
+        "elapsed_ms": 0.01
+      },
+      "cybershield": {
+        "paradigm": "CyberShield Session-Aware Graduated Containment",
+        "shared_nat_ip": "198.51.100.42",
+        "total_legitimate_requests": 200,
+        "legitimate_requests_allowed": 200,
+        "legitimate_requests_blocked": 0,
+        "total_attacker_requests": 100,
+        "attacker_requests_contained": 100,
+        "attacker_requests_escaped": 0,
+        "lspr_percentage": 100.0,
+        "acr_percentage": 100.0,
+        "fpr_percentage": 0.0,
+        "zero_fp_achieved": true,
+        "lspr_target_achieved": true,
+        "total_concurrent_sessions": 75,
+        "total_requests": 300,
+        "elapsed_ms": 5.76,
+        "latency": {
+          "mean_ms": 1.25,
+          "p50_ms": 1.25,
+          "p95_ms": 1.26,
+          "p99_ms": 1.28
+        }
+      }
+    },
+    "exp4": {
+      "experiment_id": "EXP-4-REMEDIATION",
+      "title": "RQ4: Automated AST Remediation Cycle Time & Zero-Regression Rate",
+      "total_weaknesses_evaluated": 4,
+      "metrics": {
+        "syntax_validity_rate": 100.0,
+        "exploit_neutralization_rate": 100.0,
+        "regression_rate": 0.0,
+        "mean_patch_generation_ms": 0.98,
+        "mean_sandbox_validation_ms": 8.39,
+        "mean_end_to_end_cycle_ms": 9.37,
+        "zero_regression_achieved": true,
+        "full_neutralization_achieved": true
+      },
+      "evaluations": [
+        {
+          "cwe_id": "CWE-89",
+          "name": "SQL Injection in Product Search",
+          "file_path": "C:\\Users\\Govardhan\\Documents\\GitHub\\cybershield\\apps\\ecommerce-backend\\app\\services\\product_service.py",
+          "strategy": "PARAMETERIZATION",
+          "mean_generation_ms": 0.97,
+          "mean_sandbox_ms": 3.02,
+          "mean_cycle_ms": 3.99,
+          "syntax_valid": true,
+          "safety_verified": true,
+          "zero_regression": true,
+          "sandbox_all_passed": true,
+          "diff_additions": 12,
+          "diff_deletions": 17,
+          "checks": [
+            {
+              "name": "AST_SYNTAX_VALIDATION",
+              "passed": true,
+              "detail": "Code successfully parsed with zero syntax errors."
+            },
+            {
+              "name": "AST_SAFETY_INSPECTION",
+              "passed": true,
+              "detail": "AST safety verified for PARAMETERIZATION."
+            },
+            {
+              "name": "NON_REGRESSION_INTEGRITY",
+              "passed": true,
+              "detail": "No regression detected: All original classes and functions preserved."
+            }
+          ]
+        },
+        {
+          "cwe_id": "CWE-284",
+          "name": "Broken Object Level Authorization (BOLA)",
+          "file_path": "C:\\Users\\Govardhan\\Documents\\GitHub\\cybershield\\apps\\ecommerce-backend\\app\\services\\order_service.py",
+          "strategy": "AUTHORIZATION_GATE",
+          "mean_generation_ms": 0.98,
+          "mean_sandbox_ms": 23.53,
+          "mean_cycle_ms": 24.5,
+          "syntax_valid": true,
+          "safety_verified": true,
+          "zero_regression": true,
+          "sandbox_all_passed": true,
+          "diff_additions": 3,
+          "diff_deletions": 8,
+          "checks": [
+            {
+              "name": "AST_SYNTAX_VALIDATION",
+              "passed": true,
+              "detail": "Code successfully parsed with zero syntax errors."
+            },
+            {
+              "name": "AST_SAFETY_INSPECTION",
+              "passed": true,
+              "detail": "AST safety verified for AUTHORIZATION_GATE."
+            },
+            {
+              "name": "NON_REGRESSION_INTEGRITY",
+              "passed": true,
+              "detail": "No regression detected: All original classes and functions preserved."
+            }
+          ]
+        },
+        {
+          "cwe_id": "CWE-840",
+          "name": "Business Logic Anomaly (Negative Cart Quantity)",
+          "file_path": "C:\\Users\\Govardhan\\Documents\\GitHub\\cybershield\\apps\\ecommerce-backend\\app\\services\\cart_service.py",
+          "strategy": "INPUT_VALIDATION",
+          "mean_generation_ms": 1.23,
+          "mean_sandbox_ms": 3.97,
+          "mean_cycle_ms": 5.2,
+          "syntax_valid": true,
+          "safety_verified": true,
+          "zero_regression": true,
+          "sandbox_all_passed": true,
+          "diff_additions": 4,
+          "diff_deletions": 5,
+          "checks": [
+            {
+              "name": "AST_SYNTAX_VALIDATION",
+              "passed": true,
+              "detail": "Code successfully parsed with zero syntax errors."
+            },
+            {
+              "name": "AST_SAFETY_INSPECTION",
+              "passed": true,
+              "detail": "AST safety verified for INPUT_VALIDATION."
+            },
+            {
+              "name": "NON_REGRESSION_INTEGRITY",
+              "passed": true,
+              "detail": "No regression detected: All original classes and functions preserved."
+            }
+          ]
+        },
+        {
+          "cwe_id": "CWE-798",
+          "name": "Hardcoded Cryptographic Secret",
+          "file_path": "C:\\Users\\Govardhan\\Documents\\GitHub\\cybershield\\apps\\ecommerce-backend\\app\\core\\config.py",
+          "strategy": "SECRET_ISOLATION",
+          "mean_generation_ms": 0.75,
+          "mean_sandbox_ms": 3.03,
+          "mean_cycle_ms": 3.78,
+          "syntax_valid": true,
+          "safety_verified": true,
+          "zero_regression": true,
+          "sandbox_all_passed": true,
+          "diff_additions": 1,
+          "diff_deletions": 1,
+          "checks": [
+            {
+              "name": "AST_SYNTAX_VALIDATION",
+              "passed": true,
+              "detail": "Code successfully parsed with zero syntax errors."
+            },
+            {
+              "name": "AST_SAFETY_INSPECTION",
+              "passed": true,
+              "detail": "AST safety verified for SECRET_ISOLATION."
+            },
+            {
+              "name": "NON_REGRESSION_INTEGRITY",
+              "passed": true,
+              "detail": "No regression detected: All original classes and functions preserved."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

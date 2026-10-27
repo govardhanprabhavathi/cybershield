@@ -1,0 +1,109 @@
+services:
+  # ============================================================================
+  # INFRASTRUCTURE SERVICES
+  # ============================================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: cybershield-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cybershield_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-cybershield_pass}
+      POSTGRES_DB: ${POSTGRES_DB:-cybershield_db}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cybershield_user} -d ${POSTGRES_DB:-cybershield_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - cybershield-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: cybershield-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - cybershield-net
+
+  # ============================================================================
+  # APPLICATION SERVICES
+  # ============================================================================
+  ecommerce-backend:
+    build:
+      context: .
+      dockerfile: apps/ecommerce-backend/Dockerfile
+    container_name: cybershield-backend
+    restart: unless-stopped
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-cybershield_user}:${POSTGRES_PASSWORD:-cybershield_pass}@postgres:5432/${POSTGRES_DB:-cybershield_db}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_USE_FAKEREDIS_FALLBACK=false
+      - SECRET_KEY=${SECRET_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - cybershield-net
+
+  runtime-worker:
+    build:
+      context: .
+      dockerfile: apps/ecommerce-backend/Dockerfile
+    container_name: cybershield-runtime-worker
+    restart: unless-stopped
+    command: ["python", "-m", "app.worker"]
+    environment:
+      - ENVIRONMENT=production
+      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-cybershield_user}:${POSTGRES_PASSWORD:-cybershield_pass}@postgres:5432/${POSTGRES_DB:-cybershield_db}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_USE_FAKEREDIS_FALLBACK=false
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - cybershield-net
+
+  ecommerce-frontend:
+    build:
+      context: .
+      dockerfile: apps/ecommerce-frontend/Dockerfile
+    container_name: cybershield-frontend
+    restart: unless-stopped
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - ecommerce-backend
+    networks:
+      - cybershield-net
+
+networks:
+  cybershield-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:

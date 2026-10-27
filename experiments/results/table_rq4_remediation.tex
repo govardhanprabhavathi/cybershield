@@ -1,0 +1,16 @@
+% Table: RQ4 Automated Remediation Verification
+\begin{table}[htbp]
+\centering
+\caption{RQ4: Automated AST Remediation Cycle Time and Zero-Regression Verification}
+\label{tab:rq4_remediation}
+\begin{tabular}{llcccccc}
+\toprule
+\textbf{CWE ID} & \textbf{Strategy} & \textbf{Gen (ms)} & \textbf{Sandbox (ms)} & \textbf{Total (ms)} & \textbf{Syntax} & \textbf{Neutralized} & \textbf{Regression} \\
+\midrule
+    CWE-89 & PARAMETERIZATION & 0.97 & 3.02 & 3.99 & \checkmark & \checkmark & 0.0\% \\
+    CWE-284 & AUTHORIZATION_GATE & 0.98 & 23.53 & 24.50 & \checkmark & \checkmark & 0.0\% \\
+    CWE-840 & INPUT_VALIDATION & 1.23 & 3.97 & 5.20 & \checkmark & \checkmark & 0.0\% \\
+    CWE-798 & SECRET_ISOLATION & 0.75 & 3.03 & 3.78 & \checkmark & \checkmark & 0.0\% \\
+\bottomrule
+\end{tabular}
+\end{table}

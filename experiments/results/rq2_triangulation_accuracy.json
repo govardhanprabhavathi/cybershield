@@ -1,0 +1,56 @@
+{
+  "experiment_id": "EXP-2-TRIANGULATION",
+  "title": "RQ2: Multi-Pillar Evidence Triangulation & Accuracy",
+  "total_samples": 20,
+  "total_benign": 14,
+  "total_attack": 6,
+  "signature_waf": {
+    "tpr": 50.0,
+    "fpr": 21.43,
+    "precision": 50.0,
+    "false_positives_count": 3
+  },
+  "cybershield_triangulated": {
+    "tpr": 100.0,
+    "fpr": 0.0,
+    "precision": 100.0,
+    "false_positives_count": 0
+  },
+  "bayesian_escalation_curve": {
+    "1_Pillar_SAST_Only": {
+      "confidences": [
+        0.8
+      ],
+      "composite": 0.8,
+      "tier": "SAST_ONLY",
+      "fpr_estimate": 14.2
+    },
+    "1_Pillar_DAST_Only": {
+      "confidences": [
+        0.85
+      ],
+      "composite": 0.85,
+      "tier": "DAST_ONLY",
+      "fpr_estimate": 8.5
+    },
+    "2_Pillars_SAST_DAST": {
+      "confidences": [
+        0.8,
+        0.85
+      ],
+      "composite": 0.97,
+      "tier": "SAST_DAST",
+      "fpr_estimate": 1.2
+    },
+    "3_Pillars_Triangulated": {
+      "confidences": [
+        0.95,
+        0.92,
+        0.98
+      ],
+      "composite": 1.0,
+      "tier": "FULL_TRIANGULATION",
+      "fpr_estimate": 0.0
+    }
+  }
+}

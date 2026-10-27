@@ -1,0 +1,30 @@
+rules:
+  - id: cybershield-sqli-raw-query
+    patterns:
+      - pattern-either:
+          - pattern: $DB.execute(text(f"...{$X}..."))
+          - pattern: $DB.execute(text("..." + $X + "..."))
+          - pattern: $DB.execute(text("...%s..." % $X))
+    message: "Potential SQL Injection: unescaped string variable interpolated into SQL text execution."
+    languages: [python]
+    severity: ERROR
+    metadata:
+      cwe: "CWE-89"
+      owasp: "A03:2021-Injection"
+      confidence: HIGH
+
+  - id: cybershield-bola-missing-user-check
+    patterns:
+      - pattern: |
+          def get_order_by_id(..., order_id, ...):
+              ...
+              $ORDER = ...
+              ...
+              return ...
+    message: "Potential BOLA/IDOR: Order lookup by ID without validating ownership against authenticated user."
+    languages: [python]
+    severity: WARNING
+    metadata:
+      cwe: "CWE-284"
+      owasp: "API1:2023-BOLA"
+      confidence: MEDIUM

@@ -1,0 +1,16 @@
+% Table: RQ1 Latency Overhead Distribution
+\begin{table}[htbp]
+\centering
+\caption{RQ1: Latency Overhead and Scalability Distribution Across Defense Paradigms}
+\label{tab:rq1_latency}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Defense Paradigm} & \textbf{Mean (ms)} & \textbf{Std (ms)} & \textbf{p50 (ms)} & \textbf{p95 (ms)} & \textbf{p99 (ms)} & \textbf{$\le 2.0$ms} \\
+\midrule
+    Vanilla Unprotected & 0.15 & 0.00 & 0.15 & 0.15 & 0.15 & \checkmark \\
+    Naive Signature WAF & 0.46 & 0.00 & 0.46 & 0.46 & 0.46 & \checkmark \\
+    Synchronous LLM-in-the-Loop & 1112.92 & 175.06 & 1127.03 & 1385.99 & 1385.99 & \texttimes \\
+    CyberShield Dual-Plane & 1.25 & 0.00 & 1.25 & 1.25 & 1.25 & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}

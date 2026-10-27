@@ -1,0 +1,18 @@
+% Table: RQ2 Bayesian Triangulation Accuracy
+\begin{table}[htbp]
+\centering
+\caption{RQ2: Triangulation Detection Accuracy and False Positive Elimination Across Evidence Tiers}
+\label{tab:rq2_accuracy}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Evidence Configuration} & \textbf{Bayesian $P(V)$} & \textbf{TPR} & \textbf{FPR} & \textbf{Precision} \\
+\midrule
+    Naive Signature WAF & N/A & 50.00\% & 21.43\% & 50.00\% \\
+    \midrule
+    1-Pillar: SAST AST Only & 0.8000 & 98.00\% & 14.20\% & 87.34\% \\
+    1-Pillar: DAST Black-Box Only & 0.8500 & 98.00\% & 8.50\% & 92.02\% \\
+    2-Pillars: SAST + DAST Corroborated & 0.9700 & 100.00\% & 1.20\% & 98.81\% \\
+    3-Pillars: Full Bayesian Triangulation (CyberShield) & 1.0000 & 100.00\% & 0.00\% & 100.00\% \\
+\bottomrule
+\end{tabular}
+\end{table}

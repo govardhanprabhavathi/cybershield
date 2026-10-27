@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   LUXURY DARK & BLUE GRADIENT FLOW THEME TOKENS
+   ========================================================= */
+:root {
+  --background: #050505;
+  --foreground: #f4f4f5;
+  
+  --brand-blue: #3b82f6;
+  --brand-azure: #60a5fa;
+  --brand-cyan: #38bdf8;
+  --brand-sapphire: #1d4ed8;
+  --brand-dark-blue: #1e3a8a;
+  
+  --glass-bg: rgba(255, 255, 255, 0.035);
+  --glass-border-top: rgba(255, 255, 255, 0.14);
+  --glass-border-side: rgba(255, 255, 255, 0.07);
+  --glass-border-bottom: rgba(255, 255, 255, 0.03);
+}
+
+html,
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Outfit", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* 1. Technical Grid Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -2;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+/* 2. Top-Left Soft Ambient Radial Glow */
+body::after {
+  content: "";
+  position: fixed;
+  top: -10%;
+  left: -20%;
+  width: 70vw;
+  height: 70vw;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+  filter: blur(120px);
+  z-index: -1;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* =========================================================
+   LIVE BLUE GRADIENT WAVE FLOW CONTAINER & ORBS
+   ========================================================= */
+.glow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity, filter;
+}
+
+/* Orb 1: Vibrant Electric Blue (Bottom-Left to Center Wave) */
+.orb-1 {
+  width: 110vw;
+  height: 60vh;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.7) 0%, rgba(37, 99, 235, 0.45) 45%, transparent 75%);
+  bottom: -15vh;
+  left: -20vw;
+  filter: blur(80px);
+  animation: waveFlow1 22s infinite alternate ease-in-out, colorPulse 14s infinite alternate ease-in-out;
+}
+
+/* Orb 2: Deep Indigo & Sapphire (Bottom-Right Wave) */
+.orb-2 {
+  width: 95vw;
+  height: 65vh;
+  background: radial-gradient(circle, rgba(29, 78, 216, 0.75) 0%, rgba(30, 58, 138, 0.5) 50%, transparent 80%);
+  bottom: -20vh;
+  right: -15vw;
+  filter: blur(85px);
+  animation: waveFlow2 26s infinite alternate ease-in-out, colorPulse 16s infinite alternate ease-in-out;
+  animation-delay: -4s, -2s;
+}
+
+/* Orb 3: Luminous Sky Blue & Cyan (Lower-Middle Sweep) */
+.orb-3 {
+  width: 80vw;
+  height: 50vh;
+  background: radial-gradient(circle, rgba(56, 189, 248, 0.6) 0%, rgba(96, 165, 250, 0.35) 45%, transparent 75%);
+  bottom: -5vh;
+  left: 10vw;
+  filter: blur(75px);
+  animation: waveFlow3 18s infinite alternate ease-in-out, colorPulse 10s infinite alternate ease-in-out;
+  animation-delay: -9s, -5s;
+}
+
+/* Orb 4: Atmospheric Top-Right Azure Ambient Accent */
+.orb-4 {
+  width: 65vw;
+  height: 55vh;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, rgba(59, 130, 246, 0.25) 50%, transparent 75%);
+  top: -15vh;
+  right: -10vw;
+  filter: blur(95px);
+  animation: waveFlow4 24s infinite alternate ease-in-out;
+  animation-delay: -6s;
+}
+
+/* =========================================================
+   KEYFRAME ANIMATIONS (ORGANIC MOTION & GLOW PULSE)
+   ========================================================= */
+@keyframes waveFlow1 {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33%  { transform: translate(12vw, -12vh) scale(1.15) rotate(15deg); }
+  66%  { transform: translate(-8vw, -22vh) scale(0.95) rotate(-10deg); }
+  100% { transform: translate(15vw, -8vh) scale(1.1) rotate(8deg); }
+}
+
+@keyframes waveFlow2 {
+  0%   { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33%  { transform: translate(-14vw, -18vh) scale(1.1) rotate(-12deg); }
+  66%  { transform: translate(10vw, -10vh) scale(0.9) rotate(15deg); }
+  100% { transform: translate(-18vw, -25vh) scale(1.2) rotate(-8deg); }
+}
+
+@keyframes waveFlow3 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-10vw, -15vh) scale(1.2) rotate(20deg); }
+  100% { transform: translate(12vw, -25vh) scale(0.85) rotate(-15deg); }
+}
+
+@keyframes waveFlow4 {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-15vw, 15vh) scale(1.15); }
+  100% { transform: translate(8vw, 20vh) scale(0.95); }
+}
+
+@keyframes colorPulse {
+  0%   { opacity: 0.70; filter: blur(85px) brightness(0.95) hue-rotate(-10deg); }
+  50%  { opacity: 0.90; filter: blur(70px) brightness(1.25) hue-rotate(15deg); }
+  100% { opacity: 0.75; filter: blur(85px) brightness(1.05) hue-rotate(0deg); }
+}
+
+/* =========================================================
+   LUXURY FROSTED GLASS UTILITIES
+   ========================================================= */
+.glass-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  border-left: 1px solid rgba(255, 255, 255, 0.07);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-hover:hover {
+  border-top-color: rgba(96, 165, 250, 0.4);
+  border-left-color: rgba(96, 165, 250, 0.2);
+  border-right-color: rgba(96, 165, 250, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(59, 130, 246, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 10, 15, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.5);
+}

