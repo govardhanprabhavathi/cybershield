@@ -28,7 +28,7 @@ export default function RootLayout({
         <footer className="border-t border-[#EBE6DE] bg-[#F5F2EB] py-8 mt-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#7A756D]">
             <div className="flex items-center gap-2.5">
-              <span className="font-semibold text-[#141414]">✻ cybershield</span>
+              <span className="font-semibold text-[#141414]">cybershield</span>
               <span>•</span>
               <span>11 Autonomous Agents</span>
               <span>•</span>

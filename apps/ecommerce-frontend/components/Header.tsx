@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Shield } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
@@ -19,12 +19,11 @@ export default function Header() {
         {/* Brand Logo */}
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm tracking-tighter group-hover:rotate-45 transition-transform duration-300">
-              ✻
+            <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center transition-transform duration-300 group-hover:scale-105 shadow-sm">
+              <Shield className="w-4 h-4 text-white fill-white" />
             </div>
-            <span className="font-bold text-xl tracking-tight text-black flex items-center gap-2">
-              <span>cybershield</span>
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="font-bold text-xl tracking-tight text-black">
+              cybershield
             </span>
           </Link>
         </div>
