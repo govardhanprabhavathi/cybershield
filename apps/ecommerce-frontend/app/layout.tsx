@@ -3,9 +3,9 @@ import "./globals.css";
 import Header from "../components/Header";
 
 export const metadata: Metadata = {
-  title: "CyberShield — Autonomous Multi-Agent Security Command Center",
+  title: "CyberShield — Autonomous Security Engine",
   description:
-    "Multi-Agent AI System for E-Commerce Application Security Analysis, Runtime Threat Detection, Graduated Containment, and Automated Remediation.",
+    "Intelligent multi-agent defense system for e-commerce applications. Real-time sub-2ms fast-path containment with zero false positives.",
 };
 
 export default function RootLayout({
@@ -14,40 +14,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen bg-[#050505] text-zinc-100 selection:bg-blue-500/30 selection:text-white">
-        {/* Animated Background Flow from luxury-gradient-ui */}
-        <div className="glow-container" aria-hidden="true">
-          <div className="glow-orb orb-1" />
-          <div className="glow-orb orb-2" />
-          <div className="glow-orb orb-3" />
-          <div className="glow-orb orb-4" />
-        </div>
-
-        {/* Global Navigation Header */}
+    <html lang="en">
+      <body className="min-h-screen bg-[#F5F2EB] text-[#141414] antialiased selection:bg-black selection:text-white">
+        {/* Minimalist Top Navigation Header */}
         <Header />
 
-        {/* Foreground Content */}
-        <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-20">
+        {/* Main Content Workspace */}
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24">
           {children}
         </main>
 
-        {/* Bottom Technical Bar */}
-        <footer className="relative z-10 border-t border-white/[0.06] bg-black/50 backdrop-blur-xl py-6 mt-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-            <div className="flex items-center gap-3">
-              <span className="font-semibold text-zinc-400">CyberShield Multi-Agent Framework</span>
+        {/* Minimalist Clean Footer */}
+        <footer className="border-t border-[#EBE6DE] bg-[#F5F2EB] py-8 mt-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#7A756D]">
+            <div className="flex items-center gap-2.5">
+              <span className="font-semibold text-[#141414]">✻ cybershield</span>
               <span>•</span>
-              <span>11 Autonomous Specialized Agents</span>
+              <span>11 Autonomous Agents</span>
               <span>•</span>
-              <span className="text-emerald-400 font-mono">0% False Positives (FPR)</span>
+              <span className="text-emerald-700 font-medium">0% False Positives</span>
             </div>
-            <div className="flex items-center gap-4 text-zinc-400">
-              <span>FastAPI + Redis + OpenTelemetry</span>
+            <div className="flex items-center gap-4 text-[#8C877E]">
+              <span>Sub-2ms Deterministic Gate</span>
               <span>•</span>
-              <span>Next.js 15 App Router</span>
-              <span>•</span>
-              <span>Bayesian Triangulation Engine (Agent 9)</span>
+              <span>Bayesian Multi-Plane Verification</span>
             </div>
           </div>
         </footer>
