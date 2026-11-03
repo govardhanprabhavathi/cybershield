@@ -31,7 +31,7 @@
       "syntax_validity_rate": 100.0,
       "neutralization_rate": 100.0,
       "regression_rate": 0.0,
-      "mean_cycle_ms": 12.55,
+      "mean_cycle_ms": 12.0,
       "target_met": true
     }
   },
@@ -162,7 +162,7 @@
         "acr_percentage": 97.0,
         "fpr_percentage": 100.0,
         "ip_block_triggered": true,
-        "elapsed_ms": 0.01
+        "elapsed_ms": 0.02
       },
       "cybershield": {
         "paradigm": "CyberShield Session-Aware Graduated Containment",
@@ -180,12 +180,12 @@
         "lspr_target_achieved": true,
         "total_concurrent_sessions": 75,
         "total_requests": 300,
-        "elapsed_ms": 4.23,
+        "elapsed_ms": 6.35,
         "latency": {
           "mean_ms": 1.25,
           "p50_ms": 1.25,
-          "p95_ms": 1.26,
-          "p99_ms": 1.27
+          "p95_ms": 1.27,
+          "p99_ms": 1.3
         }
       }
     },
@@ -197,9 +197,9 @@
         "syntax_validity_rate": 100.0,
         "exploit_neutralization_rate": 100.0,
         "regression_rate": 0.0,
-        "mean_patch_generation_ms": 1.3,
-        "mean_sandbox_validation_ms": 11.25,
-        "mean_end_to_end_cycle_ms": 12.55,
+        "mean_patch_generation_ms": 1.23,
+        "mean_sandbox_validation_ms": 10.77,
+        "mean_end_to_end_cycle_ms": 12.0,
         "zero_regression_achieved": true,
         "full_neutralization_achieved": true
       },
@@ -209,9 +209,9 @@
           "name": "SQL Injection in Product Search",
           "file_path": "C:\\Users\\Govardhan\\Documents\\GitHub\\cybershield\\apps\\ecommerce-backend\\app\\services\\product_service.py",
           "strategy": "PARAMETERIZATION",
-          "mean_generation_ms": 1.4,
-          "mean_sandbox_ms": 32.22,
-          "mean_cycle_ms": 33.62,
+          "mean_generation_ms": 0.86,
+          "mean_sandbox_ms": 29.13,
+          "mean_cycle_ms": 29.99,
           "syntax_valid": true,
           "safety_verified": true,
           "zero_regression": true,
@@ -241,9 +241,9 @@
           "name": "Broken Object Level Authorization (BOLA)",
           "file_path": "C:\\Users\\Govardhan\\Documents\\GitHub\\cybershield\\apps\\ecommerce-backend\\app\\services\\order_service.py",
           "strategy": "AUTHORIZATION_GATE",
-          "mean_generation_ms": 1.84,
-          "mean_sandbox_ms": 6.7,
-          "mean_cycle_ms": 8.54,
+          "mean_generation_ms": 1.92,
+          "mean_sandbox_ms": 7.11,
+          "mean_cycle_ms": 9.03,
           "syntax_valid": true,
           "safety_verified": true,
           "zero_regression": true,
@@ -274,8 +274,8 @@
           "file_path": "C:\\Users\\Govardhan\\Documents\\GitHub\\cybershield\\apps\\ecommerce-backend\\app\\services\\cart_service.py",
           "strategy": "INPUT_VALIDATION",
           "mean_generation_ms": 1.32,
-          "mean_sandbox_ms": 3.98,
-          "mean_cycle_ms": 5.3,
+          "mean_sandbox_ms": 4.33,
+          "mean_cycle_ms": 5.65,
           "syntax_valid": true,
           "safety_verified": true,
           "zero_regression": true,
@@ -305,9 +305,9 @@
           "name": "Hardcoded Cryptographic Secret",
           "file_path": "C:\\Users\\Govardhan\\Documents\\GitHub\\cybershield\\apps\\ecommerce-backend\\app\\core\\config.py",
           "strategy": "SECRET_ISOLATION",
-          "mean_generation_ms": 0.62,
-          "mean_sandbox_ms": 2.12,
-          "mean_cycle_ms": 2.74,
+          "mean_generation_ms": 0.83,
+          "mean_sandbox_ms": 2.5,
+          "mean_cycle_ms": 3.33,
           "syntax_valid": true,
           "safety_verified": true,
           "zero_regression": true,

@@ -152,7 +152,7 @@ export default function SecurityCommandCenter() {
       <section className="pt-4 text-center max-w-4xl mx-auto space-y-6">
         <div className="flex justify-center">
           <div className="clean-pill">
-            <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Autonomous Multi-Agent Defense Engine</span>
           </div>
         </div>
@@ -174,7 +174,7 @@ export default function SecurityCommandCenter() {
             onClick={() => handleQuickExploit("SQLI")}
             className="btn-light text-xs py-2 px-4 hover:border hover:border-black/20"
           >
-            <Flame className="w-3.5 h-3.5 text-black mr-1.5" />
+            <Flame className="w-3.5 h-3.5 text-rose-500 mr-1.5" />
             Test SQL Injection
           </button>
 
@@ -182,7 +182,7 @@ export default function SecurityCommandCenter() {
             onClick={() => handleQuickExploit("BOLA")}
             className="btn-light text-xs py-2 px-4 hover:border hover:border-black/20"
           >
-            <Lock className="w-3.5 h-3.5 text-black mr-1.5" />
+            <Lock className="w-3.5 h-3.5 text-amber-500 mr-1.5" />
             Test BOLA Access
           </button>
 
@@ -190,7 +190,7 @@ export default function SecurityCommandCenter() {
             onClick={() => handleQuickExploit("CART_TAMPER")}
             className="btn-light text-xs py-2 px-4 hover:border hover:border-black/20"
           >
-            <Zap className="w-3.5 h-3.5 text-black mr-1.5" />
+            <Zap className="w-3.5 h-3.5 text-blue-500 mr-1.5" />
             Test Cart Logic
           </button>
 
@@ -206,7 +206,7 @@ export default function SecurityCommandCenter() {
         {quickNotification && (
           <div className="max-w-xl mx-auto p-4 rounded-2xl bg-white border border-[#E0DACF] shadow-lg flex items-center justify-between text-xs text-[#222] animate-in fade-in slide-in-from-top-2 duration-300">
             <div className="flex items-center gap-2.5">
-              <span className="w-2 h-2 rounded-full bg-black" />
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="font-medium">{quickNotification}</span>
             </div>
             <button
@@ -223,38 +223,58 @@ export default function SecurityCommandCenter() {
           2. MINIMALIST NAV PILLS / VIEW SELECTOR
           ===================================================================== */}
       <div className="flex justify-center">
-        <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-[#EAE5DE] border border-[#DDD7CD]">
-          {[
-            { key: "overview", label: "Overview" },
-            { key: "workflow", label: "Interactive Flow", badge: "Live" },
-            { key: "incidents", label: "Threat Stream", badge: `${incidents.length}` },
-            { key: "patches", label: "Auto-Patches", badge: `${proposals.length}` },
-            { key: "simulator", label: "Traffic Simulator" },
-          ].map((tab) => {
-            const isActive = activeTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => handleTabChange(tab.key as TabKey)}
-                className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold transition-all duration-200 ${
-                  isActive
-                    ? "bg-white text-[#141414] shadow-sm"
-                    : "text-[#6B665E] hover:text-[#141414]"
-                }`}
-              >
-                <span>{tab.label}</span>
-                {tab.badge && (
-                  <span
-                    className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
-                      isActive ? "bg-black text-white" : "bg-[#DDD7CE] text-[#444]"
-                    }`}
-                  >
-                    {tab.badge}
-                  </span>
-                )}
-              </button>
-            );
-          })}
+        <div className="inline-flex items-center gap-1.5 p-1 rounded-full bg-[#EAE5DE] border border-[#D5D0C7]">
+          <Link
+            href="/"
+            className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold bg-black text-white shadow-sm transition-all"
+          >
+            <span>Overview</span>
+          </Link>
+
+          <Link
+            href="/workflow"
+            className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold text-[#222222] hover:text-black hover:bg-white/60 transition-all"
+          >
+            <span>Interactive Flow</span>
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-white text-black border border-[#D5D0C7]">
+              Live
+            </span>
+          </Link>
+
+          <Link
+            href="/incidents"
+            className="flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold text-[#222222] hover:text-black hover:bg-white/60 transition-all"
+          >
+            <span>Threat Stream</span>
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-white text-black border border-[#D5D0C7]">
+              {incidents.length}
+            </span>
+          </Link>
+
+          <button
+            onClick={() => handleTabChange("patches")}
+            className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold transition-all duration-200 ${
+              activeTab === "patches"
+                ? "bg-black text-white shadow-sm"
+                : "text-[#222222] hover:text-black"
+            }`}
+          >
+            <span>Auto-Patches</span>
+            <span className="px-1.5 py-0.2 rounded-full text-[10px] font-mono bg-white text-black border border-[#D5D0C7]">
+              {proposals.length}
+            </span>
+          </button>
+
+          <button
+            onClick={() => handleTabChange("simulator")}
+            className={`flex items-center gap-2 px-5 py-2 rounded-full text-xs font-semibold transition-all duration-200 ${
+              activeTab === "simulator"
+                ? "bg-black text-white shadow-sm"
+                : "text-[#222222] hover:text-black"
+            }`}
+          >
+            <span>Traffic Simulator</span>
+          </button>
         </div>
       </div>
 
@@ -268,8 +288,8 @@ export default function SecurityCommandCenter() {
             {/* Card 1: Fast-Path Gate */}
             <div className="clean-card clean-card-hover p-8 flex flex-col justify-between space-y-6">
               <div className="space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-[#F5F2EB] flex items-center justify-center text-[#141414] shadow-inner">
-                  <ShieldCheck className="w-8 h-8 text-[#141414]" />
+                <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shadow-inner">
+                  <ShieldCheck className="w-8 h-8 text-emerald-600" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-[#141414] tracking-tight">
@@ -289,8 +309,8 @@ export default function SecurityCommandCenter() {
             {/* Card 2: Bayesian Triangulation */}
             <div className="clean-card clean-card-hover p-8 flex flex-col justify-between space-y-6">
               <div className="space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-[#F5F2EB] flex items-center justify-center text-[#141414] shadow-inner">
-                  <Layers className="w-8 h-8 text-[#141414]" />
+                <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shadow-inner">
+                  <Layers className="w-8 h-8 text-blue-600" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-[#141414] tracking-tight">
@@ -310,8 +330,8 @@ export default function SecurityCommandCenter() {
             {/* Card 3: Automated Remediation */}
             <div className="clean-card clean-card-hover p-8 flex flex-col justify-between space-y-6">
               <div className="space-y-6">
-                <div className="w-16 h-16 rounded-2xl bg-[#F5F2EB] flex items-center justify-center text-[#141414] shadow-inner">
-                  <Wrench className="w-8 h-8 text-[#141414]" />
+                <div className="w-16 h-16 rounded-2xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-600 shadow-inner">
+                  <Wrench className="w-8 h-8 text-purple-600" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-[#141414] tracking-tight">
@@ -381,7 +401,7 @@ export default function SecurityCommandCenter() {
                     Live Status
                   </span>
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#EAE5DE] text-black">
-                    <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     All Systems Immune
                   </span>
                 </div>
@@ -406,13 +426,13 @@ export default function SecurityCommandCenter() {
                 </div>
 
                 <div className="pt-2">
-                  <button
-                    onClick={() => handleTabChange("workflow")}
+                  <Link
+                    href="/workflow"
                     className="w-full btn-dark flex items-center justify-center gap-2 py-3"
                   >
                     <span>Explore Visual Flow</span>
                     <ArrowRight className="w-4 h-4" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

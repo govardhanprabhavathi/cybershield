@@ -102,23 +102,70 @@ export type ScenarioPreset = "FULL" | "SQLI_ATTACK" | "LEGIT_ALICE" | "TRIANGULA
 // ============================================================================
 
 
-const MONO_SCHEME: NodeColorScheme = {
-  badgeBg: "bg-[#EAE5DE]",
-  badgeText: "text-black",
-  iconBg: "bg-[#EAE5DE] border-[#D5D0C7]",
-  iconColor: "text-black",
+
+const SCHEME_BLUE: NodeColorScheme = {
+  badgeBg: "bg-blue-50 border border-blue-200",
+  badgeText: "text-blue-700",
+  iconBg: "bg-blue-50 border border-blue-200",
+  iconColor: "text-blue-600",
   activeBorder: "border-black",
-  activeGlow: "shadow-[0_4px_25px_rgba(0,0,0,0.18)]",
+  activeGlow: "shadow-[0_4px_25px_rgba(37,99,235,0.2)]",
 };
 
-const ACTION_SCHEME: NodeColorScheme = {
-  badgeBg: "bg-black",
-  badgeText: "text-white",
-  iconBg: "bg-black text-white border-black",
-  iconColor: "text-white",
+const SCHEME_CYAN: NodeColorScheme = {
+  badgeBg: "bg-cyan-50 border border-cyan-200",
+  badgeText: "text-cyan-700",
+  iconBg: "bg-cyan-50 border border-cyan-200",
+  iconColor: "text-cyan-600",
   activeBorder: "border-black",
-  activeGlow: "shadow-[0_4px_25px_rgba(0,0,0,0.25)]",
+  activeGlow: "shadow-[0_4px_25px_rgba(6,182,212,0.2)]",
 };
+
+const SCHEME_PURPLE: NodeColorScheme = {
+  badgeBg: "bg-purple-50 border border-purple-200",
+  badgeText: "text-purple-700",
+  iconBg: "bg-purple-50 border border-purple-200",
+  iconColor: "text-purple-600",
+  activeBorder: "border-black",
+  activeGlow: "shadow-[0_4px_25px_rgba(147,51,234,0.2)]",
+};
+
+const SCHEME_ROSE: NodeColorScheme = {
+  badgeBg: "bg-rose-50 border border-rose-200",
+  badgeText: "text-rose-700",
+  iconBg: "bg-rose-50 border border-rose-200",
+  iconColor: "text-rose-600",
+  activeBorder: "border-black",
+  activeGlow: "shadow-[0_4px_25px_rgba(225,29,72,0.25)]",
+};
+
+const SCHEME_EMERALD: NodeColorScheme = {
+  badgeBg: "bg-emerald-50 border border-emerald-200",
+  badgeText: "text-emerald-700",
+  iconBg: "bg-emerald-50 border border-emerald-200",
+  iconColor: "text-emerald-600",
+  activeBorder: "border-black",
+  activeGlow: "shadow-[0_4px_25px_rgba(5,150,105,0.2)]",
+};
+
+const SCHEME_AMBER: NodeColorScheme = {
+  badgeBg: "bg-amber-50 border border-amber-200",
+  badgeText: "text-amber-700",
+  iconBg: "bg-amber-50 border border-amber-200",
+  iconColor: "text-amber-600",
+  activeBorder: "border-black",
+  activeGlow: "shadow-[0_4px_25px_rgba(217,119,6,0.2)]",
+};
+
+const SCHEME_TEAL: NodeColorScheme = {
+  badgeBg: "bg-teal-50 border border-teal-200",
+  badgeText: "text-teal-700",
+  iconBg: "bg-teal-50 border border-teal-200",
+  iconColor: "text-teal-600",
+  activeBorder: "border-black",
+  activeGlow: "shadow-[0_4px_25px_rgba(13,148,136,0.2)]",
+};
+
 
 const WORKFLOW_NODES: WorkflowNode[] = [
   // ROW 1: Fast-Path Synchronous Enforcement Plane (<= 2.0ms)
@@ -141,7 +188,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Protocol", value: "HTTP/2 TLS 1.3" },
     ],
     codeSnippet: `GET /api/v1/products/search?search=' UNION SELECT id, password_hash, email FROM users-- HTTP/1.1\nHost: store.cybershield.internal\nUser-Agent: Mozilla/5.0 (AdversarialBot/2.4)\nX-Forwarded-For: 198.51.100.42`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_BLUE,
   },
   {
     id: "node_fastpath",
@@ -163,7 +210,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "JTI Blacklist Check", value: "revoked:jti:{jti}" },
     ],
     codeSnippet: `async def verify_session_fastpath(session_id: str, redis: Redis) -> bool:\n    # Sub-2ms fast-path lookup\n    state = await redis.hget(f"session:risk:{session_id}", "state")\n    if state == "CONTAIN":\n        raise HTTPException(status_code=403, detail="Session quarantined")\n    return True`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_CYAN,
   },
   {
     id: "node_branch_risk",
@@ -186,7 +233,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Containment Floor", value: "Risk >= 80 & Conf >= 0.75" },
     ],
     codeSnippet: `if risk_score >= 80 and confidence >= 0.75:\n    # Route to containment quarantine branch\n    return "CONTAIN"\nreturn "ALLOW"`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_PURPLE,
   },
   {
     id: "node_containment",
@@ -207,7 +254,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Total Intercept Time", value: "1.25 ms" },
     ],
     codeSnippet: `await redis.setex(f"revoked:jti:{jti}", 86400, "quarantined")\nawait redis.hset(f"session:risk:{session_id}", "state", "CONTAIN")\nreturn Response(status_code=403, content={"error": "Session quarantined"})`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_ROSE,
   },
   {
     id: "node_storefront",
@@ -227,7 +274,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Storefront Status", value: "HTTP 200 OK" },
     ],
     codeSnippet: `@router.get("/products/search")\nasync def search(search: str, db: AsyncSession = Depends(get_db)):\n    # Executes query and returns active catalog items\n    return await product_service.search_products(db, search)`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_EMERALD,
   },
   {
     id: "node_otel",
@@ -247,7 +294,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Trace Context", value: "W3C traceparent trace_id" },
     ],
     codeSnippet: `trace_event = TelemetryEvent(\n    trace_id=trace_id,\n    session_id=session_id,\n    route=request.url.path,\n    status_code=response.status_code,\n    duration_ms=latency\n)`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_CYAN,
   },
   {
     id: "node_redis_stream",
@@ -267,7 +314,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Stream Key", value: "stream:telemetry" },
     ],
     codeSnippet: `await redis.xadd("stream:telemetry", {\n    "session_id": event.session_id,\n    "payload": json.dumps(event.dict())\n})`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_ROSE,
   },
 
   // ROW 2: Pre-Deployment & Runtime Detection Agents (Intelligence Plane)
@@ -291,7 +338,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "SAST Confidence", value: "c_1 = 0.95" },
     ],
     codeSnippet: `class CodeSecurityVisitor(ast.NodeVisitor):\n    def visit_JoinedStr(self, node):\n        # Flags raw f-string inside SQLAlchemy text() call\n        self.findings.append(SecurityFinding(cwe_id="CWE-89", confidence=0.95))`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_PURPLE,
   },
   {
     id: "node_dast_prober",
@@ -312,7 +359,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Exploitation Status", value: "Confirmed Exploit Response 500" },
     ],
     codeSnippet: `res = await client.get("/api/v1/products/search?search=' UNION SELECT id...")\nif res.status_code == 500 and "Database execution error" in res.text:\n    # DAST confirms active vulnerability\n    return DASTFinding(cwe_id="CWE-89", confidence=0.92)`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_CYAN,
   },
   {
     id: "node_runtime_sensor",
@@ -334,7 +381,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Pattern Matched", value: "SQL_INJECTION (UNION / quote)" },
     ],
     codeSnippet: `if any(p.search(query) for p in SQLI_PATTERNS):\n    return RuntimeIncident(\n        attack_type="SQL_INJECTION",\n        cwe_id="CWE-89",\n        confidence=0.98\n    )`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_ROSE,
   },
   {
     id: "node_risk_engine",
@@ -356,7 +403,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Compounded Conf", value: "0.96" },
     ],
     codeSnippet: `base_score = sum(WEIGHTS[i.attack_type] for i in incidents)\nif len(attack_types) >= 2:\n    base_score = int(base_score * 1.2)  # Multi-vector compounding\nfinal_risk = min(100, base_score)`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_AMBER,
   },
   {
     id: "node_graduated_policy",
@@ -376,7 +423,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "State Sync Latency", value: "0.85 ms to Redis" },
     ],
     codeSnippet: `if risk_score >= 90 and confidence >= 0.85:\n    return "CONTAIN"  # Immediate gateway drop\nelif risk_score >= 60:\n    return "THROTTLE" # Adaptive latency injection`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_BLUE,
   },
 
   // ROW 3: Triangulation, Orchestration & AST Remediation
@@ -400,7 +447,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Triangulation Tier", value: "FULL_TRIANGULATION" },
     ],
     codeSnippet: `# P(V) = 1.0 - (1 - c_sast) * (1 - c_dast) * (1 - c_runtime)\nproduct_failure = (1.0 - 0.95) * (1.0 - 0.92) * (1.0 - 0.98)\ncomposite_p = 1.0 - product_failure  # 0.9996`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_TEAL,
   },
   {
     id: "node_dossier",
@@ -420,7 +467,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Exploit Status", value: "ACTIVELY_EXPLOITED" },
     ],
     codeSnippet: `dossier = TriangulatedDossier(\n    cwe_id="CWE-89",\n    status="ACTIVELY_EXPLOITED",\n    composite_confidence=0.9996\n)`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_BLUE,
   },
   {
     id: "node_orchestrator",
@@ -441,7 +488,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Governance Mode", value: "FULLY_AUTONOMOUS" },
     ],
     codeSnippet: `fsm = IncidentStateMachine(current_state="TRIANGULATING")\nnext_state = fsm.transition_to("DRAFTING_PATCH")\nawait playbook_runner.execute("SQLI_CONTAINMENT_PLAYBOOK")`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_PURPLE,
   },
   {
     id: "node_ast_patcher",
@@ -462,7 +509,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Strategy", value: "SQLAlchemy Parameterization (:term)" },
     ],
     codeSnippet: `# Unified AST Diff Generated:\n- raw_sql = f"SELECT * FROM products WHERE name LIKE '%{search}%'"\n+ safe_sql = text("SELECT * FROM products WHERE name LIKE :term")\n+ result = await db.execute(safe_sql, {"term": f"%{search}%"})`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_PURPLE,
   },
   {
     id: "node_sandbox",
@@ -484,7 +531,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Gate 3: Functional Regression", value: "0.0% (Signatures Preserved)" },
     ],
     codeSnippet: `passed, checks, ms = RemediationSandbox.run_sandbox_checks(diff, original)\nassert passed == True\nassert all(c.passed for c in checks)`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_BLUE,
   },
   {
     id: "node_branch_sandbox",
@@ -507,7 +554,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Route Selection", value: "Autonomous Apply" },
     ],
     codeSnippet: `if verification_report.all_passed:\n    return "AUTO_DEPLOYING"\nreturn "ESCALATED_HUMAN"`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_AMBER,
   },
   {
     id: "node_auto_deploy",
@@ -528,7 +575,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Rollback Ready", value: "True" },
     ],
     codeSnippet: `await remediation_service.apply_proposal(proposal_id=p.id, dry_run=False)\nfsm.transition_to("RESOLVED")`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_EMERALD,
   },
   {
     id: "node_hitl",
@@ -548,7 +595,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Operator Role", value: "SecOps Lead" },
     ],
     codeSnippet: `fsm.transition_to("AWAITING_APPROVAL")\nnotify_security_analyst(workflow_id=wf.id)`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_AMBER,
   },
   {
     id: "node_resolution",
@@ -569,7 +616,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Exploit Neutralized", value: "100.0%" },
     ],
     codeSnippet: `await workflow_service.record_audit_log(\n    action="WORKFLOW_RESOLVED",\n    status="SUCCESS",\n    details="Exploit neutralized, zero regressions."\n)`,
-    colorScheme: MONO_SCHEME,
+    colorScheme: SCHEME_EMERALD,
   },
 ];
 
@@ -617,6 +664,7 @@ const WORKFLOW_EDGES: WorkflowEdge[] = [
 interface SimulationStep {
   nodeId: string;
   edgeId?: string;
+  edgeIds?: string[];
   logMessage: string;
   durationMs: number;
   highlightStatus?: NodeStatus;
@@ -629,16 +677,17 @@ const SCENARIOS: Record<ScenarioPreset, { name: string; description: string; ste
     steps: [
       { nodeId: "node_inbound", edgeId: "e1", logMessage: "HTTP GET /products/search?search=' OR 1=1-- from 198.51.100.42", durationMs: 400 },
       { nodeId: "node_fastpath", edgeId: "e2", logMessage: "Fast-Path Gate: Redis lookup executed in 1.25ms (Sub-2ms verified)", durationMs: 500 },
-      { nodeId: "node_branch_risk", edgeId: "e3", logMessage: "Risk Evaluation: Session risk = 90 (CONTAIN threshold reached)", durationMs: 400 },
-      { nodeId: "node_containment", logMessage: "Enforcement: Attacker token blacklisted in Redis. 403 Dropped (LSPR = 100% on shared NAT)", durationMs: 600, highlightStatus: "quarantined" },
+      { nodeId: "node_branch_risk", edgeIds: ["e3", "e4"], logMessage: "Risk Evaluation: Dual-path routing — Attacker quarantined while clean tenant traffic passes", durationMs: 500 },
+      { nodeId: "node_containment", logMessage: "Enforcement: Attacker token blacklisted in Redis. 403 Dropped (LSPR = 100% on shared NAT)", durationMs: 500, highlightStatus: "quarantined" },
+      { nodeId: "node_storefront", edgeId: "e5", logMessage: "FastAPI Storefront Core: Catalog & Cart route executed safely for benign traffic", durationMs: 500, highlightStatus: "completed" },
       { nodeId: "node_otel", edgeId: "e6", logMessage: "OTel Middleware: Asynchronous telemetry span emitted with W3C tracecontext", durationMs: 400 },
       { nodeId: "node_redis_stream", edgeId: "e7", logMessage: "Redis Stream: Event queued to 'stream:telemetry' for worker pool", durationMs: 400 },
-      { nodeId: "node_runtime_sensor", edgeId: "e8", logMessage: "Agent 7 Runtime Sensor: Pattern matched SQL_INJECTION error (Confidence: 0.98)", durationMs: 500 },
+      { nodeId: "node_runtime_sensor", edgeIds: ["e8", "e14"], logMessage: "Agent 7 Runtime Sensor: Pattern matched SQL_INJECTION error (c_3 = 0.98 emitted to Triangulator)", durationMs: 500 },
       { nodeId: "node_risk_engine", edgeId: "e9", logMessage: "Agent 8 Risk Engine: Compounded risk 90/100 (1.2x cross-vector boost applied)", durationMs: 500 },
       { nodeId: "node_graduated_policy", edgeId: "e10", logMessage: "Graduated Policy: Confirmed CONTAIN state. Fast-path sync complete.", durationMs: 500 },
-      { nodeId: "node_static_scan", edgeId: "e12", logMessage: "Agent 2 Code AST: Correlated pre-deployment finding CWE-89 (c_1 = 0.95)", durationMs: 500 },
+      { nodeId: "node_static_scan", edgeIds: ["e11", "e12"], logMessage: "Agent 2 Code AST: Correlated pre-deployment finding CWE-89 (c_1 = 0.95)", durationMs: 500 },
       { nodeId: "node_dast_prober", edgeId: "e13", logMessage: "Agent 3 DAST Prober: Correlated dynamic exploit confirmation (c_2 = 0.92)", durationMs: 500 },
-      { nodeId: "node_triangulator", edgeId: "e15", logMessage: "Agent 9 Triangulator: Computed P(V) = 1.0 - (0.05 * 0.08 * 0.02) = 0.9996 (FPR = 0.0%)", durationMs: 600 },
+      { nodeId: "node_triangulator", edgeId: "e15", logMessage: "Agent 9 Triangulator: Fused c_1, c_2, c_3 -> Computed P(V) = 0.9996 (FPR = 0.0%)", durationMs: 600, highlightStatus: "completed" },
       { nodeId: "node_dossier", edgeId: "e16", logMessage: "Triangulated Dossier: Stored in DB with status ACTIVELY_EXPLOITED", durationMs: 400 },
       { nodeId: "node_orchestrator", edgeId: "e17", logMessage: "Agent 12 Master Orchestrator: FSM transitioned to DRAFTING_PATCH", durationMs: 500 },
       { nodeId: "node_ast_patcher", edgeId: "e18", logMessage: "Agent 10 AST Patcher: Synthesized parameterized SQLAlchemy query diff", durationMs: 500 },
@@ -666,7 +715,7 @@ const SCENARIOS: Record<ScenarioPreset, { name: string; description: string; ste
       { nodeId: "node_fastpath", edgeId: "e2", logMessage: "Fast-Path Gate: Alice's session token clean (Risk = 0, Lookup: 1.25ms)", durationMs: 500 },
       { nodeId: "node_branch_risk", edgeId: "e4", logMessage: "Branch: Risk < 80 -> Route allowed to Storefront Core", durationMs: 500 },
       { nodeId: "node_storefront", edgeId: "e5", logMessage: "Storefront Backend: Item added to cart, Order #1003 placed (HTTP 200 OK)", durationMs: 600, highlightStatus: "completed" },
-      { nodeId: "node_otel", logMessage: "LSPR = 100.0%: Alice completely unaffected by co-located botnet on identical IP", durationMs: 600, highlightStatus: "completed" },
+      { nodeId: "node_otel", edgeId: "e6", logMessage: "LSPR = 100.0%: Alice completely unaffected by co-located botnet on identical IP", durationMs: 600, highlightStatus: "completed" },
     ],
   },
   TRIANGULATION: {
@@ -808,9 +857,11 @@ export default function InteractiveWorkflowCanvas() {
 
     // Activate node & edge
     setActiveNodeIds((prev) => new Set([...prev, currentStep.nodeId]));
-    const activeEdge = currentStep.edgeId;
-    if (activeEdge) {
-      setActiveEdgeIds((prev) => new Set([...prev, activeEdge]));
+    if (currentStep.edgeId) {
+      setActiveEdgeIds((prev) => new Set([...prev, currentStep.edgeId!]));
+    }
+    if (currentStep.edgeIds) {
+      setActiveEdgeIds((prev) => new Set([...prev, ...currentStep.edgeIds!]));
     }
 
     // Update node status
@@ -966,11 +1017,11 @@ export default function InteractiveWorkflowCanvas() {
           <div className="flex items-center gap-1.5 p-1 rounded-full bg-[#EAE5DE] border border-[#D5D0C7]">
             {(
               [
-                { key: "FULL", label: "Master Flow", icon: <Sparkles className="w-3.5 h-3.5 text-current" /> },
-                { key: "SQLI_ATTACK", label: "SQLi Attack Gate", icon: <Flame className="w-3.5 h-3.5 text-current" /> },
-                { key: "LEGIT_ALICE", label: "Legitimate (NAT)", icon: <UserCheck className="w-3.5 h-3.5 text-current" /> },
-                { key: "TRIANGULATION", label: "Bayesian P(V)", icon: <Cpu className="w-3.5 h-3.5 text-current" /> },
-                { key: "AST_REMEDIATION", label: "AST Repair", icon: <Wrench className="w-3.5 h-3.5 text-current" /> },
+                { key: "FULL", label: "Master Flow", icon: <Sparkles className="w-3.5 h-3.5 text-blue-500" /> },
+                { key: "SQLI_ATTACK", label: "SQLi Attack Gate", icon: <Flame className="w-3.5 h-3.5 text-rose-500" /> },
+                { key: "LEGIT_ALICE", label: "Legitimate (NAT)", icon: <UserCheck className="w-3.5 h-3.5 text-emerald-500" /> },
+                { key: "TRIANGULATION", label: "Bayesian P(V)", icon: <Cpu className="w-3.5 h-3.5 text-cyan-500" /> },
+                { key: "AST_REMEDIATION", label: "AST Repair", icon: <Wrench className="w-3.5 h-3.5 text-purple-500" /> },
               ] as const
             ).map((item) => {
               const active = selectedScenario === item.key;

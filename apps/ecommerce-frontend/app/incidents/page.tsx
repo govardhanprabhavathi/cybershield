@@ -68,7 +68,7 @@ export default function IncidentsPage() {
       <section className="text-center max-w-3xl mx-auto space-y-4 pt-4">
         <div className="flex justify-center">
           <div className="clean-pill">
-            <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Threat Intelligence &amp; Containment</span>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function IncidentsPage() {
             onClick={() => handleQuickExploit("SQLI")}
             className="btn-light text-xs py-2 px-4"
           >
-            <Flame className="w-3.5 h-3.5 mr-1.5" />
+            <Flame className="w-3.5 h-3.5 text-rose-500 mr-1.5" />
             Test SQLi Block
           </button>
 
@@ -98,7 +98,7 @@ export default function IncidentsPage() {
             onClick={() => handleQuickExploit("BOLA")}
             className="btn-light text-xs py-2 px-4"
           >
-            <Lock className="w-3.5 h-3.5 mr-1.5" />
+            <Lock className="w-3.5 h-3.5 text-amber-500 mr-1.5" />
             Test BOLA Block
           </button>
 
@@ -106,7 +106,7 @@ export default function IncidentsPage() {
             onClick={() => handleQuickExploit("CART_TAMPER")}
             className="btn-light text-xs py-2 px-4"
           >
-            <Zap className="w-3.5 h-3.5 mr-1.5" />
+            <Zap className="w-3.5 h-3.5 text-blue-500 mr-1.5" />
             Test Cart Logic Block
           </button>
         </div>
@@ -114,7 +114,7 @@ export default function IncidentsPage() {
         {notification && (
           <div className="max-w-md mx-auto p-3.5 rounded-2xl bg-white border border-[#E0DACF] shadow-md flex items-center justify-between text-xs text-black animate-in fade-in">
             <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-black" />
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="font-semibold">{notification}</span>
             </div>
             <button

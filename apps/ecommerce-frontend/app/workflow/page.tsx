@@ -12,7 +12,7 @@ export default function WorkflowPage() {
       <section className="text-center max-w-3xl mx-auto space-y-4 pt-4">
         <div className="flex justify-center">
           <div className="clean-pill">
-            <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Multi-Agent System Architecture</span>
           </div>
         </div>

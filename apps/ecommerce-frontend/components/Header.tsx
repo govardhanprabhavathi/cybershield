@@ -22,8 +22,9 @@ export default function Header() {
             <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm tracking-tighter group-hover:rotate-45 transition-transform duration-300">
               ✻
             </div>
-            <span className="font-bold text-xl tracking-tight text-black">
-              cybershield
+            <span className="font-bold text-xl tracking-tight text-black flex items-center gap-2">
+              <span>cybershield</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             </span>
           </Link>
         </div>
