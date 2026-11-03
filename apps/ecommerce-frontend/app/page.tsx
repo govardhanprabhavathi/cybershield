@@ -71,7 +71,29 @@ export default function SecurityCommandCenter() {
 
   useEffect(() => {
     loadData();
+
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab") as TabKey;
+      const hashParam = window.location.hash.replace("#", "") as TabKey;
+      const validTabs: TabKey[] = ["kpis", "workflow", "stream", "sessions", "triangulation", "remediation", "simulator"];
+      
+      if (tabParam && validTabs.includes(tabParam)) {
+        setActiveTab(tabParam);
+      } else if (hashParam && validTabs.includes(hashParam)) {
+        setActiveTab(hashParam);
+      }
+    }
   }, []);
+
+  const handleTabChange = (key: TabKey) => {
+    setActiveTab(key);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.set("tab", key);
+      window.history.replaceState({}, "", url.toString());
+    }
+  };
 
   const handleResetSession = async (sessionId: string) => {
     await api.resetSessionRisk(sessionId);
@@ -198,7 +220,7 @@ export default function SecurityCommandCenter() {
           return (
             <button
               key={tab.key}
-              onClick={() => setActiveTab(tab.key)}
+              onClick={() => handleTabChange(tab.key)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 border ${
                 isActive
                   ? "bg-blue-600 text-white border-blue-400/50 shadow-[0_0_20px_rgba(37,99,235,0.35)]"
