@@ -14,13 +14,13 @@
       "sub_2ms_compliance": true
     },
     "Naive Signature WAF": {
-      "mean_ms": 0.46,
-      "std_ms": 0.0,
+      "mean_ms": 0.47,
+      "std_ms": 0.05,
       "p50_ms": 0.46,
-      "p95_ms": 0.46,
-      "p99_ms": 0.46,
+      "p95_ms": 0.69,
+      "p99_ms": 0.69,
       "min_ms": 0.45,
-      "max_ms": 0.46,
+      "max_ms": 0.69,
       "sub_2ms_compliance": true
     },
     "Synchronous LLM-in-the-Loop": {

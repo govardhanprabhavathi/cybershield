@@ -1,6 +1,6 @@
 # CyberShield Empirical Research Evaluation Report
 **Automated Dissertation Evaluation Suite (RQ1 - RQ4)**  
-*Generated: 2026-10-07 06:50:45 UTC*
+*Generated: 2026-11-03 10:53:04 UTC*
 
 ---
 
@@ -29,7 +29,7 @@ Traditional AI-driven security architectures often introduce catastrophic latenc
 | Defense Paradigm | Mean (ms) | Std (ms) | p50 (ms) | p95 (ms) | p99 (ms) | Fast-Path ($\le 2.0$ms) |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
 | **Vanilla Unprotected** | 0.15 | 0.00 | 0.15 | 0.15 | 0.15 | Yes |
-| **Naive Signature WAF** | 0.46 | 0.00 | 0.46 | 0.46 | 0.46 | Yes |
+| **Naive Signature WAF** | 0.47 | 0.05 | 0.46 | 0.69 | 0.69 | Yes |
 | **Synchronous LLM** | 1112.92 | 175.06 | 1127.03 | 1385.99 | 1385.99 | No (Violated) |
 | **CyberShield Dual-Plane** | **1.25** | **0.00** | **1.25** | **1.25** | **1.25** | **Yes (Verified)** |
 
@@ -82,16 +82,16 @@ CyberShield Agent 10 synthesizes deterministic AST patches for discovered vulner
 
 | Evaluated Weakness | Patch Strategy | Mean Gen (ms) | Mean Sandbox (ms) | End-to-End Cycle (ms) | Syntax Valid | Neutralized | Regression Rate |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **CWE-89** | `PARAMETERIZATION` | 0.97 | 3.02 | 3.99 | Yes | Yes | **0.0%** |
-| **CWE-284** | `AUTHORIZATION_GATE` | 0.98 | 23.53 | 24.50 | Yes | Yes | **0.0%** |
-| **CWE-840** | `INPUT_VALIDATION` | 1.23 | 3.97 | 5.20 | Yes | Yes | **0.0%** |
-| **CWE-798** | `SECRET_ISOLATION` | 0.75 | 3.03 | 3.78 | Yes | Yes | **0.0%** |
+| **CWE-89** | `PARAMETERIZATION` | 1.58 | 41.91 | 43.49 | Yes | Yes | **0.0%** |
+| **CWE-284** | `AUTHORIZATION_GATE` | 2.44 | 10.73 | 13.17 | Yes | Yes | **0.0%** |
+| **CWE-840** | `INPUT_VALIDATION` | 1.92 | 9.03 | 10.95 | Yes | Yes | **0.0%** |
+| **CWE-798** | `SECRET_ISOLATION` | 0.92 | 4.73 | 5.65 | Yes | Yes | **0.0%** |
 
 ### Aggregate Metrics:
 - **Syntax Validity Rate:** 100.00%
 - **Exploit Neutralization Rate:** 100.00%
 - **Functional Regression Rate:** 0.00%
-- **Mean Remediation Cycle Time:** 9.37ms
+- **Mean Remediation Cycle Time:** 18.31ms
 
 **Key Takeaway:** CyberShield achieves $100.0\%$ exploit neutralization with $0.0\%$ functional regression across all canonical e-commerce security flaws in less than $40\text{ms}$ total cycle time.
 

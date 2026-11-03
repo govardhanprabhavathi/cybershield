@@ -15,6 +15,7 @@ import {
   Zap,
   RotateCw,
   Flame,
+  Workflow,
 } from "lucide-react";
 import { api } from "../lib/api";
 import {
@@ -32,8 +33,9 @@ import SessionRiskMatrix from "../components/dashboard/SessionRiskMatrix";
 import EvidenceTriangulationView from "../components/dashboard/EvidenceTriangulationView";
 import RemediationWorkbench from "../components/dashboard/RemediationWorkbench";
 import TrafficSimulator from "../components/dashboard/TrafficSimulator";
+import InteractiveWorkflowCanvas from "../components/dashboard/InteractiveWorkflowCanvas";
 
-type TabKey = "kpis" | "stream" | "sessions" | "triangulation" | "remediation" | "simulator";
+type TabKey = "kpis" | "workflow" | "stream" | "sessions" | "triangulation" | "remediation" | "simulator";
 
 export default function SecurityCommandCenter() {
   const [activeTab, setActiveTab] = useState<TabKey>("kpis");
@@ -105,6 +107,7 @@ export default function SecurityCommandCenter() {
 
   const tabs: { key: TabKey; label: string; icon: React.ReactNode; badge?: string }[] = [
     { key: "kpis", label: "Executive KPIs", icon: <LayoutDashboard className="w-4 h-4" /> },
+    { key: "workflow", label: "Interactive Workflow", icon: <Workflow className="w-4 h-4" />, badge: "Flow" },
     { key: "stream", label: "Threat Stream", icon: <Radio className="w-4 h-4" />, badge: `${incidents.length}` },
     { key: "sessions", label: "Session Matrix", icon: <Users className="w-4 h-4" />, badge: `${sessions.length}` },
     { key: "triangulation", label: "Evidence Triangulation", icon: <Layers className="w-4 h-4" />, badge: "P \u2265 0.99" },
@@ -221,6 +224,7 @@ export default function SecurityCommandCenter() {
       {/* Active Tab View Body */}
       <div className="transition-all duration-200">
         {activeTab === "kpis" && stats && <ExecutiveKPIs stats={stats} />}
+        {activeTab === "workflow" && <InteractiveWorkflowCanvas />}
         {activeTab === "stream" && <LiveTelemetryStream incidents={incidents} />}
         {activeTab === "sessions" && (
           <SessionRiskMatrix sessions={sessions} onResetSession={handleResetSession} />
