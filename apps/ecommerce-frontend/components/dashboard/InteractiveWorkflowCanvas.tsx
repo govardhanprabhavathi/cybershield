@@ -57,6 +57,15 @@ export type NodeCategory =
 
 export type NodeStatus = "idle" | "running" | "completed" | "quarantined" | "bypassed";
 
+export interface NodeColorScheme {
+  badgeBg: string;
+  badgeText: string;
+  iconBg: string;
+  iconColor: string;
+  activeBorder: string;
+  activeGlow: string;
+}
+
 export interface WorkflowNode {
   id: string;
   title: string;
@@ -73,14 +82,7 @@ export interface WorkflowNode {
   outputsDesc: string[];
   metrics: { label: string; value: string }[];
   codeSnippet?: string;
-  colorScheme: {
-    badgeBg: string;
-    badgeText: string;
-    iconBg: string;
-    iconColor: string;
-    activeBorder: string;
-    activeGlow: string;
-  };
+  colorScheme: NodeColorScheme;
 }
 
 export interface WorkflowEdge {
@@ -98,6 +100,25 @@ export type ScenarioPreset = "FULL" | "SQLI_ATTACK" | "LEGIT_ALICE" | "TRIANGULA
 // ============================================================================
 // Node Specifications for CyberShield 12-Agent Lifecycle
 // ============================================================================
+
+
+const MONO_SCHEME: NodeColorScheme = {
+  badgeBg: "bg-[#EAE5DE]",
+  badgeText: "text-black",
+  iconBg: "bg-[#EAE5DE] border-[#D5D0C7]",
+  iconColor: "text-black",
+  activeBorder: "border-black",
+  activeGlow: "shadow-[0_4px_25px_rgba(0,0,0,0.18)]",
+};
+
+const ACTION_SCHEME: NodeColorScheme = {
+  badgeBg: "bg-black",
+  badgeText: "text-white",
+  iconBg: "bg-black text-white border-black",
+  iconColor: "text-white",
+  activeBorder: "border-black",
+  activeGlow: "shadow-[0_4px_25px_rgba(0,0,0,0.25)]",
+};
 
 const WORKFLOW_NODES: WorkflowNode[] = [
   // ROW 1: Fast-Path Synchronous Enforcement Plane (<= 2.0ms)
@@ -120,14 +141,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Protocol", value: "HTTP/2 TLS 1.3" },
     ],
     codeSnippet: `GET /api/v1/products/search?search=' UNION SELECT id, password_hash, email FROM users-- HTTP/1.1\nHost: store.cybershield.internal\nUser-Agent: Mozilla/5.0 (AdversarialBot/2.4)\nX-Forwarded-For: 198.51.100.42`,
-    colorScheme: {
-      badgeBg: "bg-blue-500/10",
-      badgeText: "text-blue-400",
-      iconBg: "bg-blue-500/15 border-blue-500/30",
-      iconColor: "text-blue-400",
-      activeBorder: "border-blue-400",
-      activeGlow: "shadow-[0_0_25px_rgba(59,130,246,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_fastpath",
@@ -149,14 +163,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "JTI Blacklist Check", value: "revoked:jti:{jti}" },
     ],
     codeSnippet: `async def verify_session_fastpath(session_id: str, redis: Redis) -> bool:\n    # Sub-2ms fast-path lookup\n    state = await redis.hget(f"session:risk:{session_id}", "state")\n    if state == "CONTAIN":\n        raise HTTPException(status_code=403, detail="Session quarantined")\n    return True`,
-    colorScheme: {
-      badgeBg: "bg-cyan-500/10",
-      badgeText: "text-cyan-400",
-      iconBg: "bg-cyan-500/15 border-cyan-500/30",
-      iconColor: "text-cyan-400",
-      activeBorder: "border-cyan-400",
-      activeGlow: "shadow-[0_0_25px_rgba(6,182,212,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_branch_risk",
@@ -179,14 +186,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Containment Floor", value: "Risk >= 80 & Conf >= 0.75" },
     ],
     codeSnippet: `if risk_score >= 80 and confidence >= 0.75:\n    # Route to containment quarantine branch\n    return "CONTAIN"\nreturn "ALLOW"`,
-    colorScheme: {
-      badgeBg: "bg-purple-500/10",
-      badgeText: "text-purple-400",
-      iconBg: "bg-purple-500/15 border-purple-500/30",
-      iconColor: "text-purple-400",
-      activeBorder: "border-purple-400",
-      activeGlow: "shadow-[0_0_25px_rgba(168,85,247,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_containment",
@@ -207,14 +207,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Total Intercept Time", value: "1.25 ms" },
     ],
     codeSnippet: `await redis.setex(f"revoked:jti:{jti}", 86400, "quarantined")\nawait redis.hset(f"session:risk:{session_id}", "state", "CONTAIN")\nreturn Response(status_code=403, content={"error": "Session quarantined"})`,
-    colorScheme: {
-      badgeBg: "bg-rose-500/10",
-      badgeText: "text-rose-400",
-      iconBg: "bg-rose-500/15 border-rose-500/30",
-      iconColor: "text-rose-400",
-      activeBorder: "border-rose-400",
-      activeGlow: "shadow-[0_0_25px_rgba(244,63,94,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_storefront",
@@ -234,14 +227,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Storefront Status", value: "HTTP 200 OK" },
     ],
     codeSnippet: `@router.get("/products/search")\nasync def search(search: str, db: AsyncSession = Depends(get_db)):\n    # Executes query and returns active catalog items\n    return await product_service.search_products(db, search)`,
-    colorScheme: {
-      badgeBg: "bg-emerald-500/10",
-      badgeText: "text-emerald-400",
-      iconBg: "bg-emerald-500/15 border-emerald-500/30",
-      iconColor: "text-emerald-400",
-      activeBorder: "border-emerald-400",
-      activeGlow: "shadow-[0_0_25px_rgba(16,185,129,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_otel",
@@ -261,14 +247,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Trace Context", value: "W3C traceparent trace_id" },
     ],
     codeSnippet: `trace_event = TelemetryEvent(\n    trace_id=trace_id,\n    session_id=session_id,\n    route=request.url.path,\n    status_code=response.status_code,\n    duration_ms=latency\n)`,
-    colorScheme: {
-      badgeBg: "bg-sky-500/10",
-      badgeText: "text-sky-400",
-      iconBg: "bg-sky-500/15 border-sky-500/30",
-      iconColor: "text-sky-400",
-      activeBorder: "border-sky-400",
-      activeGlow: "shadow-[0_0_25px_rgba(14,165,233,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_redis_stream",
@@ -288,14 +267,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Stream Key", value: "stream:telemetry" },
     ],
     codeSnippet: `await redis.xadd("stream:telemetry", {\n    "session_id": event.session_id,\n    "payload": json.dumps(event.dict())\n})`,
-    colorScheme: {
-      badgeBg: "bg-amber-500/10",
-      badgeText: "text-amber-400",
-      iconBg: "bg-amber-500/15 border-amber-500/30",
-      iconColor: "text-amber-400",
-      activeBorder: "border-amber-400",
-      activeGlow: "shadow-[0_0_25px_rgba(245,158,11,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
 
   // ROW 2: Pre-Deployment & Runtime Detection Agents (Intelligence Plane)
@@ -319,14 +291,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "SAST Confidence", value: "c_1 = 0.95" },
     ],
     codeSnippet: `class CodeSecurityVisitor(ast.NodeVisitor):\n    def visit_JoinedStr(self, node):\n        # Flags raw f-string inside SQLAlchemy text() call\n        self.findings.append(SecurityFinding(cwe_id="CWE-89", confidence=0.95))`,
-    colorScheme: {
-      badgeBg: "bg-indigo-500/10",
-      badgeText: "text-indigo-400",
-      iconBg: "bg-indigo-500/15 border-indigo-500/30",
-      iconColor: "text-indigo-400",
-      activeBorder: "border-indigo-400",
-      activeGlow: "shadow-[0_0_25px_rgba(99,102,241,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_dast_prober",
@@ -347,14 +312,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Exploitation Status", value: "Confirmed Exploit Response 500" },
     ],
     codeSnippet: `res = await client.get("/api/v1/products/search?search=' UNION SELECT id...")\nif res.status_code == 500 and "Database execution error" in res.text:\n    # DAST confirms active vulnerability\n    return DASTFinding(cwe_id="CWE-89", confidence=0.92)`,
-    colorScheme: {
-      badgeBg: "bg-blue-500/10",
-      badgeText: "text-blue-400",
-      iconBg: "bg-blue-500/15 border-blue-500/30",
-      iconColor: "text-blue-400",
-      activeBorder: "border-blue-400",
-      activeGlow: "shadow-[0_0_25px_rgba(59,130,246,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_runtime_sensor",
@@ -376,14 +334,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Pattern Matched", value: "SQL_INJECTION (UNION / quote)" },
     ],
     codeSnippet: `if any(p.search(query) for p in SQLI_PATTERNS):\n    return RuntimeIncident(\n        attack_type="SQL_INJECTION",\n        cwe_id="CWE-89",\n        confidence=0.98\n    )`,
-    colorScheme: {
-      badgeBg: "bg-orange-500/10",
-      badgeText: "text-orange-400",
-      iconBg: "bg-orange-500/15 border-orange-500/30",
-      iconColor: "text-orange-400",
-      activeBorder: "border-orange-400",
-      activeGlow: "shadow-[0_0_25px_rgba(249,115,22,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_risk_engine",
@@ -405,14 +356,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Compounded Conf", value: "0.96" },
     ],
     codeSnippet: `base_score = sum(WEIGHTS[i.attack_type] for i in incidents)\nif len(attack_types) >= 2:\n    base_score = int(base_score * 1.2)  # Multi-vector compounding\nfinal_risk = min(100, base_score)`,
-    colorScheme: {
-      badgeBg: "bg-amber-500/10",
-      badgeText: "text-amber-400",
-      iconBg: "bg-amber-500/15 border-amber-500/30",
-      iconColor: "text-amber-400",
-      activeBorder: "border-amber-400",
-      activeGlow: "shadow-[0_0_25px_rgba(245,158,11,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_graduated_policy",
@@ -432,14 +376,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "State Sync Latency", value: "0.85 ms to Redis" },
     ],
     codeSnippet: `if risk_score >= 90 and confidence >= 0.85:\n    return "CONTAIN"  # Immediate gateway drop\nelif risk_score >= 60:\n    return "THROTTLE" # Adaptive latency injection`,
-    colorScheme: {
-      badgeBg: "bg-rose-500/10",
-      badgeText: "text-rose-400",
-      iconBg: "bg-rose-500/15 border-rose-500/30",
-      iconColor: "text-rose-400",
-      activeBorder: "border-rose-400",
-      activeGlow: "shadow-[0_0_25px_rgba(244,63,94,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
 
   // ROW 3: Triangulation, Orchestration & AST Remediation
@@ -463,14 +400,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Triangulation Tier", value: "FULL_TRIANGULATION" },
     ],
     codeSnippet: `# P(V) = 1.0 - (1 - c_sast) * (1 - c_dast) * (1 - c_runtime)\nproduct_failure = (1.0 - 0.95) * (1.0 - 0.92) * (1.0 - 0.98)\ncomposite_p = 1.0 - product_failure  # 0.9996`,
-    colorScheme: {
-      badgeBg: "bg-emerald-500/10",
-      badgeText: "text-emerald-400",
-      iconBg: "bg-emerald-500/15 border-emerald-500/30",
-      iconColor: "text-emerald-400",
-      activeBorder: "border-emerald-400",
-      activeGlow: "shadow-[0_0_25px_rgba(16,185,129,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_dossier",
@@ -490,14 +420,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Exploit Status", value: "ACTIVELY_EXPLOITED" },
     ],
     codeSnippet: `dossier = TriangulatedDossier(\n    cwe_id="CWE-89",\n    status="ACTIVELY_EXPLOITED",\n    composite_confidence=0.9996\n)`,
-    colorScheme: {
-      badgeBg: "bg-blue-500/10",
-      badgeText: "text-blue-400",
-      iconBg: "bg-blue-500/15 border-blue-500/30",
-      iconColor: "text-blue-400",
-      activeBorder: "border-blue-400",
-      activeGlow: "shadow-[0_0_25px_rgba(59,130,246,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_orchestrator",
@@ -518,14 +441,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Governance Mode", value: "FULLY_AUTONOMOUS" },
     ],
     codeSnippet: `fsm = IncidentStateMachine(current_state="TRIANGULATING")\nnext_state = fsm.transition_to("DRAFTING_PATCH")\nawait playbook_runner.execute("SQLI_CONTAINMENT_PLAYBOOK")`,
-    colorScheme: {
-      badgeBg: "bg-violet-500/10",
-      badgeText: "text-violet-400",
-      iconBg: "bg-violet-500/15 border-violet-500/30",
-      iconColor: "text-violet-400",
-      activeBorder: "border-violet-400",
-      activeGlow: "shadow-[0_0_25px_rgba(139,92,246,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_ast_patcher",
@@ -546,14 +462,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Strategy", value: "SQLAlchemy Parameterization (:term)" },
     ],
     codeSnippet: `# Unified AST Diff Generated:\n- raw_sql = f"SELECT * FROM products WHERE name LIKE '%{search}%'"\n+ safe_sql = text("SELECT * FROM products WHERE name LIKE :term")\n+ result = await db.execute(safe_sql, {"term": f"%{search}%"})`,
-    colorScheme: {
-      badgeBg: "bg-cyan-500/10",
-      badgeText: "text-cyan-400",
-      iconBg: "bg-cyan-500/15 border-cyan-500/30",
-      iconColor: "text-cyan-400",
-      activeBorder: "border-cyan-400",
-      activeGlow: "shadow-[0_0_25px_rgba(6,182,212,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_sandbox",
@@ -575,14 +484,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Gate 3: Functional Regression", value: "0.0% (Signatures Preserved)" },
     ],
     codeSnippet: `passed, checks, ms = RemediationSandbox.run_sandbox_checks(diff, original)\nassert passed == True\nassert all(c.passed for c in checks)`,
-    colorScheme: {
-      badgeBg: "bg-emerald-500/10",
-      badgeText: "text-emerald-400",
-      iconBg: "bg-emerald-500/15 border-emerald-500/30",
-      iconColor: "text-emerald-400",
-      activeBorder: "border-emerald-400",
-      activeGlow: "shadow-[0_0_25px_rgba(16,185,129,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_branch_sandbox",
@@ -605,14 +507,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Route Selection", value: "Autonomous Apply" },
     ],
     codeSnippet: `if verification_report.all_passed:\n    return "AUTO_DEPLOYING"\nreturn "ESCALATED_HUMAN"`,
-    colorScheme: {
-      badgeBg: "bg-purple-500/10",
-      badgeText: "text-purple-400",
-      iconBg: "bg-purple-500/15 border-purple-500/30",
-      iconColor: "text-purple-400",
-      activeBorder: "border-purple-400",
-      activeGlow: "shadow-[0_0_25px_rgba(168,85,247,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_auto_deploy",
@@ -633,14 +528,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Rollback Ready", value: "True" },
     ],
     codeSnippet: `await remediation_service.apply_proposal(proposal_id=p.id, dry_run=False)\nfsm.transition_to("RESOLVED")`,
-    colorScheme: {
-      badgeBg: "bg-emerald-500/10",
-      badgeText: "text-emerald-400",
-      iconBg: "bg-emerald-500/15 border-emerald-500/30",
-      iconColor: "text-emerald-400",
-      activeBorder: "border-emerald-400",
-      activeGlow: "shadow-[0_0_25px_rgba(16,185,129,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_hitl",
@@ -660,14 +548,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Operator Role", value: "SecOps Lead" },
     ],
     codeSnippet: `fsm.transition_to("AWAITING_APPROVAL")\nnotify_security_analyst(workflow_id=wf.id)`,
-    colorScheme: {
-      badgeBg: "bg-amber-500/10",
-      badgeText: "text-amber-400",
-      iconBg: "bg-amber-500/15 border-amber-500/30",
-      iconColor: "text-amber-400",
-      activeBorder: "border-amber-400",
-      activeGlow: "shadow-[0_0_25px_rgba(245,158,11,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
   {
     id: "node_resolution",
@@ -688,14 +569,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
       { label: "Exploit Neutralized", value: "100.0%" },
     ],
     codeSnippet: `await workflow_service.record_audit_log(\n    action="WORKFLOW_RESOLVED",\n    status="SUCCESS",\n    details="Exploit neutralized, zero regressions."\n)`,
-    colorScheme: {
-      badgeBg: "bg-emerald-500/10",
-      badgeText: "text-emerald-400",
-      iconBg: "bg-emerald-500/15 border-emerald-500/30",
-      iconColor: "text-emerald-400",
-      activeBorder: "border-emerald-400",
-      activeGlow: "shadow-[0_0_25px_rgba(16,185,129,0.5)]",
-    },
+    colorScheme: MONO_SCHEME,
   },
 ];
 
@@ -1069,34 +943,34 @@ export default function InteractiveWorkflowCanvas() {
       {/* =====================================================================
           TOP CONTROLS & SCENARIO SELECTION TOOLBAR
           ===================================================================== */}
-      <div className="glass-panel p-4 flex flex-col xl:flex-row xl:items-center justify-between gap-4 border-blue-500/20">
+      <div className="clean-card p-4 flex flex-col xl:flex-row xl:items-center justify-between gap-4 border border-[#E0DACF] bg-white">
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 pr-3 border-r border-white/10">
-            <span className="p-2 rounded-xl bg-blue-500/10 border border-blue-400/20 text-blue-400">
-              <Workflow className="w-5 h-5" />
+          <div className="flex items-center gap-2 pr-3 border-r border-[#E0DACF]">
+            <span className="p-2 rounded-xl bg-[#EAE5DE] border border-[#D5D0C7] text-black">
+              <Workflow className="w-5 h-5 text-black" />
             </span>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-white tracking-tight">Interactive Workflow Pipeline</h2>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                <h2 className="text-base font-bold text-black tracking-tight">Interactive Workflow Pipeline</h2>
+                <span className="clean-pill text-[10px] py-0.5 px-2">
                   Node Canvas
                 </span>
               </div>
-              <p className="text-xs text-zinc-400">
-                Visual n8n-style workflow demonstrating the 12-agent defense lifecycle and sub-2ms request gating.
+              <p className="text-xs text-[#333333] font-medium">
+                Visual workflow demonstrating the multi-agent defense lifecycle and sub-2ms request gating.
               </p>
             </div>
           </div>
 
           {/* Scenario Preset Selector */}
-          <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+          <div className="flex items-center gap-1.5 p-1 rounded-full bg-[#EAE5DE] border border-[#D5D0C7]">
             {(
               [
-                { key: "FULL", label: "Master Flow", icon: <Sparkles className="w-3.5 h-3.5 text-blue-400" /> },
-                { key: "SQLI_ATTACK", label: "SQLi Attack Gate", icon: <Flame className="w-3.5 h-3.5 text-rose-400" /> },
-                { key: "LEGIT_ALICE", label: "Legitimate (NAT)", icon: <UserCheck className="w-3.5 h-3.5 text-emerald-400" /> },
-                { key: "TRIANGULATION", label: "Bayesian P(V)", icon: <Cpu className="w-3.5 h-3.5 text-cyan-400" /> },
-                { key: "AST_REMEDIATION", label: "AST Repair", icon: <Wrench className="w-3.5 h-3.5 text-purple-400" /> },
+                { key: "FULL", label: "Master Flow", icon: <Sparkles className="w-3.5 h-3.5 text-current" /> },
+                { key: "SQLI_ATTACK", label: "SQLi Attack Gate", icon: <Flame className="w-3.5 h-3.5 text-current" /> },
+                { key: "LEGIT_ALICE", label: "Legitimate (NAT)", icon: <UserCheck className="w-3.5 h-3.5 text-current" /> },
+                { key: "TRIANGULATION", label: "Bayesian P(V)", icon: <Cpu className="w-3.5 h-3.5 text-current" /> },
+                { key: "AST_REMEDIATION", label: "AST Repair", icon: <Wrench className="w-3.5 h-3.5 text-current" /> },
               ] as const
             ).map((item) => {
               const active = selectedScenario === item.key;
@@ -1104,10 +978,10 @@ export default function InteractiveWorkflowCanvas() {
                 <button
                   key={item.key}
                   onClick={() => handleSelectScenario(item.key)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${
                     active
-                      ? "bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]"
-                      : "text-zinc-400 hover:text-white hover:bg-white/[0.05]"
+                      ? "bg-black text-white shadow-sm"
+                      : "text-[#222222] hover:text-black hover:bg-white/60"
                   }`}
                 >
                   {item.icon}
@@ -1123,14 +997,14 @@ export default function InteractiveWorkflowCanvas() {
           {isPlaying ? (
             <button
               onClick={handlePause}
-              className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold flex items-center gap-2 transition shadow-[0_0_15px_rgba(217,119,6,0.3)]"
+              className="btn-dark px-4 py-2 text-xs font-bold flex items-center gap-2"
             >
               <span>Pause</span>
             </button>
           ) : (
             <button
               onClick={handlePlay}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-2 transition shadow-[0_0_15px_rgba(16,185,129,0.35)]"
+              className="btn-dark px-4 py-2 text-xs font-bold flex items-center gap-2"
             >
               <Play className="w-3.5 h-3.5 fill-white" />
               <span>Simulate Flow</span>
@@ -1139,35 +1013,35 @@ export default function InteractiveWorkflowCanvas() {
 
           <button
             onClick={handleReset}
-            className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border border-white/10 transition"
+            className="p-2 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition"
             title="Reset Canvas and Logs"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-4 h-4 text-black" />
           </button>
 
-          <div className="h-6 w-px bg-white/10 mx-1" />
+          <div className="h-6 w-px bg-[#E0DACF] mx-1" />
 
           <button
             onClick={handleZoomOut}
-            className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border border-white/10 transition"
+            className="p-2 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition"
             title="Zoom Out"
           >
-            <ZoomOut className="w-4 h-4" />
+            <ZoomOut className="w-4 h-4 text-black" />
           </button>
-          <span className="text-xs font-mono text-zinc-400 px-1">{Math.round(scale * 100)}%</span>
+          <span className="text-xs font-mono font-bold text-black px-1">{Math.round(scale * 100)}%</span>
           <button
             onClick={handleZoomIn}
-            className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border border-white/10 transition"
+            className="p-2 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition"
             title="Zoom In"
           >
-            <ZoomIn className="w-4 h-4" />
+            <ZoomIn className="w-4 h-4 text-black" />
           </button>
           <button
             onClick={handleFitView}
-            className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border border-white/10 transition"
+            className="p-2 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition"
             title="Fit to Screen"
           >
-            <Maximize2 className="w-4 h-4" />
+            <Maximize2 className="w-4 h-4 text-black" />
           </button>
         </div>
       </div>
@@ -1176,7 +1050,7 @@ export default function InteractiveWorkflowCanvas() {
           MAIN WORKFLOW WORKSPACE (CANVAS + INSPECTOR DRAWER)
           ===================================================================== */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Canvas Area (9 cols or 12 cols when drawer closed) */}
+        {/* Canvas Area */}
         <div className="lg:col-span-8 xl:col-span-9 relative">
           <div
             ref={containerRef}
@@ -1185,10 +1059,10 @@ export default function InteractiveWorkflowCanvas() {
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
             onWheel={handleWheel}
-            className="relative w-full h-[680px] rounded-2xl overflow-hidden cursor-grab active:cursor-grabbing border border-white/10 bg-[#07090e] select-none shadow-[inset_0_0_80px_rgba(0,0,0,0.8)]"
+            className="relative w-full h-[680px] rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing border border-[#E0DACF] bg-[#F5F2EB] select-none shadow-sm"
             style={{
-              backgroundImage: `radial-gradient(circle, rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px)`,
-              backgroundSize: `24px 24px`,
+              backgroundImage: "radial-gradient(circle, rgba(0, 0, 0, 0.12) 1.5px, transparent 1.5px)",
+              backgroundSize: "26px 26px",
             }}
           >
             {/* Canvas Transformation Wrapper */}
@@ -1203,20 +1077,12 @@ export default function InteractiveWorkflowCanvas() {
               {/* SVG Connecting Edges Layer */}
               <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
                 <defs>
-                  {/* Glowing Arrow Markers */}
                   <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#38bdf8" opacity="0.7" />
+                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#111111" />
                   </marker>
                   <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#60a5fa" />
+                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#000000" />
                   </marker>
-
-                  {/* Linear Gradient for Active Edges */}
-                  <linearGradient id="edge-glow" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
-                    <stop offset="50%" stopColor="#60a5fa" stopOpacity="1" />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.4" />
-                  </linearGradient>
                 </defs>
 
                 {WORKFLOW_EDGES.map((edge) => {
@@ -1231,8 +1097,8 @@ export default function InteractiveWorkflowCanvas() {
                       <path
                         d={path}
                         fill="none"
-                        stroke={isActive ? "rgba(96, 165, 250, 0.4)" : "rgba(255, 255, 255, 0.12)"}
-                        strokeWidth={isActive ? 3 : 2}
+                        stroke={isActive ? "#000000" : "#D0CAC0"}
+                        strokeWidth={isActive ? 2.8 : 2}
                         markerEnd="url(#arrow)"
                       />
 
@@ -1241,11 +1107,9 @@ export default function InteractiveWorkflowCanvas() {
                         <path
                           d={path}
                           fill="none"
-                          stroke="url(#edge-glow)"
-                          strokeWidth={3.5}
+                          stroke="#000000"
+                          strokeWidth={3}
                           strokeDasharray="8 6"
-                          className="animate-pulse"
-                          filter="drop-shadow(0 0 6px #3b82f6)"
                         >
                           <animate
                             attributeName="stroke-dashoffset"
@@ -1258,7 +1122,7 @@ export default function InteractiveWorkflowCanvas() {
 
                       {/* Moving Energy Particle during Active Play */}
                       {isActive && (
-                        <circle r="4.5" fill="#38bdf8" filter="drop-shadow(0 0 8px #38bdf8)">
+                        <circle r="4.5" fill="#000000">
                           <animateMotion path={path} dur="1.2s" repeatCount="indefinite" />
                         </circle>
                       )}
@@ -1271,16 +1135,16 @@ export default function InteractiveWorkflowCanvas() {
                             y="-9"
                             width="90"
                             height="18"
-                            rx="5"
-                            fill="#0d1117"
-                            stroke="rgba(255, 255, 255, 0.15)"
+                            rx="9"
+                            fill="#FFFFFF"
+                            stroke="#D5D0C7"
                             strokeWidth="1"
                           />
                           <text
                             x="0"
                             y="3"
                             textAnchor="middle"
-                            fill="#94a3b8"
+                            fill="#111111"
                             fontSize="10"
                             fontFamily="monospace"
                             fontWeight="bold"
@@ -1308,13 +1172,13 @@ export default function InteractiveWorkflowCanvas() {
                         e.stopPropagation();
                         setSelectedNodeId(node.id);
                       }}
-                      className={`workflow-card absolute w-[240px] rounded-2xl p-3.5 transition-all duration-200 select-none cursor-pointer ${
+                      className={`workflow-card absolute w-[240px] rounded-2xl p-3.5 transition-all duration-200 select-none cursor-pointer bg-white ${
                         isSelected
-                          ? `bg-[#0f172a]/95 border-2 ${node.colorScheme.activeBorder} ${node.colorScheme.activeGlow} ring-4 ring-blue-500/20`
+                          ? "border-2 border-black shadow-xl ring-4 ring-black/10"
                           : isActive
-                          ? `bg-[#0c1427]/90 border border-blue-400/50 ${node.colorScheme.activeGlow}`
-                          : "bg-[#0b0f19]/80 hover:bg-[#0f172a]/90 border border-white/10 hover:border-white/20"
-                      } backdrop-blur-xl shadow-xl`}
+                          ? "border-2 border-black shadow-lg"
+                          : "border border-[#D5D0C7] hover:border-black shadow-sm"
+                      }`}
                       style={{
                         left: `${node.x}px`,
                         top: `${node.y}px`,
@@ -1323,10 +1187,10 @@ export default function InteractiveWorkflowCanvas() {
                       {/* Left Input Port Handle */}
                       {node.hasInput !== false && (
                         <div
-                          className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#0d1117] border-2 border-zinc-400 flex items-center justify-center transition group-hover:border-blue-400"
+                          className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center transition group-hover:scale-110"
                           title="Input Connection Port"
                         >
-                          <div className="w-1.5 h-1.5 rounded-full bg-zinc-300" />
+                          <div className="w-1.5 h-1.5 rounded-full bg-black" />
                         </div>
                       )}
 
@@ -1337,11 +1201,11 @@ export default function InteractiveWorkflowCanvas() {
                           return (
                             <div
                               key={out.id}
-                              className="absolute -right-2 w-4 h-4 rounded-full bg-[#0d1117] border-2 border-blue-400 flex items-center justify-center transition hover:scale-110 shadow-[0_0_8px_rgba(59,130,246,0.6)]"
+                              className="absolute -right-2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center transition hover:scale-110 shadow-sm"
                               style={{ top: `${topPercent}%`, transform: "translateY(-50%)" }}
                               title={out.label || "Output Connection Port"}
                             >
-                              <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                              <div className="w-1.5 h-1.5 rounded-full bg-black" />
                             </div>
                           );
                         })}
@@ -1349,82 +1213,75 @@ export default function InteractiveWorkflowCanvas() {
                       {/* Card Content Header */}
                       <div className="flex items-center justify-between gap-2 mb-2">
                         <span
-                          className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider ${node.colorScheme.badgeBg} ${node.colorScheme.badgeText}`}
+                          className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider ${node.colorScheme.badgeBg} ${node.colorScheme.badgeText} border border-[#D5D0C7]`}
                         >
                           {node.agentLabel || node.category}
                         </span>
 
                         {/* Status Indicator */}
                         {status === "completed" && (
-                          <span className="flex items-center gap-1 text-[10px] font-mono text-emerald-400">
-                            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                          <span className="flex items-center gap-1 text-[10px] font-mono font-bold text-black">
+                            <CheckCircle2 className="w-3 h-3 text-black" />
                             <span>Done</span>
                           </span>
                         )}
                         {status === "quarantined" && (
-                          <span className="flex items-center gap-1 text-[10px] font-mono text-rose-400 animate-pulse">
-                            <ShieldAlert className="w-3 h-3 text-rose-400" />
+                          <span className="flex items-center gap-1 text-[10px] font-mono font-bold text-white bg-black px-1.5 py-0.2 rounded-full">
+                            <ShieldAlert className="w-3 h-3 text-white" />
                             <span>Dropped</span>
                           </span>
                         )}
                         {status === "idle" && (
-                          <span className="w-2 h-2 rounded-full bg-zinc-600" />
+                          <span className="w-2 h-2 rounded-full bg-[#CCCCCC]" />
                         )}
                       </div>
 
                       {/* Main Title & Icon */}
                       <div className="flex items-start gap-2.5">
                         <div
-                          className={`p-2 rounded-xl flex-shrink-0 border ${node.colorScheme.iconBg} ${node.colorScheme.iconColor} shadow-inner`}
+                          className={`p-2 rounded-xl flex-shrink-0 border ${node.colorScheme.iconBg} ${node.colorScheme.iconColor}`}
                         >
                           <NodeIcon name={node.icon} className="w-4 h-4" />
                         </div>
                         <div className="overflow-hidden">
-                          <h3 className="text-xs font-bold text-white leading-tight truncate">
+                          <h3 className="text-xs font-bold text-black leading-tight truncate">
                             {node.title}
                           </h3>
-                          <p className="text-[10px] font-mono text-zinc-400 truncate mt-0.5">
+                          <p className="text-[10px] font-medium text-[#444444] truncate mt-0.5">
                             {node.subtitle}
                           </p>
                         </div>
                       </div>
-
-                      {/* Active Execution Aura */}
-                      {isActive && (
-                        <div className="absolute inset-0 rounded-2xl pointer-events-none ring-2 ring-blue-400/30 animate-pulse" />
-                      )}
                     </div>
                   );
                 })}
               </div>
             </div>
 
-            {/* Bottom Floating Legend & Watermark */}
-            <div className="absolute bottom-3 left-3 flex items-center gap-3 p-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/10 text-[11px] font-mono text-zinc-400">
+            {/* Bottom Floating Legend */}
+            <div className="absolute bottom-3 left-3 flex items-center gap-3 p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E0DACF] text-[11px] font-semibold text-black shadow-sm">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-blue-400 shadow-[0_0_6px_#38bdf8]" />
-                Enforcement Plane (&le; 2ms)
+                <span className="w-2 h-2 rounded-full bg-black" />
+                Enforcement Gate (&le; 2ms)
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_6px_#c084fc]" />
-                Intelligence Plane (12 Agents)
+                <span className="w-2 h-2 rounded-full bg-[#888888]" />
+                Multi-Agent Stream (12 Agents)
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" />
+                <span className="w-2 h-2 rounded-full bg-white border border-black" />
                 Verified Resolution
               </span>
             </div>
           </div>
         </div>
 
-        {/* =====================================================================
-            RIGHT-SIDE NODE INSPECTOR DRAWER
-            ===================================================================== */}
+        {/* Right-Side Node Inspector Drawer */}
         <div className="lg:col-span-4 xl:col-span-3">
-          <div className="glass-panel p-5 h-[680px] flex flex-col justify-between border-blue-500/20 overflow-y-auto scrollbar-thin">
+          <div className="clean-card p-5 h-[680px] flex flex-col justify-between border border-[#E0DACF] bg-white overflow-y-auto">
             <div>
               {/* Drawer Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+              <div className="flex items-center justify-between pb-3 border-b border-[#E0DACF]">
                 <div className="flex items-center gap-2">
                   <div
                     className={`p-2 rounded-xl border ${selectedNode.colorScheme.iconBg} ${selectedNode.colorScheme.iconColor}`}
@@ -1432,35 +1289,35 @@ export default function InteractiveWorkflowCanvas() {
                     <NodeIcon name={selectedNode.icon} className="w-4 h-4" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-blue-400">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#666666]">
                       Node Inspector
                     </span>
-                    <h3 className="text-sm font-bold text-white leading-tight">{selectedNode.title}</h3>
+                    <h3 className="text-sm font-bold text-black leading-tight">{selectedNode.title}</h3>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/[0.05] text-zinc-400 border border-white/10">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#EAE5DE] text-black border border-[#D5D0C7] font-bold">
                   {selectedNode.category}
                 </span>
               </div>
 
               {/* Description */}
               <div className="mt-3">
-                <p className="text-xs text-zinc-300 leading-relaxed">{selectedNode.description}</p>
+                <p className="text-xs text-[#333333] leading-relaxed">{selectedNode.description}</p>
               </div>
 
               {/* Metrics & Performance Badges */}
               <div className="mt-4 space-y-2">
-                <h4 className="text-[11px] font-mono font-bold uppercase text-zinc-400 tracking-wider">
+                <h4 className="text-[11px] font-bold uppercase text-black tracking-wider">
                   Operational Metrics &amp; SLOs
                 </h4>
                 <div className="grid grid-cols-1 gap-1.5">
                   {selectedNode.metrics.map((m, idx) => (
                     <div
                       key={idx}
-                      className="p-2 rounded-lg bg-white/[0.03] border border-white/[0.06] flex items-center justify-between text-xs"
+                      className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] flex items-center justify-between text-xs"
                     >
-                      <span className="text-zinc-400 font-mono text-[11px]">{m.label}</span>
-                      <span className="font-bold font-mono text-blue-300">{m.value}</span>
+                      <span className="text-[#444444] font-medium text-[11px]">{m.label}</span>
+                      <span className="font-bold font-mono text-black">{m.value}</span>
                     </div>
                   ))}
                 </div>
@@ -1468,28 +1325,28 @@ export default function InteractiveWorkflowCanvas() {
 
               {/* Inputs & Outputs Specs */}
               <div className="mt-4 grid grid-cols-1 gap-2.5">
-                <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <span className="text-[10px] font-mono font-bold uppercase text-sky-400 block mb-1">
+                <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E0DACF]">
+                  <span className="text-[10px] font-bold uppercase text-black block mb-1.5 tracking-wider">
                     Incoming Context (Inputs)
                   </span>
                   <ul className="space-y-1">
                     {selectedNode.inputsDesc.map((item, i) => (
-                      <li key={i} className="text-[11px] text-zinc-400 flex items-center gap-1.5">
-                        <ArrowRight className="w-2.5 h-2.5 text-sky-400 flex-shrink-0" />
+                      <li key={i} className="text-[11px] text-[#222222] font-mono flex items-center gap-1.5">
+                        <ArrowRight className="w-3 h-3 text-black flex-shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <span className="text-[10px] font-mono font-bold uppercase text-emerald-400 block mb-1">
+                <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E0DACF]">
+                  <span className="text-[10px] font-bold uppercase text-black block mb-1.5 tracking-wider">
                     Outgoing Artifacts (Outputs)
                   </span>
                   <ul className="space-y-1">
                     {selectedNode.outputsDesc.map((item, i) => (
-                      <li key={i} className="text-[11px] text-zinc-400 flex items-center gap-1.5">
-                        <ArrowRight className="w-2.5 h-2.5 text-emerald-400 flex-shrink-0" />
+                      <li key={i} className="text-[11px] text-[#222222] font-mono flex items-center gap-1.5">
+                        <ArrowRight className="w-3 h-3 text-black flex-shrink-0" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -1501,12 +1358,12 @@ export default function InteractiveWorkflowCanvas() {
               {selectedNode.codeSnippet && (
                 <div className="mt-4">
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[10px] font-mono font-bold uppercase text-zinc-400">
+                    <span className="text-[10px] font-bold uppercase text-black">
                       Technical Implementation
                     </span>
-                    <Terminal className="w-3.5 h-3.5 text-zinc-500" />
+                    <Terminal className="w-3.5 h-3.5 text-black" />
                   </div>
-                  <pre className="p-2.5 rounded-xl bg-black/60 border border-white/10 text-[10px] font-mono text-blue-200 overflow-x-auto scrollbar-thin whitespace-pre leading-relaxed">
+                  <pre className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] text-[11px] font-mono text-black overflow-x-auto whitespace-pre leading-relaxed">
                     <code>{selectedNode.codeSnippet}</code>
                   </pre>
                 </div>
@@ -1514,13 +1371,13 @@ export default function InteractiveWorkflowCanvas() {
             </div>
 
             {/* Quick Action Button */}
-            <div className="pt-3 border-t border-white/10 mt-4">
+            <div className="pt-3 border-t border-[#E0DACF] mt-4">
               <button
                 onClick={() => {
                   setSelectedScenario("FULL");
                   handlePlay();
                 }}
-                className="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 transition shadow-[0_0_15px_rgba(37,99,235,0.3)]"
+                className="w-full btn-dark py-2.5 text-xs font-bold flex items-center justify-center gap-1.5"
               >
                 <Play className="w-3.5 h-3.5 fill-white" />
                 <span>Simulate Flow Through This Node</span>
@@ -1533,37 +1390,37 @@ export default function InteractiveWorkflowCanvas() {
       {/* =====================================================================
           BOTTOM LIVE LOG TICKER (REAL-TIME PIPELINE TRACE STREAM)
           ===================================================================== */}
-      <div className="glass-panel p-4 border-blue-500/20">
-        <div className="flex items-center justify-between pb-2 border-b border-white/10 mb-2">
+      <div className="clean-card p-4 border border-[#E0DACF] bg-white">
+        <div className="flex items-center justify-between pb-2 border-b border-[#E0DACF] mb-2">
           <div className="flex items-center gap-2">
-            <Radio className="w-4 h-4 text-emerald-400 animate-pulse" />
-            <h3 className="text-xs font-bold text-white font-mono uppercase tracking-wider">
+            <Radio className="w-4 h-4 text-black animate-pulse" />
+            <h3 className="text-xs font-bold text-black font-mono uppercase tracking-wider">
               Real-Time Workflow Event Ticker
             </h3>
           </div>
-          <span className="text-[11px] font-mono text-zinc-400">
+          <span className="text-[11px] font-mono font-bold text-[#555555]">
             {logs.length} trace events recorded
           </span>
         </div>
 
-        <div className="h-28 overflow-y-auto space-y-1.5 font-mono text-xs scrollbar-thin">
+        <div className="h-28 overflow-y-auto space-y-1.5 font-mono text-xs">
           {logs.length === 0 ? (
-            <div className="h-full flex items-center justify-center text-zinc-500 text-xs">
+            <div className="h-full flex items-center justify-center text-[#555555] text-xs">
               <span>Click "Simulate Flow" above to stream live data through the node pipeline.</span>
             </div>
           ) : (
             logs.map((log) => (
               <div
                 key={log.id}
-                className={`p-2 rounded-lg flex items-start gap-2.5 border transition ${
+                className={`p-2 rounded-xl flex items-start gap-2.5 border text-xs ${
                   log.type === "alert"
-                    ? "bg-rose-500/10 border-rose-500/25 text-rose-300"
+                    ? "bg-black text-white border-black font-bold"
                     : log.type === "success"
-                    ? "bg-emerald-500/10 border-emerald-500/25 text-emerald-300"
-                    : "bg-white/[0.02] border-white/[0.05] text-zinc-300"
+                    ? "bg-[#FAF8F5] border-black text-black font-semibold"
+                    : "bg-[#FAF8F5] border-[#E0DACF] text-[#222222]"
                 }`}
               >
-                <span className="text-[10px] text-zinc-500 flex-shrink-0 mt-0.5">{log.time}</span>
+                <span className="text-[10px] opacity-70 flex-shrink-0 mt-0.5">{log.time}</span>
                 <span className="flex-1">{log.message}</span>
               </div>
             ))

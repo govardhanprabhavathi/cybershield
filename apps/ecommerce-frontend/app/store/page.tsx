@@ -119,18 +119,18 @@ export default function StorefrontDemo() {
   return (
     <div className="space-y-8">
       {/* Top Storefront Banner & Context */}
-      <div className="p-6 glass-panel border-blue-500/20 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-6 clean-card border border-[#E0DACF] bg-white flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-500/10 text-blue-300 border border-blue-400/30">
+            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-black/10 text-black border border-[#D5D0C7]">
               Surface A Storefront
             </span>
-            <span className="text-xs font-mono text-zinc-400">CyberShield Live Target App</span>
+            <span className="text-xs font-mono text-[#444444]">CyberShield Live Target App</span>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight mt-2">
+          <h1 className="text-2xl font-black text-black tracking-tight mt-2">
             CyberShield Hardware &amp; Security Store
           </h1>
-          <p className="text-xs text-zinc-400 mt-1 max-w-xl">
+          <p className="text-xs text-[#444444] mt-1 max-w-xl">
             Fully functional e-commerce storefront instrumented with OpenTelemetry.
             Use this surface to browse products or test live attack vectors to observe real-time defense.
           </p>
@@ -139,18 +139,18 @@ export default function StorefrontDemo() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsCartOpen(!isCartOpen)}
-            className="px-4 py-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.1] text-xs font-semibold text-white flex items-center gap-2 transition relative"
+            className="px-4 py-2 rounded-xl bg-[#EAE5DE] hover:bg-white border border-[#D5D0C7] text-xs font-semibold text-black flex items-center gap-2 transition relative"
           >
-            <ShoppingCart className="w-4 h-4 text-blue-400" />
+            <ShoppingCart className="w-4 h-4 text-black" />
             <span>Cart ({cartItemCount})</span>
             {cartItemCount > 0 && (
-              <span className="w-2 h-2 rounded-full bg-blue-500 absolute -top-1 -right-1" />
+              <span className="w-2 h-2 rounded-full bg-black absolute -top-1 -right-1" />
             )}
           </button>
 
           <Link
             href="/"
-            className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(37,99,235,0.3)]"
+            className="px-4 py-2 rounded-xl btn-dark text-xs font-semibold flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(37,99,235,0.3)]"
           >
             <span>Command Center &rarr;</span>
           </Link>
@@ -162,22 +162,22 @@ export default function StorefrontDemo() {
         <div
           className={`p-4 rounded-2xl border text-xs font-mono flex items-start justify-between gap-3 animate-in fade-in ${
             feedback.type === "blocked"
-              ? "bg-rose-950/40 border-rose-500/40 text-rose-200 shadow-[0_0_20px_rgba(244,63,94,0.2)]"
+              ? "bg-black text-white border border-black shadow-md"
               : feedback.type === "success"
-              ? "bg-emerald-950/40 border-emerald-500/40 text-emerald-200"
-              : "bg-blue-950/40 border-blue-500/40 text-blue-200"
+              ? "bg-[#FAF8F5] text-black border border-black"
+              : "bg-[#FAF8F5] border-black text-black"
           }`}
         >
           <div className="flex items-start gap-2.5">
             {feedback.type === "blocked" ? (
-              <ShieldAlert className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+              <ShieldAlert className="w-4 h-4 text-black flex-shrink-0 mt-0.5" />
             ) : (
-              <CheckCircle className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+              <CheckCircle className="w-4 h-4 text-black flex-shrink-0 mt-0.5" />
             )}
             <div>
               <p className="font-semibold">{feedback.message}</p>
               {feedback.type === "blocked" && (
-                <Link href="/" className="inline-block mt-1 text-[11px] underline text-rose-300 hover:text-white">
+                <Link href="/" className="inline-block mt-1 text-[11px] underline text-white hover:text-black">
                   View this live quarantine incident in Security Command Center &rarr;
                 </Link>
               )}
@@ -185,7 +185,7 @@ export default function StorefrontDemo() {
           </div>
           <button
             onClick={() => setFeedback(null)}
-            className="text-[10px] text-zinc-400 hover:text-white px-2 py-0.5 rounded bg-white/[0.05]"
+            className="text-[10px] text-[#444444] hover:text-black px-2 py-0.5 rounded bg-white/[0.05]"
           >
             Dismiss
           </button>
@@ -193,23 +193,23 @@ export default function StorefrontDemo() {
       )}
 
       {/* Search Bar with Exploit Triggers */}
-      <div className="p-4 glass-panel space-y-3">
+      <div className="p-4 clean-card border border-[#E0DACF] bg-white space-y-3">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-400" />
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-[#444444]" />
             <input
               type="text"
               placeholder="Search catalog products (e.g. 'FIDO2', 'Gateway', 'Encrypted')..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-blue-400/50"
+              className="w-full pl-10 pr-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08] text-xs text-black placeholder-zinc-500 focus:outline-none focus:border-black"
             />
           </div>
           <button
             onClick={() => handleSearch()}
             disabled={isSearching}
-            className="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition"
+            className="px-5 py-2 rounded-xl btn-dark text-xs font-semibold transition"
           >
             {isSearching ? "Searching..." : "Search"}
           </button>
@@ -217,31 +217,31 @@ export default function StorefrontDemo() {
 
         {/* Quick Exploit Trigger Chips */}
         <div className="flex flex-wrap items-center gap-2 pt-1">
-          <span className="text-[11px] font-mono text-zinc-400 flex items-center gap-1">
-            <Flame className="w-3.5 h-3.5 text-rose-400" />
+          <span className="text-[11px] font-mono text-[#444444] flex items-center gap-1">
+            <Flame className="w-3.5 h-3.5 text-black" />
             Vulnerability Exploit Triggers:
           </span>
           <button
             onClick={() => handleSearch("' OR 1=1--")}
-            className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 transition flex items-center gap-1"
+            className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-[#EAE5DE] hover:bg-white text-white border border-[#D5D0C7] transition flex items-center gap-1"
           >
             <span>CWE-89: Tautology (&apos; OR 1=1--)</span>
           </button>
           <button
             onClick={() => handleSearch("' UNION SELECT id, password_hash, secret_key FROM users--")}
-            className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 transition flex items-center gap-1"
+            className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-[#EAE5DE] hover:bg-white text-white border border-[#D5D0C7] transition flex items-center gap-1"
           >
             <span>CWE-89: Exfiltration (UNION SELECT)</span>
           </button>
           <button
             onClick={handleTestBolaExploit}
-            className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition flex items-center gap-1"
+            className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition flex items-center gap-1"
           >
             <span>CWE-284: BOLA (Order #ord-tenant2-99)</span>
           </button>
           <button
             onClick={handleTestNegativeQuantityTamper}
-            className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition flex items-center gap-1"
+            className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition flex items-center gap-1"
           >
             <span>CWE-840: Negative Cart (-5 qty)</span>
           </button>
@@ -253,21 +253,21 @@ export default function StorefrontDemo() {
         {products.map((product) => (
           <div
             key={product.id}
-            className="glass-panel glass-panel-hover flex flex-col justify-between overflow-hidden group"
+            className="clean-card clean-card-hover flex flex-col justify-between overflow-hidden group"
           >
             {/* Image & Badge */}
-            <div className="relative h-48 w-full bg-zinc-900 overflow-hidden">
+            <div className="relative h-48 w-full bg-[#FAF8F5] overflow-hidden">
               <img
                 src={product.imageUrl}
                 alt={product.name}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
               />
               {product.badge && (
-                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-600/90 text-white shadow-md backdrop-blur-md">
+                <span className="absolute top-3 left-3 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-black text-white/90 text-black shadow-md backdrop-blur-md">
                   {product.badge}
                 </span>
               )}
-              <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded-md text-[10px] font-mono bg-black/70 text-zinc-300 backdrop-blur-md">
+              <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded-md text-[10px] font-mono bg-black/70 text-[#222222] backdrop-blur-md">
                 {product.category}
               </span>
             </div>
@@ -275,15 +275,15 @@ export default function StorefrontDemo() {
             {/* Product Info */}
             <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
               <div>
-                <div className="flex items-center gap-1 text-amber-400 text-xs">
-                  <Star className="w-3.5 h-3.5 fill-amber-400" />
-                  <span className="font-semibold text-zinc-300">{product.rating}</span>
-                  <span className="text-zinc-500">({product.stock} in stock)</span>
+                <div className="flex items-center gap-1 text-black text-xs">
+                  <Star className="w-3.5 h-3.5 fill-black" />
+                  <span className="font-semibold text-[#222222]">{product.rating}</span>
+                  <span className="text-[#666666]">({product.stock} in stock)</span>
                 </div>
-                <h3 className="text-sm font-bold text-white mt-1 group-hover:text-blue-300 transition-colors">
+                <h3 className="text-sm font-bold text-black mt-1 group-hover:text-black transition-colors">
                   {product.name}
                 </h3>
-                <p className="text-xs text-zinc-400 mt-1 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-[#444444] mt-1 line-clamp-2 leading-relaxed">
                   {product.description}
                 </p>
               </div>
@@ -292,12 +292,12 @@ export default function StorefrontDemo() {
               {product.vulnerabilityHint && (
                 <div className="p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold text-rose-400">
+                    <span className="text-[10px] font-mono font-bold text-black">
                       Target: {product.vulnerabilityHint.cwe}
                     </span>
-                    <span className="text-[9px] text-zinc-500 uppercase font-mono">Test Hook</span>
+                    <span className="text-[9px] text-[#666666] uppercase font-mono">Test Hook</span>
                   </div>
-                  <p className="text-[11px] text-zinc-300 line-clamp-1">
+                  <p className="text-[11px] text-[#222222] line-clamp-1">
                     {product.vulnerabilityHint.title}
                   </p>
                 </div>
@@ -305,12 +305,12 @@ export default function StorefrontDemo() {
 
               {/* Price & Action */}
               <div className="flex items-center justify-between pt-3 border-t border-white/[0.06]">
-                <span className="text-lg font-black text-white font-mono">
+                <span className="text-lg font-black text-black font-mono">
                   ${product.price.toFixed(2)}
                 </span>
                 <button
                   onClick={() => addToCart(product)}
-                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(37,99,235,0.25)]"
+                  className="px-3.5 py-1.5 rounded-xl btn-dark text-xs font-semibold flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(37,99,235,0.25)]"
                 >
                   <Plus className="w-3.5 h-3.5" />
                   <span>Add to Cart</span>
@@ -328,12 +328,12 @@ export default function StorefrontDemo() {
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
                 <div className="flex items-center gap-2">
-                  <ShoppingCart className="w-5 h-5 text-blue-400" />
-                  <h3 className="text-base font-bold text-white">Shopping Cart</h3>
+                  <ShoppingCart className="w-5 h-5 text-black" />
+                  <h3 className="text-base font-bold text-black">Shopping Cart</h3>
                 </div>
                 <button
                   onClick={() => setIsCartOpen(false)}
-                  className="text-xs text-zinc-400 hover:text-white px-2 py-1 rounded bg-white/[0.05]"
+                  className="text-xs text-[#444444] hover:text-black px-2 py-1 rounded bg-white/[0.05]"
                 >
                   Close
                 </button>
@@ -342,31 +342,31 @@ export default function StorefrontDemo() {
               {/* Cart Items List */}
               <div className="divide-y divide-white/[0.04] mt-4 max-h-[50vh] overflow-y-auto pr-1">
                 {cart.length === 0 ? (
-                  <p className="text-xs text-zinc-500 text-center py-8">Your shopping cart is empty.</p>
+                  <p className="text-xs text-[#666666] text-center py-8">Your shopping cart is empty.</p>
                 ) : (
                   cart.map((item) => (
                     <div key={item.product.id} className="py-3 flex items-center justify-between gap-3 text-xs">
                       <div>
-                        <h4 className="font-semibold text-white">{item.product.name}</h4>
-                        <span className="text-zinc-400 font-mono">${item.product.price.toFixed(2)}</span>
+                        <h4 className="font-semibold text-black">{item.product.name}</h4>
+                        <span className="text-[#444444] font-mono">${item.product.price.toFixed(2)}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                          className="p-1 rounded bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300"
+                          className="p-1 rounded bg-white/[0.05] hover:bg-white/[0.1] text-[#222222]"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="font-mono font-bold w-4 text-center text-white">{item.quantity}</span>
+                        <span className="font-mono font-bold w-4 text-center text-black">{item.quantity}</span>
                         <button
                           onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="p-1 rounded bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300"
+                          className="p-1 rounded bg-white/[0.05] hover:bg-white/[0.1] text-[#222222]"
                         >
                           <Plus className="w-3 h-3" />
                         </button>
                         <button
                           onClick={() => removeFromCart(item.product.id)}
-                          className="p-1 rounded text-zinc-500 hover:text-rose-400 ml-2"
+                          className="p-1 rounded text-[#666666] hover:text-black ml-2"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -380,16 +380,16 @@ export default function StorefrontDemo() {
             {/* Cart Footer & Tamper Exploit Test */}
             <div className="space-y-4 pt-4 border-t border-white/[0.08]">
               <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1.5">
-                <span className="text-[10px] font-mono text-zinc-400 uppercase block">Cart Exploit Demonstration</span>
+                <span className="text-[10px] font-mono text-[#444444] uppercase block">Cart Exploit Demonstration</span>
                 <button
                   onClick={handleTestNegativeQuantityTamper}
-                  className="w-full py-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-mono font-semibold transition"
+                  className="w-full py-1.5 rounded-lg bg-[#EAE5DE] hover:bg-white text-white border border-[#D5D0C7] text-xs font-mono font-semibold transition"
                 >
                   Tamper: Inject Negative Quantity (-5)
                 </button>
               </div>
 
-              <div className="flex justify-between text-sm font-semibold text-white">
+              <div className="flex justify-between text-sm font-semibold text-black">
                 <span>Total:</span>
                 <span className="font-mono text-lg font-bold">${cartTotal.toFixed(2)}</span>
               </div>
@@ -404,7 +404,7 @@ export default function StorefrontDemo() {
                   setCart([]);
                   setIsCartOpen(false);
                 }}
-                className="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold transition disabled:opacity-40 shadow-[0_0_15px_rgba(37,99,235,0.3)]"
+                className="w-full py-2.5 rounded-xl btn-dark text-xs font-semibold transition disabled:opacity-40 shadow-[0_0_15px_rgba(37,99,235,0.3)]"
               >
                 Checkout &amp; Place Order
               </button>

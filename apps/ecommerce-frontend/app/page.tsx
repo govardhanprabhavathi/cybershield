@@ -152,7 +152,7 @@ export default function SecurityCommandCenter() {
       <section className="pt-4 text-center max-w-4xl mx-auto space-y-6">
         <div className="flex justify-center">
           <div className="clean-pill">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-black animate-pulse" />
             <span>Autonomous Multi-Agent Defense Engine</span>
           </div>
         </div>
@@ -162,19 +162,19 @@ export default function SecurityCommandCenter() {
           <span className="italic-accent font-serif">sub-2ms</span> speed
         </h1>
 
-        <p className="text-base sm:text-lg text-[#66625B] max-w-2xl mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg text-[#333333] max-w-2xl mx-auto leading-relaxed">
           CyberShield coordinates 11 specialized AI agents to inspect, contain, and automatically patch vulnerabilities in real time—with zero false alarms.
         </p>
 
         {/* Quick Exploit Trigger Bar & Store Demo CTA */}
         <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-          <span className="text-xs font-medium text-[#7D786F]">Quick Test:</span>
+          <span className="text-xs font-medium text-[#333333]">Quick Test:</span>
           
           <button
             onClick={() => handleQuickExploit("SQLI")}
             className="btn-light text-xs py-2 px-4 hover:border hover:border-black/20"
           >
-            <Flame className="w-3.5 h-3.5 text-rose-600 mr-1.5" />
+            <Flame className="w-3.5 h-3.5 text-black mr-1.5" />
             Test SQL Injection
           </button>
 
@@ -182,7 +182,7 @@ export default function SecurityCommandCenter() {
             onClick={() => handleQuickExploit("BOLA")}
             className="btn-light text-xs py-2 px-4 hover:border hover:border-black/20"
           >
-            <Lock className="w-3.5 h-3.5 text-amber-600 mr-1.5" />
+            <Lock className="w-3.5 h-3.5 text-black mr-1.5" />
             Test BOLA Access
           </button>
 
@@ -190,7 +190,7 @@ export default function SecurityCommandCenter() {
             onClick={() => handleQuickExploit("CART_TAMPER")}
             className="btn-light text-xs py-2 px-4 hover:border hover:border-black/20"
           >
-            <Zap className="w-3.5 h-3.5 text-blue-600 mr-1.5" />
+            <Zap className="w-3.5 h-3.5 text-black mr-1.5" />
             Test Cart Logic
           </button>
 
@@ -206,12 +206,12 @@ export default function SecurityCommandCenter() {
         {quickNotification && (
           <div className="max-w-xl mx-auto p-4 rounded-2xl bg-white border border-[#E0DACF] shadow-lg flex items-center justify-between text-xs text-[#222] animate-in fade-in slide-in-from-top-2 duration-300">
             <div className="flex items-center gap-2.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500" />
+              <span className="w-2 h-2 rounded-full bg-black" />
               <span className="font-medium">{quickNotification}</span>
             </div>
             <button
               onClick={() => setQuickNotification(null)}
-              className="text-[#888] hover:text-[#111] px-2 py-0.5 rounded text-[11px]"
+              className="text-[#444444] hover:text-[#111] px-2 py-0.5 rounded text-[11px]"
             >
               Dismiss
             </button>
@@ -275,14 +275,14 @@ export default function SecurityCommandCenter() {
                   <h3 className="text-2xl font-bold text-[#141414] tracking-tight">
                     Sub-2ms Containment
                   </h3>
-                  <p className="text-sm text-[#66625B] mt-2.5 leading-relaxed">
+                  <p className="text-sm text-[#333333] mt-2.5 leading-relaxed">
                     Deterministic fast-path gateway inspecting every HTTP query in microseconds. Malicious payloads are isolated before reaching your core database.
                   </p>
                 </div>
               </div>
-              <div className="pt-4 border-t border-[#F0ECE4] flex items-center justify-between text-xs font-medium text-[#7D786F]">
+              <div className="pt-4 border-t border-[#F0ECE4] flex items-center justify-between text-xs font-medium text-[#333333]">
                 <span>Speed: &le; 1.4ms</span>
-                <span className="text-emerald-700 font-semibold">100% Contained</span>
+                <span className="text-black font-semibold">100% Contained</span>
               </div>
             </div>
 
@@ -296,14 +296,14 @@ export default function SecurityCommandCenter() {
                   <h3 className="text-2xl font-bold text-[#141414] tracking-tight">
                     Multi-Plane Verification
                   </h3>
-                  <p className="text-sm text-[#66625B] mt-2.5 leading-relaxed">
+                  <p className="text-sm text-[#333333] mt-2.5 leading-relaxed">
                     Combines static code analysis, dynamic API probing, and live runtime telemetry into mathematical certainty ($P \ge 0.99$) with zero false alarms.
                   </p>
                 </div>
               </div>
-              <div className="pt-4 border-t border-[#F0ECE4] flex items-center justify-between text-xs font-medium text-[#7D786F]">
+              <div className="pt-4 border-t border-[#F0ECE4] flex items-center justify-between text-xs font-medium text-[#333333]">
                 <span>Bayesian Model</span>
-                <span className="text-emerald-700 font-semibold">0% False Positives</span>
+                <span className="text-black font-semibold">0% False Positives</span>
               </div>
             </div>
 
@@ -317,14 +317,14 @@ export default function SecurityCommandCenter() {
                   <h3 className="text-2xl font-bold text-[#141414] tracking-tight">
                     Autonomous Auto-Repair
                   </h3>
-                  <p className="text-sm text-[#66625B] mt-2.5 leading-relaxed">
+                  <p className="text-sm text-[#333333] mt-2.5 leading-relaxed">
                     When vulnerabilities are verified, AST repair agents generate verified source-code diffs and deploy hot-patches to permanently seal vulnerabilities.
                   </p>
                 </div>
               </div>
-              <div className="pt-4 border-t border-[#F0ECE4] flex items-center justify-between text-xs font-medium text-[#7D786F]">
+              <div className="pt-4 border-t border-[#F0ECE4] flex items-center justify-between text-xs font-medium text-[#333333]">
                 <span>AST Sandboxed</span>
-                <span className="text-emerald-700 font-semibold">1-Click Rollback</span>
+                <span className="text-black font-semibold">1-Click Rollback</span>
               </div>
             </div>
           </div>
@@ -342,7 +342,7 @@ export default function SecurityCommandCenter() {
                   <span className="italic-accent font-serif">predictable</span> immunity
                 </h2>
 
-                <p className="text-sm sm:text-base text-[#66625B] leading-relaxed">
+                <p className="text-sm sm:text-base text-[#333333] leading-relaxed">
                   Rather than overwhelming developers with noisy alerts and manual triage, CyberShield coordinates 11 autonomous agents to continuously audit code, probe endpoints, and contain attacks without slowing down genuine shoppers.
                 </p>
 
@@ -353,15 +353,15 @@ export default function SecurityCommandCenter() {
                       1.2ms
                     </div>
                     <div className="text-xs font-semibold text-[#141414] mt-1">Fast-Path SLA</div>
-                    <div className="text-[11px] text-[#7D786F] mt-0.5">Average containment speed</div>
+                    <div className="text-[11px] text-[#333333] mt-0.5">Average containment speed</div>
                   </div>
 
                   <div>
-                    <div className="text-3xl sm:text-4xl font-extrabold text-emerald-700 tracking-tight">
+                    <div className="text-3xl sm:text-4xl font-extrabold text-black tracking-tight">
                       0.0%
                     </div>
                     <div className="text-xs font-semibold text-[#141414] mt-1">False Positives</div>
-                    <div className="text-[11px] text-[#7D786F] mt-0.5">Clean traffic unaffected</div>
+                    <div className="text-[11px] text-[#333333] mt-0.5">Clean traffic unaffected</div>
                   </div>
 
                   <div>
@@ -369,7 +369,7 @@ export default function SecurityCommandCenter() {
                       11
                     </div>
                     <div className="text-xs font-semibold text-[#141414] mt-1">Active Agents</div>
-                    <div className="text-[11px] text-[#7D786F] mt-0.5">Autonomous background mesh</div>
+                    <div className="text-[11px] text-[#333333] mt-0.5">Autonomous background mesh</div>
                   </div>
                 </div>
               </div>
@@ -377,30 +377,30 @@ export default function SecurityCommandCenter() {
               {/* Right Side Visual Status Summary */}
               <div className="lg:col-span-5 bg-[#FAF8F5] rounded-3xl p-8 border border-[#EBE6DE] space-y-5">
                 <div className="flex items-center justify-between pb-4 border-b border-[#EAE5DE]">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#7D786F]">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#333333]">
                     Live Status
                   </span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-[#EAE5DE] text-black">
+                    <span className="w-1.5 h-1.5 rounded-full bg-black animate-pulse" />
                     All Systems Immune
                   </span>
                 </div>
 
                 <div className="space-y-3.5 text-xs">
                   <div className="flex items-center justify-between">
-                    <span className="text-[#66625B]">Fast-Path Interceptor</span>
+                    <span className="text-[#333333]">Fast-Path Interceptor</span>
                     <span className="font-semibold text-[#141414]">Operational (Port 8000)</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[#66625B]">Redis Event Stream</span>
+                    <span className="text-[#333333]">Redis Event Stream</span>
                     <span className="font-semibold text-[#141414]">Connected (Zero Lag)</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[#66625B]">Session Shield Engine</span>
+                    <span className="text-[#333333]">Session Shield Engine</span>
                     <span className="font-semibold text-[#141414]">Bayesian Decay Active</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[#66625B]">Remediation Sandbox</span>
+                    <span className="text-[#333333]">Remediation Sandbox</span>
                     <span className="font-semibold text-[#141414]">AST Syntax Checked</span>
                   </div>
                 </div>
@@ -433,7 +433,7 @@ export default function SecurityCommandCenter() {
               Visual Flow from Request to{" "}
               <span className="italic-accent font-serif">Immunity</span>
             </h2>
-            <p className="text-sm text-[#66625B]">
+            <p className="text-sm text-[#333333]">
               Pan, zoom, or run live simulations to watch packets flow through the fast-path gate, Redis streams, and the multi-agent mesh.
             </p>
           </div>
@@ -467,8 +467,8 @@ export default function SecurityCommandCenter() {
 
           <div className="clean-card p-6 sm:p-8 space-y-4">
             {incidents.length === 0 ? (
-              <div className="py-12 text-center text-[#7D786F] space-y-2">
-                <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
+              <div className="py-12 text-center text-[#333333] space-y-2">
+                <CheckCircle2 className="w-10 h-10 text-black mx-auto" />
                 <p className="font-semibold text-sm text-[#141414]">Zero active threat alerts</p>
                 <p className="text-xs">All incoming requests are currently legitimate and within normal thresholds.</p>
               </div>
@@ -478,19 +478,19 @@ export default function SecurityCommandCenter() {
                   <div key={inc.id} className="py-4 first:pt-0 last:pb-0 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-rose-100 text-rose-800">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-black text-white">
                           {inc.attack_type}
                         </span>
-                        <span className="text-xs font-mono text-[#7D786F]">{inc.endpoint}</span>
-                        <span className="text-xs text-[#999]">•</span>
-                        <span className="text-xs text-[#7D786F]">Risk Score: <strong>{inc.risk_score}/100</strong></span>
+                        <span className="text-xs font-mono text-[#333333]">{inc.endpoint}</span>
+                        <span className="text-xs text-[#777777]">•</span>
+                        <span className="text-xs text-[#333333]">Risk Score: <strong>{inc.risk_score}/100</strong></span>
                       </div>
                       <p className="text-xs text-[#444] font-medium">{inc.details}</p>
                     </div>
 
                     <div className="flex items-center gap-3">
-                      <span className="text-[11px] font-mono text-[#888]">{inc.timestamp}</span>
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
+                      <span className="text-[11px] font-mono text-[#444444]">{inc.timestamp}</span>
+                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#EAE5DE] text-black">
                         Contained (403)
                       </span>
                     </div>
@@ -527,8 +527,8 @@ export default function SecurityCommandCenter() {
 
           <div className="grid grid-cols-1 gap-6">
             {proposals.length === 0 ? (
-              <div className="clean-card p-12 text-center text-[#7D786F] space-y-2">
-                <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
+              <div className="clean-card p-12 text-center text-[#333333] space-y-2">
+                <CheckCircle2 className="w-10 h-10 text-black mx-auto" />
                 <p className="font-semibold text-sm text-[#141414]">No pending code vulnerabilities</p>
                 <p className="text-xs">All code paths have been reviewed by SAST and verified immune.</p>
               </div>
@@ -538,12 +538,12 @@ export default function SecurityCommandCenter() {
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                        <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#EAE5DE] text-black border border-[#D5D0C7]">
                           {patch.cwe}
                         </span>
                         <span className="text-xs font-bold text-[#141414]">{patch.target_file}</span>
                       </div>
-                      <p className="text-sm text-[#66625B]">{patch.description}</p>
+                      <p className="text-sm text-[#333333]">{patch.description}</p>
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -565,16 +565,16 @@ export default function SecurityCommandCenter() {
                     </div>
                   </div>
 
-                  <div className="bg-[#1E1E1E] text-zinc-200 rounded-2xl p-4 font-mono text-xs overflow-x-auto space-y-3">
+                  <div className="bg-[#FAF8F5] text-black border border-[#E0DACF] rounded-2xl p-4 font-mono text-xs overflow-x-auto space-y-3">
                     {patch.diff_items?.map((item, idx) => (
                       <div key={idx} className="space-y-1">
-                        <div className="text-zinc-400 text-[11px]">
+                        <div className="text-[#444444] text-[11px] font-semibold">
                           Line {item.line_number} • {item.fix_type}
                         </div>
-                        <div className="text-rose-400 bg-rose-950/40 p-2 rounded">
+                        <div className="text-black bg-[#EAE5DE] p-2 rounded border border-[#D5D0C7]">
                           - {item.vulnerable_code}
                         </div>
-                        <div className="text-emerald-400 bg-emerald-950/40 p-2 rounded">
+                        <div className="text-black bg-white p-2 rounded">
                           + {item.remediated_code}
                         </div>
                       </div>
@@ -599,7 +599,7 @@ export default function SecurityCommandCenter() {
             <h2 className="text-3xl font-bold text-[#141414]">
               Simulate Real-World Scenarios
             </h2>
-            <p className="text-sm text-[#66625B]">
+            <p className="text-sm text-[#333333]">
               Run multi-vector attacks, shared-IP NAT scenarios, or legitimate shopper journeys to test CyberShield in action.
             </p>
           </div>
@@ -608,7 +608,7 @@ export default function SecurityCommandCenter() {
             <div className="clean-card p-8 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <h3 className="text-xl font-bold text-[#141414]">SQL Injection Attack</h3>
-                <p className="text-xs text-[#66625B]">
+                <p className="text-xs text-[#333333]">
                   Simulates a persistent SQL injection assault across search and product filters to observe instant fast-path containment.
                 </p>
               </div>
@@ -623,7 +623,7 @@ export default function SecurityCommandCenter() {
             <div className="clean-card p-8 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <h3 className="text-xl font-bold text-[#141414]">Legitimate Shopping</h3>
-                <p className="text-xs text-[#66625B]">
+                <p className="text-xs text-[#333333]">
                   Simulates 100 genuine customers browsing, adding to cart, and checking out with 0% false positives.
                 </p>
               </div>
@@ -638,7 +638,7 @@ export default function SecurityCommandCenter() {
             <div className="clean-card p-8 flex flex-col justify-between space-y-6">
               <div className="space-y-3">
                 <h3 className="text-xl font-bold text-[#141414]">Shared-IP (NAT) Test</h3>
-                <p className="text-xs text-[#66625B]">
+                <p className="text-xs text-[#333333]">
                   Simulates 1 attacker and 4 clean users sharing the exact same IP. Demonstrates user-session risk disambiguation.
                 </p>
               </div>

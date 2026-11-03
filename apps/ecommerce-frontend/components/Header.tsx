@@ -7,75 +7,86 @@ import { ArrowUpRight } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
-  const isDashboard = pathname === "/" || pathname === "/dashboard";
+
+  const isOverview = pathname === "/";
+  const isWorkflow = pathname === "/workflow";
+  const isIncidents = pathname === "/incidents";
   const isStore = pathname.startsWith("/store");
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#F5F2EB]/90 backdrop-blur-md border-b border-[#EBE6DE]">
+    <header className="sticky top-0 z-50 w-full bg-[#F5F2EB]/95 backdrop-blur-md border-b border-[#E0DACF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-4 flex items-center justify-between">
-        {/* Brand Logo matching reference screenshot */}
+        {/* Brand Logo */}
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm tracking-tighter group-hover:rotate-45 transition-transform duration-300">
               ✻
             </div>
-            <span className="font-bold text-xl tracking-tight text-[#141414]">
+            <span className="font-bold text-xl tracking-tight text-black">
               cybershield
             </span>
           </Link>
         </div>
 
         {/* Center Minimal Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1.5 p-1 rounded-full bg-[#EAE5DE]/70 border border-[#DDD7CD]">
+        <nav className="flex items-center gap-1.5 p-1 rounded-full bg-[#EAE5DE] border border-[#D5D0C7]">
           <Link
-            href="/?tab=overview"
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
-              isDashboard
-                ? "bg-white text-[#141414] shadow-sm"
-                : "text-[#6B665E] hover:text-[#141414]"
+            href="/"
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+              isOverview
+                ? "bg-black text-white shadow-sm"
+                : "text-[#222222] hover:text-black hover:bg-white/60"
             }`}
           >
             Overview
           </Link>
 
           <Link
-            href="/?tab=workflow"
-            className="px-4 py-1.5 rounded-full text-xs font-medium text-[#6B665E] hover:text-[#141414] transition-all"
+            href="/workflow"
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+              isWorkflow
+                ? "bg-black text-white shadow-sm"
+                : "text-[#222222] hover:text-black hover:bg-white/60"
+            }`}
           >
             Visual Flow
           </Link>
 
           <Link
-            href="/?tab=incidents"
-            className="px-4 py-1.5 rounded-full text-xs font-medium text-[#6B665E] hover:text-[#141414] transition-all"
+            href="/incidents"
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
+              isIncidents
+                ? "bg-black text-white shadow-sm"
+                : "text-[#222222] hover:text-black hover:bg-white/60"
+            }`}
           >
             Live Incidents
           </Link>
 
           <Link
             href="/store"
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
+            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
               isStore
-                ? "bg-white text-[#141414] shadow-sm"
-                : "text-[#6B665E] hover:text-[#141414]"
+                ? "bg-black text-white shadow-sm"
+                : "text-[#222222] hover:text-black hover:bg-white/60"
             }`}
           >
             Storefront
           </Link>
         </nav>
 
-        {/* Right Action Button matching "Book a call" pill in screenshot */}
-        <div className="flex items-center gap-3">
+        {/* Right Action Buttons */}
+        <div className="hidden sm:flex items-center gap-3">
           <Link
             href="/store"
-            className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-[#6B665E] hover:text-[#141414] transition"
+            className="inline-flex items-center gap-1 text-xs font-semibold text-black hover:opacity-70 transition"
           >
             <span>Live Store</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </Link>
 
           <Link
-            href="/?tab=workflow"
+            href="/workflow"
             className="btn-dark"
           >
             View Flow
