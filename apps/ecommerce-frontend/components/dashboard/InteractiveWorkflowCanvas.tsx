@@ -12,6 +12,10 @@ import {
   ZoomIn,
   ZoomOut,
   Maximize2,
+  Minimize2,
+  PanelRightClose,
+  PanelRightOpen,
+  SlidersHorizontal,
   Filter,
   CheckCircle2,
   AlertTriangle,
@@ -174,7 +178,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Inbound HTTP Request",
     subtitle: "Public Egress Gateway • Port 443",
     category: "TRIGGER",
-    x: 40,
+    x: 30,
     y: 120,
     icon: "Radio",
     hasInput: false,
@@ -196,7 +200,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "Redis In-Memory State • O(1) Hash",
     category: "GATEWAY",
     agentLabel: "FAST-PATH GATE",
-    x: 350,
+    x: 310,
     y: 120,
     icon: "Zap",
     hasInput: true,
@@ -217,7 +221,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Session Risk Branch",
     subtitle: "Decision: Is Risk Score >= 80?",
     category: "BRANCH",
-    x: 660,
+    x: 600,
     y: 120,
     icon: "GitBranch",
     hasInput: true,
@@ -240,7 +244,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Immediate 403 Quarantine",
     subtitle: "Session Token Revoked in Redis",
     category: "ACTION",
-    x: 990,
+    x: 1000,
     y: 40,
     icon: "ShieldAlert",
     hasInput: true,
@@ -261,7 +265,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "FastAPI Storefront Core",
     subtitle: "Catalog • Cart • Checkout Routes",
     category: "APP",
-    x: 990,
+    x: 1000,
     y: 200,
     icon: "Database",
     hasInput: true,
@@ -281,7 +285,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "OTel Telemetry Middleware",
     subtitle: "W3C Spans • Distributed Tracing",
     category: "TELEMETRY",
-    x: 1300,
+    x: 1310,
     y: 200,
     icon: "Activity",
     hasInput: true,
@@ -301,7 +305,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Redis Event Stream",
     subtitle: "stream:telemetry • Decoupled Queue",
     category: "TELEMETRY",
-    x: 1610,
+    x: 1620,
     y: 200,
     icon: "Layers",
     hasInput: true,
@@ -324,7 +328,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "Agents 1, 2, 4, 5, 6 • AST Analysis",
     category: "SENSOR",
     agentLabel: "AGENTS 1, 2, 4, 5, 6",
-    x: 350,
+    x: 310,
     y: 390,
     icon: "Code",
     hasInput: false,
@@ -346,7 +350,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "Dynamic Probing • Exploit Replay",
     category: "SENSOR",
     agentLabel: "AGENT 3 DAST",
-    x: 660,
+    x: 650,
     y: 390,
     icon: "Search",
     hasInput: true,
@@ -367,7 +371,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "Live Telemetry Pattern Matcher",
     category: "SENSOR",
     agentLabel: "AGENT 7 SENSOR",
-    x: 1610,
+    x: 1620,
     y: 390,
     icon: "Shield",
     hasInput: true,
@@ -389,7 +393,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "Explainable Risk Scoring (0-100)",
     category: "EVALUATOR",
     agentLabel: "AGENT 8 RISK",
-    x: 1300,
+    x: 1930,
     y: 390,
     icon: "Sliders",
     hasInput: true,
@@ -410,7 +414,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Graduated Defense Policy",
     subtitle: "ALLOW • MONITOR • CONTAIN",
     category: "EVALUATOR",
-    x: 990,
+    x: 2240,
     y: 390,
     icon: "ShieldCheck",
     hasInput: true,
@@ -433,7 +437,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "Bayesian 3-Pillar Fusion • P >= 0.99",
     category: "TRIANGULATOR",
     agentLabel: "AGENT 9 TRIANGULATOR",
-    x: 660,
+    x: 650,
     y: 580,
     icon: "Cpu",
     hasInput: true,
@@ -454,7 +458,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Triangulated Dossier DB",
     subtitle: "Dossier #DOS-CWE-89 • Confirmed",
     category: "EVALUATOR",
-    x: 990,
+    x: 1000,
     y: 580,
     icon: "Database",
     hasInput: true,
@@ -475,7 +479,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "FSM Incident Workflow Lifecycle",
     category: "ORCHESTRATOR",
     agentLabel: "AGENT 12 ORCHESTRATOR",
-    x: 1300,
+    x: 1310,
     y: 580,
     icon: "Workflow",
     hasInput: true,
@@ -496,7 +500,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "Deterministic Parameterized Queries",
     category: "REMEDIATION",
     agentLabel: "AGENT 10 PATCHER",
-    x: 1610,
+    x: 1620,
     y: 580,
     icon: "Wrench",
     hasInput: true,
@@ -517,7 +521,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     subtitle: "Syntax • Safety • Non-Regression",
     category: "SANDBOX",
     agentLabel: "AGENT 11 SANDBOX",
-    x: 1920,
+    x: 1930,
     y: 580,
     icon: "Lock",
     hasInput: true,
@@ -538,7 +542,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Pre-Commit Gate",
     subtitle: "Decision: Did All 3 Checks Pass?",
     category: "BRANCH",
-    x: 2230,
+    x: 2240,
     y: 580,
     icon: "GitBranch",
     hasInput: true,
@@ -561,7 +565,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Autonomous Zero-Downtime Deploy",
     subtitle: "Hot-Patch Applied • Service Live",
     category: "ACTION",
-    x: 2540,
+    x: 2640,
     y: 500,
     icon: "CheckCircle2",
     hasInput: true,
@@ -582,7 +586,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Operator Review (HITL)",
     subtitle: "Awaiting Security Analyst Sign-off",
     category: "ACTION",
-    x: 2540,
+    x: 2640,
     y: 660,
     icon: "UserCheck",
     hasInput: true,
@@ -602,7 +606,7 @@ const WORKFLOW_NODES: WorkflowNode[] = [
     title: "Incident Verified & Resolved",
     subtitle: "Audit Ledger Closed • 0% Regr",
     category: "ACTION",
-    x: 2850,
+    x: 3000,
     y: 580,
     icon: "ShieldCheck",
     hasInput: true,
@@ -804,6 +808,12 @@ export default function InteractiveWorkflowCanvas() {
   const [nodeStatuses, setNodeStatuses] = useState<Record<string, NodeStatus>>({});
   const [logs, setLogs] = useState<{ id: string; time: string; message: string; type: "info" | "alert" | "success" }[]>([]);
 
+  // Full-Screen & Side Panel View States
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [isSidePanelOpen, setIsSidePanelOpen] = useState<boolean>(true);
+  const [sidePanelTab, setSidePanelTab] = useState<"inspector" | "scenarios" | "logs">("inspector");
+  const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
+
   // Canvas Pan & Zoom State
   const [scale, setScale] = useState<number>(0.72);
   const [pan, setPan] = useState<{ x: number; y: number }>({ x: 30, y: 40 });
@@ -841,6 +851,61 @@ export default function InteractiveWorkflowCanvas() {
     handleReset();
     setSelectedScenario(key);
   };
+
+  // Full-Screen Toggle with Browser Fullscreen API and State sync
+  const handleToggleFullscreen = () => {
+    setIsFullscreen((prev) => {
+      const next = !prev;
+      if (next) {
+        setIsSidePanelOpen(true);
+        setTimeout(() => {
+          handleFitView();
+        }, 150);
+        try {
+          if (!document.fullscreenElement && document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(() => {});
+          }
+        } catch {}
+      } else {
+        try {
+          if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          }
+        } catch {}
+        setTimeout(() => {
+          handleFitView();
+        }, 150);
+      }
+      return next;
+    });
+  };
+
+  // ESC key and native fullscreenchange listener
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isFullscreen) {
+        setIsFullscreen(false);
+        try {
+          if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen().catch(() => {});
+          }
+        } catch {}
+      }
+    };
+
+    const handleFullscreenChange = () => {
+      if (!document.fullscreenElement && isFullscreen) {
+        setIsFullscreen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, [isFullscreen]);
 
   // Simulation execution loop
   useEffect(() => {
@@ -949,75 +1014,882 @@ export default function InteractiveWorkflowCanvas() {
     setScale((prevScale) => Math.min(Math.max(prevScale * zoomFactor, 0.35), 1.5));
   };
 
-  // Compute Bezier Curve for an Edge
+  const CARD_WIDTH = 240;
+  const CARD_HEIGHT = 92;
+
+  // Compute Direction-Aware Bezier Curve for an Edge
   const calculateEdgePath = (edge: WorkflowEdge) => {
-    const fromNode = nodeMap.get(edge.from);
-    const toNode = nodeMap.get(edge.to);
-    if (!fromNode || !toNode) return { path: "", midX: 0, midY: 0, startX: 0, startY: 0, endX: 0, endY: 0 };
+    const fromNode = WORKFLOW_NODES.find((n) => n.id === edge.from);
+    const toNode = WORKFLOW_NODES.find((n) => n.id === edge.to);
 
-    const CARD_WIDTH = 240;
-    const CARD_HEIGHT = 92;
+    if (!fromNode || !toNode) {
+      return { path: "", midX: 0, midY: 0, startX: 0, startY: 0, endX: 0, endY: 0, length: 0 };
+    }
 
-    // Output port on fromNode
-    let startY = fromNode.y + CARD_HEIGHT / 2;
-    if (fromNode.outputs && fromNode.outputs.length > 1 && edge.fromPort) {
-      const port = fromNode.outputs.find((p) => p.id === edge.fromPort);
-      if (port && port.offsetPercent !== undefined) {
-        startY = fromNode.y + (CARD_HEIGHT * port.offsetPercent) / 100;
+    const fromCenter = { x: fromNode.x + CARD_WIDTH / 2, y: fromNode.y + CARD_HEIGHT / 2 };
+    const toCenter = { x: toNode.x + CARD_WIDTH / 2, y: toNode.y + CARD_HEIGHT / 2 };
+
+    let startX = fromNode.x;
+    let startY = fromCenter.y;
+    let endX = toNode.x;
+    let endY = toCenter.y;
+
+    let path = "";
+    let midX = 0;
+    let midY = 0;
+
+    // Specific deterministic edge routes for crisp, intentional topology:
+    if (edge.id === "e13") {
+      // Agent 3 DAST (650, 390) -> Triangulator (650, 580): Clean vertical drop
+      startX = fromNode.x + CARD_WIDTH / 2;
+      startY = fromNode.y + CARD_HEIGHT;
+      endX = toNode.x + CARD_WIDTH / 2;
+      endY = toNode.y;
+      path = `M ${startX} ${startY} L ${endX} ${endY}`;
+      midX = startX;
+      midY = (startY + endY) / 2;
+    } else if (edge.id === "e7") {
+      // Redis Stream (1620, 200) -> Runtime Sensor (1620, 390): Clean vertical drop
+      startX = fromNode.x + CARD_WIDTH / 2;
+      startY = fromNode.y + CARD_HEIGHT;
+      endX = toNode.x + CARD_WIDTH / 2;
+      endY = toNode.y;
+      path = `M ${startX} ${startY} L ${endX} ${endY}`;
+      midX = startX;
+      midY = (startY + endY) / 2;
+    } else if (edge.id === "e10") {
+      // Graduated Policy (2240, 390) -> Containment (1000, 40): Arches across the top margin above all cards
+      startX = fromNode.x + CARD_WIDTH / 2;
+      startY = fromNode.y;
+      endX = toNode.x + CARD_WIDTH;
+      endY = toNode.y + CARD_HEIGHT / 2;
+      path = `M ${startX} ${startY} C ${startX} 15, ${endX} 15, ${endX} ${endY}`;
+      midX = (startX + endX) / 2;
+      midY = 16;
+    } else if (edge.id === "e14") {
+      // Runtime Sensor (1620, 390) -> Triangulator (650, 580): Smooth under-curve through corridor
+      startX = fromNode.x;
+      startY = fromNode.y + CARD_HEIGHT * 0.75;
+      endX = toNode.x + CARD_WIDTH;
+      endY = toNode.y + CARD_HEIGHT * 0.45;
+      const spanX = startX - endX;
+      const cp1x = startX - spanX * 0.4;
+      const cp1y = startY + 65;
+      const cp2x = endX + spanX * 0.4;
+      const cp2y = endY + 15;
+      path = `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
+      midX = (startX + endX) / 2;
+      midY = (startY + endY) / 2 + 35;
+    } else {
+      // Standard Left-to-Right
+      startX = fromNode.x + CARD_WIDTH;
+      startY = fromCenter.y;
+      if (fromNode.outputs && fromNode.outputs.length > 1 && edge.fromPort) {
+        const port = fromNode.outputs.find((p) => p.id === edge.fromPort);
+        if (port && port.offsetPercent !== undefined) {
+          startY = fromNode.y + (CARD_HEIGHT * port.offsetPercent) / 100;
+        }
+      }
+
+      endX = toNode.x;
+      endY = toCenter.y;
+
+      const diffY = endY - startY;
+      if (Math.abs(diffY) <= 4) {
+        // Pure horizontal line: laser straight, zero wave, zero jiggle
+        path = `M ${startX} ${startY} L ${endX} ${endY}`;
+        midX = (startX + endX) / 2;
+        midY = startY;
+      } else {
+        // Monotonic cubic Bézier curve, curvature strictly bounded by spanX * 0.45 so control points never cross
+        const spanX = Math.max(endX - startX, 20);
+        const curvature = spanX * 0.45;
+        const cp1x = startX + curvature;
+        const cp1y = startY;
+        const cp2x = endX - curvature;
+        const cp2y = endY;
+        path = `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
+        midX = (startX + endX) / 2;
+        midY = (startY + endY) / 2;
       }
     }
-    const startX = fromNode.x + CARD_WIDTH;
 
-    // Input port on toNode
-    const endX = toNode.x;
-    const endY = toNode.y + CARD_HEIGHT / 2;
-
-    // Curvature
-    const deltaX = endX - startX;
-    const deltaY = endY - startY;
-    const curvature = Math.max(Math.abs(deltaX) * 0.45, 60);
-
-    const cp1x = startX + curvature;
-    const cp1y = startY;
-    const cp2x = endX - curvature;
-    const cp2y = endY;
-
-    const path = `M ${startX} ${startY} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${endX} ${endY}`;
-    const midX = (startX + endX) / 2;
-    const midY = (startY + endY) / 2;
-
-    return { path, midX, midY, startX, startY, endX, endY };
+    const approxLength = Math.sqrt((endX - startX) ** 2 + (endY - startY) ** 2);
+    return { path, midX, midY, startX, startY, endX, endY, length: Math.max(approxLength, 60) };
   };
 
-  return (
-    <div className="space-y-4">
-      {/* =====================================================================
-          TOP CONTROLS & SCENARIO SELECTION TOOLBAR
-          ===================================================================== */}
-      <div className="clean-card p-4 flex flex-col xl:flex-row xl:items-center justify-between gap-4 border border-[#E0DACF] bg-white">
-        <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 pr-3 border-r border-[#E0DACF]">
-            <span className="p-2 rounded-xl bg-[#EAE5DE] border border-[#D5D0C7] text-black">
-              <Workflow className="w-5 h-5 text-black" />
+  // =========================================================================
+  // Canvas Render Helper (Used in both Standard and Fullscreen Modes)
+  // =========================================================================
+  const renderCanvasElement = (isFull: boolean) => (
+    <div
+      ref={containerRef}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+      onWheel={handleWheel}
+      className={
+        isFull
+          ? "relative w-full h-full overflow-hidden cursor-grab active:cursor-grabbing bg-[#F5F2EB] select-none"
+          : "relative w-full h-[680px] rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing border border-[#E0DACF] bg-[#F5F2EB] select-none shadow-sm"
+      }
+      style={{
+        backgroundImage: "radial-gradient(circle, rgba(0, 0, 0, 0.12) 1.5px, transparent 1.5px)",
+        backgroundSize: "26px 26px",
+      }}
+    >
+      {/* Canvas Transformation Wrapper */}
+      <div
+        className="absolute top-0 left-0 origin-top-left transition-transform duration-75 ease-out"
+        style={{
+          transform: `translate(${pan.x}px, ${pan.y}px) scale(${scale})`,
+          width: "3350px",
+          height: "850px",
+        }}
+      >
+        {/* SVG Connecting Edges Layer */}
+        <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#111111" />
+            </marker>
+            <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M 0 1 L 9 5 L 0 9 z" fill="#000000" />
+            </marker>
+          </defs>
+
+          {WORKFLOW_EDGES.map((edge) => {
+            const { path, midX, midY, length } = calculateEdgePath(edge);
+            if (!path) return null;
+
+            const isActive = activeEdgeIds.has(edge.id);
+            // Constant visual pace across all edge lengths: ~180 px/sec
+            const particleDuration = Math.max(1.2, Math.min(length / 180, 4.0));
+
+            return (
+              <g key={edge.id} className="transition-all duration-300">
+                {/* Background Wire (Static) */}
+                <path
+                  d={path}
+                  fill="none"
+                  stroke={isActive ? "#000000" : "#D0CAC0"}
+                  strokeWidth={isActive ? 2.8 : 2}
+                  markerEnd="url(#arrow)"
+                />
+
+                {/* Active Animated Laser Wire */}
+                {isActive && (
+                  <path
+                    d={path}
+                    fill="none"
+                    stroke="#000000"
+                    strokeWidth={3}
+                    strokeDasharray="8 6"
+                  >
+                    <animate
+                      attributeName="stroke-dashoffset"
+                      values="28;0"
+                      dur="0.8s"
+                      repeatCount="indefinite"
+                    />
+                  </path>
+                )}
+
+                {/* Moving Energy Particle during Active Play */}
+                {isActive && (
+                  <circle r="4.5" fill="#000000">
+                    <animateMotion path={path} dur={`${particleDuration.toFixed(2)}s`} repeatCount="indefinite" />
+                  </circle>
+                )}
+
+                {/* Edge Label (e.g. Risk >= 80, P >= 0.99) */}
+                {edge.label && (() => {
+                  const labelWidth = Math.max(edge.label.length * 7.5 + 22, 85);
+                  // Vertical offset to ensure labels never overlap branching wires
+                  const yOffset =
+                    edge.id === "e20"
+                      ? -18
+                      : edge.id === "e21"
+                      ? 18
+                      : edge.id === "e3"
+                      ? -16
+                      : edge.id === "e4"
+                      ? 16
+                      : edge.id === "e10"
+                      ? -12
+                      : -12;
+                  return (
+                    <g transform={`translate(${midX}, ${midY + yOffset})`}>
+                      <rect
+                        x={-labelWidth / 2}
+                        y="-10"
+                        width={labelWidth}
+                        height="20"
+                        rx="10"
+                        fill="#FFFFFF"
+                        stroke="#D5D0C7"
+                        strokeWidth="1"
+                        className="shadow-sm"
+                      />
+                      <text
+                        x="0"
+                        y="3.5"
+                        textAnchor="middle"
+                        fill="#111111"
+                        fontSize="10"
+                        fontFamily="monospace"
+                        fontWeight="bold"
+                      >
+                        {edge.label}
+                      </text>
+                    </g>
+                  );
+                })()}
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* Node Cards Layer */}
+        <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-auto">
+          {WORKFLOW_NODES.map((node) => {
+            const isSelected = selectedNodeId === node.id;
+            const isActive = activeNodeIds.has(node.id);
+            const status = nodeStatuses[node.id] || "idle";
+
+            return (
+              <div
+                key={node.id}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedNodeId(node.id);
+                  if (isFullscreen) {
+                    setIsSidePanelOpen(true);
+                    setSidePanelTab("inspector");
+                  }
+                }}
+                className={`workflow-card absolute w-[240px] rounded-2xl p-3.5 transition-all duration-200 select-none cursor-pointer bg-white ${
+                  isSelected
+                    ? "border-2 border-black shadow-xl ring-4 ring-black/10"
+                    : isActive
+                    ? "border-2 border-black shadow-lg"
+                    : "border border-[#D5D0C7] hover:border-black shadow-sm"
+                }`}
+                style={{
+                  left: `${node.x}px`,
+                  top: `${node.y}px`,
+                }}
+              >
+                {/* Left Input Port Handle */}
+                {node.hasInput !== false && (
+                  <div
+                    className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center transition group-hover:scale-110 shadow-sm"
+                    title="Input Connection Port"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-black" />
+                  </div>
+                )}
+
+                {/* Right Output Port Handles */}
+                {node.outputs &&
+                  node.outputs.map((out) => {
+                    const topPercent = out.offsetPercent !== undefined ? out.offsetPercent : 50;
+                    return (
+                      <div
+                        key={out.id}
+                        className="absolute -right-2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center transition hover:scale-110 shadow-sm"
+                        style={{ top: `${topPercent}%`, transform: "translateY(-50%)" }}
+                        title={out.label || "Output Connection Port"}
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full bg-black" />
+                      </div>
+                    );
+                  })}
+
+                {/* Top Vertical Port Handle */}
+                {["node_runtime_sensor", "node_triangulator", "node_graduated_policy"].includes(node.id) && (
+                  <div
+                    className="absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center shadow-sm"
+                    title="Vertical Connection Port"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-black" />
+                  </div>
+                )}
+
+                {/* Bottom Vertical Port Handle */}
+                {["node_redis_stream", "node_dast_prober"].includes(node.id) && (
+                  <div
+                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center shadow-sm"
+                    title="Vertical Connection Port"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-black" />
+                  </div>
+                )}
+
+                {/* Right Feedback Port for Quarantine */}
+                {node.id === "node_containment" && (
+                  <div
+                    className="absolute -right-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center shadow-sm"
+                    title="Policy Update Port"
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full bg-black" />
+                  </div>
+                )}
+
+                {/* Card Content Header */}
+                <div className="flex items-center justify-between gap-2 mb-2">
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider ${node.colorScheme.badgeBg} ${node.colorScheme.badgeText} border border-[#D5D0C7]`}
+                  >
+                    {node.agentLabel || node.category}
+                  </span>
+
+                  {/* Status Indicator */}
+                  {status === "completed" && (
+                    <span className="flex items-center gap-1 text-[10px] font-mono font-bold text-black">
+                      <CheckCircle2 className="w-3 h-3 text-black" />
+                      <span>Done</span>
+                    </span>
+                  )}
+                  {status === "quarantined" && (
+                    <span className="flex items-center gap-1 text-[10px] font-mono font-bold text-white bg-black px-1.5 py-0.2 rounded-full">
+                      <ShieldAlert className="w-3 h-3 text-white" />
+                      <span>Dropped</span>
+                    </span>
+                  )}
+                  {status === "idle" && (
+                    <span className="w-2 h-2 rounded-full bg-[#CCCCCC]" />
+                  )}
+                </div>
+
+                {/* Node Title & Subtitle */}
+                <div className="flex items-start gap-2.5">
+                  <div
+                    className={`p-2 rounded-xl flex-shrink-0 border ${node.colorScheme.iconBg} ${node.colorScheme.iconColor}`}
+                  >
+                    <NodeIcon name={node.icon} className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-xs font-bold text-black truncate leading-tight">
+                      {node.title}
+                    </h4>
+                    <p className="text-[10px] text-[#555555] font-mono truncate mt-0.5">
+                      {node.subtitle}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Floating Canvas Legend */}
+      <div className="absolute bottom-4 left-4 z-20 pointer-events-none">
+        <div className="flex items-center gap-3 px-3 py-1.5 rounded-full bg-white/95 border border-[#E0DACF] shadow-sm text-[11px] font-mono text-black font-semibold">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            Fast-Path &lt; 2ms
+          </span>
+          <span className="w-px h-3 bg-[#E0DACF]" />
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#888888]" />
+            Multi-Agent Stream (12 Agents)
+          </span>
+          <span className="w-px h-3 bg-[#E0DACF]" />
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-white border border-black" />
+            Verified Resolution
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+
+  // =========================================================================
+  // Full-Screen Side Panel Component
+  // =========================================================================
+  const renderFullScreenSidePanel = () => (
+    <div className="w-[420px] max-w-[90vw] bg-white border-l border-[#E0DACF] flex flex-col h-full shadow-2xl z-20 flex-shrink-0">
+      {/* Side Panel Header */}
+      <div className="p-3.5 border-b border-[#E0DACF] flex items-center justify-between bg-[#FAF8F5]">
+        <div className="flex items-center gap-2">
+          <SlidersHorizontal className="w-4 h-4 text-black" />
+          <h3 className="text-xs font-bold uppercase tracking-wider text-black">
+            Workflow Options &amp; Inspector
+          </h3>
+        </div>
+        <button
+          onClick={() => setIsSidePanelOpen(false)}
+          className="p-1.5 rounded-xl hover:bg-black/10 text-black transition"
+          title="Close Side Panel"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Side Panel Tab Switcher */}
+      <div className="flex border-b border-[#E0DACF] bg-white text-xs font-bold flex-shrink-0">
+        <button
+          onClick={() => setSidePanelTab("inspector")}
+          className={`flex-1 py-2.5 px-2 flex items-center justify-center gap-1.5 border-b-2 transition ${
+            sidePanelTab === "inspector"
+              ? "border-black text-black bg-[#FAF8F5]"
+              : "border-transparent text-[#666666] hover:text-black"
+          }`}
+        >
+          <Info className="w-3.5 h-3.5" />
+          <span>Inspector</span>
+        </button>
+
+        <button
+          onClick={() => setSidePanelTab("scenarios")}
+          className={`flex-1 py-2.5 px-2 flex items-center justify-center gap-1.5 border-b-2 transition ${
+            sidePanelTab === "scenarios"
+              ? "border-black text-black bg-[#FAF8F5]"
+              : "border-transparent text-[#666666] hover:text-black"
+          }`}
+        >
+          <SlidersHorizontal className="w-3.5 h-3.5" />
+          <span>Options</span>
+        </button>
+
+        <button
+          onClick={() => setSidePanelTab("logs")}
+          className={`flex-1 py-2.5 px-2 flex items-center justify-center gap-1.5 border-b-2 transition ${
+            sidePanelTab === "logs"
+              ? "border-black text-black bg-[#FAF8F5]"
+              : "border-transparent text-[#666666] hover:text-black"
+          }`}
+        >
+          <Terminal className="w-3.5 h-3.5" />
+          <span>Live Logs</span>
+          {logs.length > 0 && (
+            <span className="px-1.5 py-0.2 rounded-full text-[9px] bg-black text-white font-mono">
+              {logs.length}
             </span>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-black tracking-tight">Interactive Workflow Pipeline</h2>
-                <span className="clean-pill text-[10px] py-0.5 px-2">
-                  Node Canvas
+          )}
+        </button>
+      </div>
+
+      {/* Tab 1: Inspector Tab Content */}
+      {sidePanelTab === "inspector" && (
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex items-start gap-3 pb-3 border-b border-[#E0DACF]">
+            <div
+              className={`p-2.5 rounded-2xl border ${selectedNode.colorScheme.iconBg} ${selectedNode.colorScheme.iconColor} flex-shrink-0`}
+            >
+              <NodeIcon name={selectedNode.icon} className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex flex-wrap items-center gap-1.5 mb-1">
+                <span className="text-[9px] font-bold uppercase tracking-wider text-[#666666]">
+                  {selectedNode.agentLabel ? "Agent & Node" : "Pipeline Node"}
+                </span>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded-full bg-[#EAE5DE] text-black border border-[#D5D0C7] font-bold">
+                  {selectedNode.category}
                 </span>
               </div>
-              <p className="text-xs text-[#333333] font-medium">
-                Visual workflow demonstrating the multi-agent defense lifecycle and sub-2ms request gating.
+              <h4 className="text-sm font-bold text-black leading-tight">
+                {selectedNode.title}
+              </h4>
+              <p className="text-[11px] text-[#555555] font-mono mt-0.5">
+                {selectedNode.subtitle}
               </p>
             </div>
           </div>
 
-          {/* Scenario Preset Selector */}
-          <div className="flex items-center gap-1.5 p-1 rounded-full bg-[#EAE5DE] border border-[#D5D0C7]">
+          <button
+            onClick={() => {
+              setSelectedScenario("FULL");
+              handlePlay();
+            }}
+            className="w-full btn-dark py-2 px-3 text-xs font-bold flex items-center justify-center gap-2 shadow-sm rounded-xl"
+          >
+            <Play className="w-3.5 h-3.5 fill-white" />
+            <span>Simulate Flow Through This Node</span>
+          </button>
+
+          <div>
+            <h5 className="text-[10px] font-bold uppercase text-[#666666] tracking-wider mb-1">
+              Description
+            </h5>
+            <p className="text-xs text-[#333333] leading-relaxed">
+              {selectedNode.description}
+            </p>
+          </div>
+
+          {/* Operational Metrics & SLOs */}
+          <div className="space-y-2">
+            <h5 className="text-[10px] font-bold uppercase text-black tracking-wider">
+              Operational Metrics &amp; SLOs
+            </h5>
+            <div className="space-y-1.5">
+              {selectedNode.metrics.map((m, idx) => (
+                <div
+                  key={idx}
+                  className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] flex items-center justify-between text-xs"
+                >
+                  <span className="text-[#444444] font-medium text-[11px]">{m.label}</span>
+                  <span className="font-bold font-mono text-black">{m.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Incoming & Outgoing Specifications */}
+          <div className="space-y-3">
+            <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E0DACF]">
+              <span className="text-[10px] font-bold uppercase text-black block mb-2 tracking-wider">
+                Incoming Context (Inputs)
+              </span>
+              <ul className="space-y-1.5">
+                {selectedNode.inputsDesc.map((item, i) => (
+                  <li key={i} className="text-[11px] text-[#222222] font-mono flex items-center gap-2">
+                    <ArrowRight className="w-3 h-3 text-black flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E0DACF]">
+              <span className="text-[10px] font-bold uppercase text-black block mb-2 tracking-wider">
+                Outgoing Artifacts (Outputs)
+              </span>
+              <ul className="space-y-1.5">
+                {selectedNode.outputsDesc.map((item, i) => (
+                  <li key={i} className="text-[11px] text-[#222222] font-mono flex items-center gap-2">
+                    <ArrowRight className="w-3 h-3 text-black flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Python Code Snippet */}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold uppercase text-black tracking-wider">
+                Technical Implementation
+              </span>
+              <Terminal className="w-3.5 h-3.5 text-black" />
+            </div>
+            {selectedNode.codeSnippet ? (
+              <pre className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] text-[10px] font-mono text-black overflow-x-auto whitespace-pre leading-relaxed max-h-[220px] overflow-y-auto">
+                <code>{selectedNode.codeSnippet}</code>
+              </pre>
+            ) : (
+              <div className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] text-xs text-[#666666] font-mono">
+                No custom logic snippet required for this node.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Tab 2: Scenario Options Content */}
+      {sidePanelTab === "scenarios" && (
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div>
+            <h5 className="text-[10px] font-bold uppercase text-black tracking-wider mb-2">
+              Playback Speed
+            </h5>
+            <div className="grid grid-cols-3 gap-2">
+              {[0.5, 1, 2].map((spd) => (
+                <button
+                  key={spd}
+                  onClick={() => setPlaybackSpeed(spd)}
+                  className={`py-1.5 text-xs font-mono font-bold rounded-xl border transition ${
+                    playbackSpeed === spd
+                      ? "bg-black text-white border-black shadow-sm"
+                      : "bg-[#FAF8F5] text-black border-[#E0DACF] hover:bg-white"
+                  }`}
+                >
+                  {spd}x Speed
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h5 className="text-[10px] font-bold uppercase text-black tracking-wider mb-2">
+              Simulation Scenario Presets
+            </h5>
+            <div className="space-y-2.5">
+              {(
+                [
+                  { key: "FULL", label: "Master Defense Flow", icon: <Sparkles className="w-4 h-4 text-amber-500" /> },
+                  { key: "SQLI_ATTACK", label: "SQLi Attack Gate", icon: <Flame className="w-4 h-4 text-rose-500" /> },
+                  { key: "LEGIT_ALICE", label: "Legitimate (Alice NAT)", icon: <UserCheck className="w-4 h-4 text-emerald-500" /> },
+                  { key: "TRIANGULATION", label: "Bayesian Triangulation", icon: <Cpu className="w-4 h-4 text-cyan-500" /> },
+                  { key: "AST_REMEDIATION", label: "AST Auto-Remediation", icon: <Wrench className="w-4 h-4 text-purple-500" /> },
+                ] as const
+              ).map((item) => {
+                const active = selectedScenario === item.key;
+                const scenario = SCENARIOS[item.key];
+                return (
+                  <div
+                    key={item.key}
+                    onClick={() => handleSelectScenario(item.key)}
+                    className={`p-3.5 rounded-2xl border cursor-pointer transition select-none ${
+                      active
+                        ? "border-black bg-[#FAF8F5] shadow-md ring-2 ring-black/10"
+                        : "border-[#E0DACF] bg-white hover:border-black shadow-sm"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <div className="flex items-center gap-2">
+                        {item.icon}
+                        <h6 className="text-xs font-bold text-black">{scenario.name}</h6>
+                      </div>
+                      {active && (
+                        <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold bg-black text-white">
+                          Active
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[11px] text-[#555555] leading-relaxed line-clamp-2 mt-1">
+                      {scenario.description}
+                    </p>
+                    <div className="mt-2.5 pt-2 border-t border-[#E0DACF]/60 flex items-center justify-between text-[10px] font-mono">
+                      <span className="text-[#666666]">{scenario.steps.length} sequential steps</span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleSelectScenario(item.key);
+                          handlePlay();
+                        }}
+                        className="px-2.5 py-1 rounded-lg bg-black text-white font-bold flex items-center gap-1 hover:bg-[#333333] transition"
+                      >
+                        <Play className="w-2.5 h-2.5 fill-white" />
+                        <span>Run Now</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tab 3: Live Logs Content */}
+      {sidePanelTab === "logs" && (
+        <div className="flex-1 overflow-y-auto p-4 flex flex-col justify-between">
+          <div className="space-y-2">
+            <div className="flex items-center justify-between pb-2 border-b border-[#E0DACF]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#666666]">
+                Trace Events Stream
+              </span>
+              <button
+                onClick={() => setLogs([])}
+                className="text-[10px] font-mono text-[#666666] hover:text-black font-bold"
+              >
+                Clear Stream
+              </button>
+            </div>
+
+            {logs.length === 0 ? (
+              <div className="py-12 text-center text-[#666666] text-xs font-mono">
+                <span>No active events. Click "Simulate" to stream live data.</span>
+              </div>
+            ) : (
+              logs.map((log) => (
+                <div
+                  key={log.id}
+                  className={`p-2.5 rounded-xl border text-xs font-mono ${
+                    log.type === "alert"
+                      ? "bg-black text-white border-black font-bold"
+                      : log.type === "success"
+                      ? "bg-[#FAF8F5] border-black text-black font-semibold"
+                      : "bg-[#FAF8F5] border-[#E0DACF] text-[#222222]"
+                  }`}
+                >
+                  <div className="flex items-center justify-between text-[10px] opacity-70 mb-1">
+                    <span>{log.time}</span>
+                    <span className="uppercase">{log.type}</span>
+                  </div>
+                  <div>{log.message}</div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
+  // =========================================================================
+  // Primary Return: Fullscreen Overlay vs Standard Responsive Layout
+  // =========================================================================
+  if (isFullscreen) {
+    return (
+      <div className="fixed inset-0 z-50 bg-[#F5F2EB] flex flex-col w-screen h-screen overflow-hidden select-none">
+        {/* Full-Screen Top Navigation Bar */}
+        <div className="h-14 bg-white border-b border-[#E0DACF] px-4 flex items-center justify-between shadow-sm z-30 flex-shrink-0">
+          {/* Left: Branding & Active Scenario */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 pr-3 border-r border-[#E0DACF]">
+              <div className="p-1.5 rounded-xl bg-black text-white">
+                <Workflow className="w-4 h-4" />
+              </div>
+              <div>
+                <span className="text-xs font-bold text-black uppercase tracking-wider block leading-tight">
+                  CyberShield Workflow
+                </span>
+                <span className="text-[10px] text-[#666666] font-mono leading-tight">
+                  Full Screen Interactive Canvas
+                </span>
+              </div>
+            </div>
+            <div className="hidden lg:flex items-center gap-2">
+              <span className="text-[11px] font-mono font-bold text-black px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E0DACF] flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>{SCENARIOS[selectedScenario].name}</span>
+              </span>
+            </div>
+          </div>
+
+          {/* Center: Play, Reset, Zoom [- % +] */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {isPlaying ? (
+              <button
+                onClick={handlePause}
+                className="h-9 px-4 rounded-full bg-black text-white hover:bg-[#222222] text-xs font-bold flex items-center gap-1.5 shadow-sm whitespace-nowrap flex-shrink-0 cursor-pointer"
+              >
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+                <span>Pause Flow</span>
+              </button>
+            ) : (
+              <button
+                onClick={handlePlay}
+                className="h-9 px-4 rounded-full bg-black text-white hover:bg-[#222222] text-xs font-bold flex items-center gap-1.5 shadow-sm whitespace-nowrap flex-shrink-0 cursor-pointer"
+              >
+                <Play className="w-3.5 h-3.5 fill-white" />
+                <span>Simulate Flow</span>
+              </button>
+            )}
+
+            <button
+              onClick={handleReset}
+              className="w-9 h-9 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition flex items-center justify-center flex-shrink-0"
+              title="Reset Canvas"
+            >
+              <RotateCcw className="w-3.5 h-3.5 text-black" />
+            </button>
+
+            {/* Zoom Controls: [- % +] */}
+            <div className="flex items-center gap-0.5 bg-[#FAF8F5] border border-[#E0DACF] rounded-full p-0.5 h-9 flex-shrink-0">
+              <button
+                onClick={handleZoomOut}
+                className="w-7 h-7 rounded-full hover:bg-white text-black transition flex items-center justify-center flex-shrink-0"
+                title="Zoom Out"
+              >
+                <ZoomOut className="w-3 h-3 text-black" />
+              </button>
+              <span className="text-xs font-mono font-bold text-black px-1.5 min-w-[38px] text-center select-none">
+                {Math.round(scale * 100)}%
+              </span>
+              <button
+                onClick={handleZoomIn}
+                className="w-7 h-7 rounded-full hover:bg-white text-black transition flex items-center justify-center flex-shrink-0"
+                title="Zoom In"
+              >
+                <ZoomIn className="w-3 h-3 text-black" />
+              </button>
+            </div>
+          </div>
+
+          {/* Right: Side Panel Toggle & Exit Full Screen */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              onClick={() => setIsSidePanelOpen(!isSidePanelOpen)}
+              className={`h-9 px-4 rounded-full border text-xs font-bold flex items-center gap-1.5 transition whitespace-nowrap flex-shrink-0 cursor-pointer ${
+                isSidePanelOpen
+                  ? "bg-black text-white border-black shadow-sm"
+                  : "bg-[#EAE5DE] hover:bg-white text-black border-[#D5D0C7]"
+              }`}
+              title={isSidePanelOpen ? "Hide Side Panel" : "Show Side Panel"}
+            >
+              {isSidePanelOpen ? <PanelRightClose className="w-3.5 h-3.5" /> : <PanelRightOpen className="w-3.5 h-3.5" />}
+              <span className="hidden sm:inline">Options &amp; Inspector</span>
+            </button>
+
+            <button
+              onClick={handleToggleFullscreen}
+              className="h-9 px-4 rounded-full bg-black text-white hover:bg-[#222222] text-xs font-bold flex items-center gap-1.5 shadow-sm whitespace-nowrap flex-shrink-0 cursor-pointer"
+              title="Exit Full Screen View (Esc)"
+            >
+              <Minimize2 className="w-3.5 h-3.5" />
+              <span>Exit Full Screen</span>
+              <kbd className="hidden sm:inline text-[9px] font-mono bg-white/20 px-1 py-0.5 rounded text-white/90 ml-1">
+                Esc
+              </kbd>
+            </button>
+          </div>
+        </div>
+
+        {/* Full-Screen Main Workspace: Canvas + Side Panel */}
+        <div className="flex-1 flex overflow-hidden relative">
+          <div className="flex-1 h-full relative overflow-hidden bg-[#F5F2EB]">
+            {renderCanvasElement(true)}
+
+            {/* Floating button to open panel if closed */}
+            {!isSidePanelOpen && (
+              <button
+                onClick={() => setIsSidePanelOpen(true)}
+                className="absolute top-4 right-4 z-20 btn-dark px-3 py-2 text-xs font-bold flex items-center gap-2 shadow-lg rounded-xl"
+                title="Open Workflow Options & Inspector Panel"
+              >
+                <PanelRightOpen className="w-4 h-4" />
+                <span>Options &amp; Inspector</span>
+              </button>
+            )}
+          </div>
+
+          {/* Collapsible Full-Screen Side Panel */}
+          {isSidePanelOpen && renderFullScreenSidePanel()}
+        </div>
+      </div>
+    );
+  }
+
+  // =========================================================================
+  // Standard Normal Page View (Canvas with Inspector Below)
+  // =========================================================================
+  return (
+    <div className="space-y-4">
+      {/* Top Controls & Scenario Selection Toolbar */}
+      <div className="clean-card p-4 sm:p-5 border border-[#E0DACF] bg-white flex flex-col xl:flex-row xl:items-center justify-between gap-4">
+        {/* Left Section: Branding & Scenario Presets */}
+        <div className="flex flex-col lg:flex-row lg:items-center gap-3 xl:gap-4 min-w-0">
+          <div className="flex items-center gap-2.5 pr-0 lg:pr-3 lg:border-r border-[#E0DACF] flex-shrink-0">
+            <span className="p-2 rounded-xl bg-[#EAE5DE] border border-[#D5D0C7] text-black flex-shrink-0">
+              <Workflow className="w-5 h-5 text-black" />
+            </span>
+            <div className="min-w-0">
+              <div className="flex items-center gap-2">
+                <h2 className="text-sm sm:text-base font-bold text-black tracking-tight whitespace-nowrap">
+                  Interactive Workflow Pipeline
+                </h2>
+                <span className="clean-pill text-[10px] py-0.5 px-2 font-mono flex-shrink-0">
+                  Node Canvas
+                </span>
+              </div>
+              <p className="text-[11px] sm:text-xs text-[#555555] truncate mt-0.5">
+                Visual workflow demonstrating multi-agent defense lifecycle and sub-2ms request gating.
+              </p>
+            </div>
+          </div>
+
+          {/* Scenario Preset Selector (Responsive horizontally scrollable pill container) */}
+          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-[#FAF8F5] border border-[#E0DACF] overflow-x-auto max-w-full scrollbar-none py-1">
             {(
               [
-                { key: "FULL", label: "Master Flow", icon: <Sparkles className="w-3.5 h-3.5 text-blue-500" /> },
+                { key: "FULL", label: "Master Flow", icon: <Sparkles className="w-3.5 h-3.5 text-amber-500" /> },
                 { key: "SQLI_ATTACK", label: "SQLi Attack Gate", icon: <Flame className="w-3.5 h-3.5 text-rose-500" /> },
                 { key: "LEGIT_ALICE", label: "Legitimate (NAT)", icon: <UserCheck className="w-3.5 h-3.5 text-emerald-500" /> },
                 { key: "TRIANGULATION", label: "Bayesian P(V)", icon: <Cpu className="w-3.5 h-3.5 text-cyan-500" /> },
@@ -1029,7 +1901,7 @@ export default function InteractiveWorkflowCanvas() {
                 <button
                   key={item.key}
                   onClick={() => handleSelectScenario(item.key)}
-                  className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition flex-shrink-0 cursor-pointer ${
                     active
                       ? "bg-black text-white shadow-sm"
                       : "text-[#222222] hover:text-black hover:bg-white/60"
@@ -1043,404 +1915,199 @@ export default function InteractiveWorkflowCanvas() {
           </div>
         </div>
 
-        {/* Action Buttons: Play, Pause, Reset, Zoom */}
-        <div className="flex items-center gap-2">
+        {/* Right Section: Action Buttons (Simulate Flow, Reset, Zoom [- % +], Full Screen) */}
+        <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap justify-start xl:justify-end flex-shrink-0">
+          {/* Simulate Flow Button */}
           {isPlaying ? (
             <button
               onClick={handlePause}
-              className="btn-dark px-4 py-2 text-xs font-bold flex items-center gap-2"
+              className="h-10 px-5 rounded-full bg-black text-white hover:bg-[#222222] transition text-xs font-bold flex items-center justify-center gap-2 shadow-sm whitespace-nowrap flex-shrink-0 cursor-pointer"
             >
-              <span>Pause</span>
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+              <span>Pause Flow</span>
             </button>
           ) : (
             <button
               onClick={handlePlay}
-              className="btn-dark px-4 py-2 text-xs font-bold flex items-center gap-2"
+              className="h-10 px-5 rounded-full bg-black text-white hover:bg-[#222222] transition text-xs font-bold flex items-center justify-center gap-2 shadow-sm whitespace-nowrap flex-shrink-0 cursor-pointer"
             >
               <Play className="w-3.5 h-3.5 fill-white" />
               <span>Simulate Flow</span>
             </button>
           )}
 
+          {/* Reset Button */}
           <button
             onClick={handleReset}
-            className="p-2 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition"
-            title="Reset Canvas and Logs"
+            className="w-10 h-10 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition flex items-center justify-center flex-shrink-0 shadow-sm cursor-pointer"
+            title="Reset Canvas and Simulation"
           >
             <RotateCcw className="w-4 h-4 text-black" />
           </button>
 
-          <div className="h-6 w-px bg-[#E0DACF] mx-1" />
+          {/* Zoom Controls: [- % +] (Removed the redundant/marked Fit button) */}
+          <div className="flex items-center gap-0.5 bg-[#FAF8F5] border border-[#E0DACF] rounded-full p-1 h-10 flex-shrink-0">
+            <button
+              onClick={handleZoomOut}
+              className="w-8 h-8 rounded-full hover:bg-white text-black transition flex items-center justify-center flex-shrink-0"
+              title="Zoom Out"
+            >
+              <ZoomOut className="w-3.5 h-3.5 text-black" />
+            </button>
+            <span className="text-xs font-mono font-bold text-black px-1.5 min-w-[42px] text-center select-none">
+              {Math.round(scale * 100)}%
+            </span>
+            <button
+              onClick={handleZoomIn}
+              className="w-8 h-8 rounded-full hover:bg-white text-black transition flex items-center justify-center flex-shrink-0"
+              title="Zoom In"
+            >
+              <ZoomIn className="w-3.5 h-3.5 text-black" />
+            </button>
+          </div>
 
+          {/* Full Screen Button */}
           <button
-            onClick={handleZoomOut}
-            className="p-2 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition"
-            title="Zoom Out"
+            onClick={handleToggleFullscreen}
+            className="h-10 px-5 rounded-full bg-black text-white hover:bg-[#222222] transition text-xs font-bold flex items-center justify-center gap-2 shadow-sm whitespace-nowrap flex-shrink-0 cursor-pointer"
+            title="Open Workflow in Full Screen View"
           >
-            <ZoomOut className="w-4 h-4 text-black" />
-          </button>
-          <span className="text-xs font-mono font-bold text-black px-1">{Math.round(scale * 100)}%</span>
-          <button
-            onClick={handleZoomIn}
-            className="p-2 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition"
-            title="Zoom In"
-          >
-            <ZoomIn className="w-4 h-4 text-black" />
-          </button>
-          <button
-            onClick={handleFitView}
-            className="p-2 rounded-full bg-[#EAE5DE] hover:bg-white text-black border border-[#D5D0C7] transition"
-            title="Fit to Screen"
-          >
-            <Maximize2 className="w-4 h-4 text-black" />
+            <Maximize2 className="w-3.5 h-3.5 text-white" />
+            <span>Full Screen</span>
           </button>
         </div>
       </div>
 
-      {/* =====================================================================
-          MAIN WORKFLOW WORKSPACE (CANVAS + INSPECTOR DRAWER)
-          ===================================================================== */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-        {/* Canvas Area */}
-        <div className="lg:col-span-8 xl:col-span-9 relative">
-          <div
-            ref={containerRef}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onWheel={handleWheel}
-            className="relative w-full h-[680px] rounded-3xl overflow-hidden cursor-grab active:cursor-grabbing border border-[#E0DACF] bg-[#F5F2EB] select-none shadow-sm"
-            style={{
-              backgroundImage: "radial-gradient(circle, rgba(0, 0, 0, 0.12) 1.5px, transparent 1.5px)",
-              backgroundSize: "26px 26px",
-            }}
-          >
-            {/* Canvas Transformation Wrapper */}
+      {/* Main Workflow Workspace (Full-Width Canvas) */}
+      <div className="relative w-full">
+        {renderCanvasElement(false)}
+      </div>
+
+      {/* AGENT & NODE INSPECTOR (PLACED BELOW WORKFLOW CANVAS) */}
+      <div className="clean-card p-5 sm:p-6 border border-[#E0DACF] bg-white shadow-sm space-y-4">
+        {/* Header Bar */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-[#E0DACF] gap-3">
+          <div className="flex items-start sm:items-center gap-3.5">
             <div
-              className="absolute top-0 left-0 origin-top-left transition-transform duration-75 ease-out"
-              style={{
-                transform: `translate(${pan.x}px, ${pan.y}px) scale(${scale})`,
-                width: "3200px",
-                height: "850px",
-              }}
+              className={`p-2.5 rounded-2xl border ${selectedNode.colorScheme.iconBg} ${selectedNode.colorScheme.iconColor} flex-shrink-0`}
             >
-              {/* SVG Connecting Edges Layer */}
-              <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
-                <defs>
-                  <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#111111" />
-                  </marker>
-                  <marker id="arrow-active" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                    <path d="M 0 1 L 9 5 L 0 9 z" fill="#000000" />
-                  </marker>
-                </defs>
-
-                {WORKFLOW_EDGES.map((edge) => {
-                  const { path, midX, midY } = calculateEdgePath(edge);
-                  if (!path) return null;
-
-                  const isActive = activeEdgeIds.has(edge.id);
-
-                  return (
-                    <g key={edge.id} className="transition-all duration-300">
-                      {/* Background Wire (Static) */}
-                      <path
-                        d={path}
-                        fill="none"
-                        stroke={isActive ? "#000000" : "#D0CAC0"}
-                        strokeWidth={isActive ? 2.8 : 2}
-                        markerEnd="url(#arrow)"
-                      />
-
-                      {/* Active Animated Laser Wire */}
-                      {isActive && (
-                        <path
-                          d={path}
-                          fill="none"
-                          stroke="#000000"
-                          strokeWidth={3}
-                          strokeDasharray="8 6"
-                        >
-                          <animate
-                            attributeName="stroke-dashoffset"
-                            values="100;0"
-                            dur="1.2s"
-                            repeatCount="indefinite"
-                          />
-                        </path>
-                      )}
-
-                      {/* Moving Energy Particle during Active Play */}
-                      {isActive && (
-                        <circle r="4.5" fill="#000000">
-                          <animateMotion path={path} dur="1.2s" repeatCount="indefinite" />
-                        </circle>
-                      )}
-
-                      {/* Edge Label (e.g. Risk >= 80, P >= 0.99) */}
-                      {edge.label && (
-                        <g transform={`translate(${midX}, ${midY - 10})`}>
-                          <rect
-                            x="-45"
-                            y="-9"
-                            width="90"
-                            height="18"
-                            rx="9"
-                            fill="#FFFFFF"
-                            stroke="#D5D0C7"
-                            strokeWidth="1"
-                          />
-                          <text
-                            x="0"
-                            y="3"
-                            textAnchor="middle"
-                            fill="#111111"
-                            fontSize="10"
-                            fontFamily="monospace"
-                            fontWeight="bold"
-                          >
-                            {edge.label}
-                          </text>
-                        </g>
-                      )}
-                    </g>
-                  );
-                })}
-              </svg>
-
-              {/* Node Cards Layer */}
-              <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-auto">
-                {WORKFLOW_NODES.map((node) => {
-                  const isSelected = selectedNodeId === node.id;
-                  const isActive = activeNodeIds.has(node.id);
-                  const status = nodeStatuses[node.id] || "idle";
-
-                  return (
-                    <div
-                      key={node.id}
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedNodeId(node.id);
-                      }}
-                      className={`workflow-card absolute w-[240px] rounded-2xl p-3.5 transition-all duration-200 select-none cursor-pointer bg-white ${
-                        isSelected
-                          ? "border-2 border-black shadow-xl ring-4 ring-black/10"
-                          : isActive
-                          ? "border-2 border-black shadow-lg"
-                          : "border border-[#D5D0C7] hover:border-black shadow-sm"
-                      }`}
-                      style={{
-                        left: `${node.x}px`,
-                        top: `${node.y}px`,
-                      }}
-                    >
-                      {/* Left Input Port Handle */}
-                      {node.hasInput !== false && (
-                        <div
-                          className="absolute -left-2 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center transition group-hover:scale-110"
-                          title="Input Connection Port"
-                        >
-                          <div className="w-1.5 h-1.5 rounded-full bg-black" />
-                        </div>
-                      )}
-
-                      {/* Right Output Port Handles */}
-                      {node.outputs &&
-                        node.outputs.map((out) => {
-                          const topPercent = out.offsetPercent !== undefined ? out.offsetPercent : 50;
-                          return (
-                            <div
-                              key={out.id}
-                              className="absolute -right-2 w-4 h-4 rounded-full bg-white border-2 border-black flex items-center justify-center transition hover:scale-110 shadow-sm"
-                              style={{ top: `${topPercent}%`, transform: "translateY(-50%)" }}
-                              title={out.label || "Output Connection Port"}
-                            >
-                              <div className="w-1.5 h-1.5 rounded-full bg-black" />
-                            </div>
-                          );
-                        })}
-
-                      {/* Card Content Header */}
-                      <div className="flex items-center justify-between gap-2 mb-2">
-                        <span
-                          className={`px-2 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase tracking-wider ${node.colorScheme.badgeBg} ${node.colorScheme.badgeText} border border-[#D5D0C7]`}
-                        >
-                          {node.agentLabel || node.category}
-                        </span>
-
-                        {/* Status Indicator */}
-                        {status === "completed" && (
-                          <span className="flex items-center gap-1 text-[10px] font-mono font-bold text-black">
-                            <CheckCircle2 className="w-3 h-3 text-black" />
-                            <span>Done</span>
-                          </span>
-                        )}
-                        {status === "quarantined" && (
-                          <span className="flex items-center gap-1 text-[10px] font-mono font-bold text-white bg-black px-1.5 py-0.2 rounded-full">
-                            <ShieldAlert className="w-3 h-3 text-white" />
-                            <span>Dropped</span>
-                          </span>
-                        )}
-                        {status === "idle" && (
-                          <span className="w-2 h-2 rounded-full bg-[#CCCCCC]" />
-                        )}
-                      </div>
-
-                      {/* Main Title & Icon */}
-                      <div className="flex items-start gap-2.5">
-                        <div
-                          className={`p-2 rounded-xl flex-shrink-0 border ${node.colorScheme.iconBg} ${node.colorScheme.iconColor}`}
-                        >
-                          <NodeIcon name={node.icon} className="w-4 h-4" />
-                        </div>
-                        <div className="overflow-hidden">
-                          <h3 className="text-xs font-bold text-black leading-tight truncate">
-                            {node.title}
-                          </h3>
-                          <p className="text-[10px] font-medium text-[#444444] truncate mt-0.5">
-                            {node.subtitle}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              <NodeIcon name={selectedNode.icon} className="w-5 h-5" />
             </div>
-
-            {/* Bottom Floating Legend */}
-            <div className="absolute bottom-3 left-3 flex items-center gap-3 p-2.5 rounded-full bg-white/95 backdrop-blur-md border border-[#E0DACF] text-[11px] font-semibold text-black shadow-sm">
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-black" />
-                Enforcement Gate (&le; 2ms)
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#888888]" />
-                Multi-Agent Stream (12 Agents)
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-white border border-black" />
-                Verified Resolution
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Right-Side Node Inspector Drawer */}
-        <div className="lg:col-span-4 xl:col-span-3">
-          <div className="clean-card p-5 h-[680px] flex flex-col justify-between border border-[#E0DACF] bg-white overflow-y-auto">
             <div>
-              {/* Drawer Header */}
-              <div className="flex items-center justify-between pb-3 border-b border-[#E0DACF]">
-                <div className="flex items-center gap-2">
-                  <div
-                    className={`p-2 rounded-xl border ${selectedNode.colorScheme.iconBg} ${selectedNode.colorScheme.iconColor}`}
-                  >
-                    <NodeIcon name={selectedNode.icon} className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#666666]">
-                      Node Inspector
-                    </span>
-                    <h3 className="text-sm font-bold text-black leading-tight">{selectedNode.title}</h3>
-                  </div>
-                </div>
+              <div className="flex flex-wrap items-center gap-2 mb-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#666666]">
+                  {selectedNode.agentLabel ? "Agent & Node Inspector" : "Node Inspector"}
+                </span>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#EAE5DE] text-black border border-[#D5D0C7] font-bold">
                   {selectedNode.category}
                 </span>
-              </div>
-
-              {/* Description */}
-              <div className="mt-3">
-                <p className="text-xs text-[#333333] leading-relaxed">{selectedNode.description}</p>
-              </div>
-
-              {/* Metrics & Performance Badges */}
-              <div className="mt-4 space-y-2">
-                <h4 className="text-[11px] font-bold uppercase text-black tracking-wider">
-                  Operational Metrics &amp; SLOs
-                </h4>
-                <div className="grid grid-cols-1 gap-1.5">
-                  {selectedNode.metrics.map((m, idx) => (
-                    <div
-                      key={idx}
-                      className="p-2.5 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] flex items-center justify-between text-xs"
-                    >
-                      <span className="text-[#444444] font-medium text-[11px]">{m.label}</span>
-                      <span className="font-bold font-mono text-black">{m.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Inputs & Outputs Specs */}
-              <div className="mt-4 grid grid-cols-1 gap-2.5">
-                <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E0DACF]">
-                  <span className="text-[10px] font-bold uppercase text-black block mb-1.5 tracking-wider">
-                    Incoming Context (Inputs)
+                {selectedNode.agentLabel && (
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full font-bold ${selectedNode.colorScheme.badgeBg} ${selectedNode.colorScheme.badgeText}`}>
+                    {selectedNode.agentLabel}
                   </span>
-                  <ul className="space-y-1">
-                    {selectedNode.inputsDesc.map((item, i) => (
-                      <li key={i} className="text-[11px] text-[#222222] font-mono flex items-center gap-1.5">
-                        <ArrowRight className="w-3 h-3 text-black flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="p-3 rounded-2xl bg-[#FAF8F5] border border-[#E0DACF]">
-                  <span className="text-[10px] font-bold uppercase text-black block mb-1.5 tracking-wider">
-                    Outgoing Artifacts (Outputs)
-                  </span>
-                  <ul className="space-y-1">
-                    {selectedNode.outputsDesc.map((item, i) => (
-                      <li key={i} className="text-[11px] text-[#222222] font-mono flex items-center gap-1.5">
-                        <ArrowRight className="w-3 h-3 text-black flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                )}
               </div>
+              <h3 className="text-base sm:text-lg font-bold text-black leading-tight">
+                {selectedNode.title}
+              </h3>
+              <p className="text-xs text-[#555555] font-medium mt-0.5">
+                {selectedNode.subtitle}
+              </p>
+            </div>
+          </div>
 
-              {/* Technical Code / Rule Formulation Snippet */}
-              {selectedNode.codeSnippet && (
-                <div className="mt-4">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[10px] font-bold uppercase text-black">
-                      Technical Implementation
-                    </span>
-                    <Terminal className="w-3.5 h-3.5 text-black" />
-                  </div>
-                  <pre className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] text-[11px] font-mono text-black overflow-x-auto whitespace-pre leading-relaxed">
-                    <code>{selectedNode.codeSnippet}</code>
-                  </pre>
+          <div className="flex items-center gap-2 flex-shrink-0">
+            <button
+              onClick={() => {
+                setSelectedScenario("FULL");
+                handlePlay();
+              }}
+              className="btn-dark py-2 px-4 text-xs font-bold flex items-center justify-center gap-2 shadow-sm"
+            >
+              <Play className="w-3.5 h-3.5 fill-white" />
+              <span>Simulate Flow Through This Node</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Description */}
+        <p className="text-xs sm:text-sm text-[#333333] leading-relaxed">
+          {selectedNode.description}
+        </p>
+
+        {/* 3-Column Responsive Grid for Details */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-1">
+          {/* Column 1: Operational Metrics & SLOs */}
+          <div className="space-y-2.5">
+            <h4 className="text-[11px] font-bold uppercase text-black tracking-wider">
+              Operational Metrics &amp; SLOs
+            </h4>
+            <div className="grid grid-cols-1 gap-2">
+              {selectedNode.metrics.map((m, idx) => (
+                <div
+                  key={idx}
+                  className="p-3 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] flex items-center justify-between text-xs"
+                >
+                  <span className="text-[#444444] font-medium text-[11px]">{m.label}</span>
+                  <span className="font-bold font-mono text-black">{m.value}</span>
                 </div>
-              )}
+              ))}
+            </div>
+          </div>
+
+          {/* Column 2: Context Specifications (Inputs & Outputs) */}
+          <div className="space-y-3">
+            <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E0DACF]">
+              <span className="text-[10px] font-bold uppercase text-black block mb-2 tracking-wider">
+                Incoming Context (Inputs)
+              </span>
+              <ul className="space-y-1.5">
+                {selectedNode.inputsDesc.map((item, i) => (
+                  <li key={i} className="text-[11px] text-[#222222] font-mono flex items-center gap-2">
+                    <ArrowRight className="w-3 h-3 text-black flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            {/* Quick Action Button */}
-            <div className="pt-3 border-t border-[#E0DACF] mt-4">
-              <button
-                onClick={() => {
-                  setSelectedScenario("FULL");
-                  handlePlay();
-                }}
-                className="w-full btn-dark py-2.5 text-xs font-bold flex items-center justify-center gap-1.5"
-              >
-                <Play className="w-3.5 h-3.5 fill-white" />
-                <span>Simulate Flow Through This Node</span>
-              </button>
+            <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E0DACF]">
+              <span className="text-[10px] font-bold uppercase text-black block mb-2 tracking-wider">
+                Outgoing Artifacts (Outputs)
+              </span>
+              <ul className="space-y-1.5">
+                {selectedNode.outputsDesc.map((item, i) => (
+                  <li key={i} className="text-[11px] text-[#222222] font-mono flex items-center gap-2">
+                    <ArrowRight className="w-3 h-3 text-black flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
+          </div>
+
+          {/* Column 3: Technical Implementation (Code snippet) */}
+          <div className="md:col-span-2 lg:col-span-1 space-y-2.5">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold uppercase text-black tracking-wider">
+                Technical Implementation
+              </span>
+              <Terminal className="w-3.5 h-3.5 text-black" />
+            </div>
+            {selectedNode.codeSnippet ? (
+              <pre className="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] text-[11px] font-mono text-black overflow-x-auto whitespace-pre leading-relaxed max-h-[220px] overflow-y-auto">
+                <code>{selectedNode.codeSnippet}</code>
+              </pre>
+            ) : (
+              <div className="p-4 rounded-xl bg-[#FAF8F5] border border-[#E0DACF] text-xs text-[#666666] font-mono">
+                No custom logic snippet required for this node.
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* =====================================================================
-          BOTTOM LIVE LOG TICKER (REAL-TIME PIPELINE TRACE STREAM)
-          ===================================================================== */}
+      {/* BOTTOM LIVE LOG TICKER (REAL-TIME PIPELINE TRACE STREAM) */}
       <div className="clean-card p-4 border border-[#E0DACF] bg-white">
         <div className="flex items-center justify-between pb-2 border-b border-[#E0DACF] mb-2">
           <div className="flex items-center gap-2">
@@ -1480,4 +2147,5 @@ export default function InteractiveWorkflowCanvas() {
       </div>
     </div>
   );
+
 }

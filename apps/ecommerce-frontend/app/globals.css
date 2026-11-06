@@ -72,6 +72,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
   padding: 0.65rem 1.4rem;
   border-radius: 9999px;
   background-color: #000000;
