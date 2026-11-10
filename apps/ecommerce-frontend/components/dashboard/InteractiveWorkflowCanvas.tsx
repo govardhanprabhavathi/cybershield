@@ -821,6 +821,8 @@ export default function InteractiveWorkflowCanvas() {
   const [dragStart, setDragStart] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const touchDistanceRef = useRef<number | null>(null);
+  const initialTouchScaleRef = useRef<number>(0.72);
 
   // Active Selected Node Data
   const selectedNode = useMemo(() => {
@@ -1007,12 +1009,80 @@ export default function InteractiveWorkflowCanvas() {
 
   const handleMouseUp = () => setIsDragging(false);
 
-  // Wheel zoom
+  // Zoom gestures: Two-finger expanding (pinch-to-zoom) or Ctrl/Cmd + wheel
+  // Standard two-finger vertical/horizontal scrolling will NOT zoom the canvas, allowing natural page scroll.
   const handleWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const zoomFactor = e.deltaY < 0 ? 1.05 : 0.95;
-    setScale((prevScale) => Math.min(Math.max(prevScale * zoomFactor, 0.35), 1.5));
+    if (e.defaultPrevented) return;
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const clampedDelta = Math.max(Math.min(e.deltaY, 60), -60);
+      const factor = 1 - clampedDelta * 0.003;
+      setScale((prev) => Math.min(Math.max(Number((prev * factor).toFixed(3)), 0.35), 1.5));
+    }
   };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      touchDistanceRef.current = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+      initialTouchScaleRef.current = scale;
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2 && touchDistanceRef.current !== null && touchDistanceRef.current > 0) {
+      const t1 = e.touches[0];
+      const t2 = e.touches[1];
+      const currentDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+      const ratio = currentDist / touchDistanceRef.current;
+      const newScale = Math.min(Math.max(Number((initialTouchScaleRef.current * ratio).toFixed(3)), 0.35), 1.5);
+      setScale(newScale);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (e.touches.length < 2) {
+      touchDistanceRef.current = null;
+    }
+  };
+
+  // Attach non-passive wheel and touch listeners to allow preventDefault during intentional zoom
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const onNativeWheel = (e: WheelEvent) => {
+      // Only zoom if ctrl/meta is active (pinch-to-zoom on trackpad or ctrl + wheel)
+      if (e.ctrlKey || e.metaKey) {
+        e.preventDefault();
+        const clampedDelta = Math.max(Math.min(e.deltaY, 60), -60);
+        const factor = 1 - clampedDelta * 0.003;
+        setScale((prev) => Math.min(Math.max(Number((prev * factor).toFixed(3)), 0.35), 1.5));
+      }
+      // If ctrlKey is false: do NOT preventDefault! Let page scroll naturally without disturbing zoom.
+    };
+
+    const onNativeTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2 && touchDistanceRef.current !== null && touchDistanceRef.current > 0) {
+        e.preventDefault(); // Prevent native browser page zoom while expanding two fingers over canvas
+        const t1 = e.touches[0];
+        const t2 = e.touches[1];
+        const currentDist = Math.hypot(t2.clientX - t1.clientX, t2.clientY - t1.clientY);
+        const ratio = currentDist / touchDistanceRef.current;
+        const newScale = Math.min(Math.max(Number((initialTouchScaleRef.current * ratio).toFixed(3)), 0.35), 1.5);
+        setScale(newScale);
+      }
+    };
+
+    el.addEventListener("wheel", onNativeWheel, { passive: false });
+    el.addEventListener("touchmove", onNativeTouchMove, { passive: false });
+
+    return () => {
+      el.removeEventListener("wheel", onNativeWheel);
+      el.removeEventListener("touchmove", onNativeTouchMove);
+    };
+  }, [isFullscreen]);
 
   const CARD_WIDTH = 240;
   const CARD_HEIGHT = 92;
@@ -1129,6 +1199,11 @@ export default function InteractiveWorkflowCanvas() {
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
       onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
+      title="Drag to Pan | Expand two fingers or Ctrl + Scroll to Zoom"
       className={
         isFull
           ? "relative w-full h-full overflow-hidden cursor-grab active:cursor-grabbing bg-[#F5F2EB] select-none"
@@ -1403,6 +1478,11 @@ export default function InteractiveWorkflowCanvas() {
             Verified Resolution
           </span>
         </div>
+      </div>
+
+      {/* Floating Gesture Hint */}
+      <div className="absolute bottom-4 right-4 z-20 pointer-events-none hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/95 border border-[#E0DACF] shadow-sm text-[11px] font-mono text-[#555555] font-medium">
+        <span>Expand 2 fingers or Ctrl + Scroll to zoom</span>
       </div>
     </div>
   );
