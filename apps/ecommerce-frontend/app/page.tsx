@@ -195,10 +195,10 @@ export default function SecurityCommandCenter() {
           </button>
 
           <Link
-            href="/store"
+            href="/workflow"
             className="btn-dark text-xs py-2 px-5 ml-1"
           >
-            Open Storefront &rarr;
+            View Security Flow &rarr;
           </Link>
         </div>
 

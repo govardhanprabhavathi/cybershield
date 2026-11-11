@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUpRight, Shield } from "lucide-react";
+import { Shield } from "lucide-react";
 
 export default function Header() {
   const pathname = usePathname();
@@ -11,7 +11,6 @@ export default function Header() {
   const isOverview = pathname === "/";
   const isWorkflow = pathname === "/workflow";
   const isIncidents = pathname === "/incidents";
-  const isStore = pathname.startsWith("/store");
 
   return (
     <header className="sticky top-0 z-50 w-full bg-[#F5F2EB]/95 backdrop-blur-md border-b border-[#E0DACF]">
@@ -62,29 +61,10 @@ export default function Header() {
           >
             Live Incidents
           </Link>
-
-          <Link
-            href="/store"
-            className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all ${
-              isStore
-                ? "bg-black text-white shadow-sm"
-                : "text-[#222222] hover:text-black hover:bg-white/60"
-            }`}
-          >
-            Storefront
-          </Link>
         </nav>
 
         {/* Right Action Buttons */}
         <div className="hidden sm:flex items-center gap-3">
-          <Link
-            href="/store"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-black hover:opacity-70 transition"
-          >
-            <span>Live Store</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
-          </Link>
-
           <Link
             href="/workflow"
             className="btn-dark"
