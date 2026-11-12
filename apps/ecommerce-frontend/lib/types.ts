@@ -1,3 +1,20 @@
+export interface TargetProject {
+  id: string;
+  name: string;
+  url: string;
+  localPath: string;
+  architecture: string;
+  supabaseUrl: string;
+  status: "ACTIVE" | "INACTIVE";
+  lastScanTime: string;
+  riskSummary: {
+    critical: number;
+    high: number;
+    medium: number;
+    low: number;
+  };
+}
+
 export type Severity = "INFO" | "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
 
 export type ContainmentLevel =

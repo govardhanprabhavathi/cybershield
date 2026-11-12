@@ -150,10 +150,14 @@ export default function SecurityCommandCenter() {
           1. HERO HEADER SECTION (Inspired by Screenshot 1 & 2)
           ===================================================================== */}
       <section className="pt-4 text-center max-w-4xl mx-auto space-y-6">
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center gap-2">
           <div className="clean-pill">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>Autonomous Multi-Agent Defense Engine</span>
+          </div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAF8F5] border border-[#E0DACF] text-xs font-mono text-[#444]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Connected Target: <strong className="text-black">Andhra Treats (www.andhratreats.com)</strong></span>
           </div>
         </div>
 

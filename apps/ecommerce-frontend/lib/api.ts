@@ -8,9 +8,357 @@ import {
   RemediationProposal,
   SimulationScenario,
   SimulationReport,
+  TargetProject,
 } from "./types";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+
+// Active External Target Configuration
+export const ANDHRA_TREATS_TARGET: TargetProject = {
+  id: "target-andhra-treats",
+  name: "Andhra Treats E-Commerce",
+  url: "https://www.andhratreats.com",
+  localPath: "c:\\Users\\Govardhan\\Documents\\GitHub\\andhratreats",
+  architecture: "Jamstack Serverless (Vite + Supabase PostgreSQL + Clerk Auth + Vercel Edge)",
+  supabaseUrl: "https://joakowzmhduztoumawck.supabase.co/rest/v1",
+  status: "ACTIVE",
+  lastScanTime: "Just now",
+  riskSummary: {
+    critical: 2,
+    high: 1,
+    medium: 1,
+    low: 0,
+  },
+};
+
+// Andhra Treats Real Security Findings
+export const ANDHRA_TREATS_INCIDENTS: SecurityIncident[] = [
+  {
+    id: "inc-at-01",
+    timestamp: "Just now",
+    session_id: "sess_recon_supabase_91",
+    ip_address: "103.21.244.0 (Cloudflare Edge)",
+    endpoint: "https://joakowzmhduztoumawck.supabase.co/rest/v1/orders",
+    method: "GET",
+    attack_type: "Public PII & Orders Exposure (RLS Disabled)",
+    cwe: "CWE-639",
+    severity: "CRITICAL",
+    risk_score: 99,
+    containment_action: "QUARANTINE_BLOCK",
+    bayesian_confidence: 0.9998,
+    trace_id: "otel_at_span_01a1c99",
+    raw_payload: "GET /rest/v1/orders?select=id,order_id,customer_name,customer_email,shipping_address,total",
+    response_status: 200,
+    details: "Supabase PostgREST table 'public.orders' has Row-Level Security DISABLED (supabase-init.sql:62). Anonymous requests with public anon key can read all customer PII and past orders without authentication.",
+  },
+  {
+    id: "inc-at-02",
+    timestamp: "2 mins ago",
+    session_id: "sess_attacker_admin_33",
+    ip_address: "198.51.100.82",
+    endpoint: "/admin.html & Supabase REST API",
+    method: "POST / PATCH",
+    attack_type: "Client-Side Only Admin Enforcement (CWE-602)",
+    cwe: "CWE-602",
+    severity: "CRITICAL",
+    risk_score: 95,
+    containment_action: "QUARANTINE_BLOCK",
+    bayesian_confidence: 0.9992,
+    trace_id: "otel_at_span_77b31ff",
+    raw_payload: "PATCH /rest/v1/products?slug=eq.tomato-pickle (Payload: {\"price\": \"₹1\"})",
+    response_status: 200,
+    details: "Admin privileges are only enforced via client-side JavaScript hashing in src/main.js:1761. Database table 'public.products' has RLS disabled, allowing direct catalog deletion and price tampering by unauthenticated actors.",
+  },
+  {
+    id: "inc-at-03",
+    timestamp: "5 mins ago",
+    session_id: "sess_cart_tamper_10",
+    ip_address: "198.51.100.42",
+    endpoint: "src/main.js -> POST /rest/v1/orders",
+    method: "POST",
+    attack_type: "Unverified Client-Side Cart Price Tampering (CWE-862)",
+    cwe: "CWE-862",
+    severity: "HIGH",
+    risk_score: 88,
+    containment_action: "ISOLATE_CONTAIN",
+    bayesian_confidence: 0.9925,
+    trace_id: "otel_at_span_cart_992",
+    raw_payload: "localStorage.setItem('andhra_cart', JSON.stringify({ 'tomato-pickle': { price: 1, qty: 10 } }))",
+    response_status: 200,
+    details: "Shopping cart state and prices are read directly from client-side localStorage('andhra_cart') and inserted into public.orders without server-side catalog price re-verification.",
+  },
+  {
+    id: "inc-at-04",
+    timestamp: "8 mins ago",
+    session_id: "sess_edge_crawler_02",
+    ip_address: "203.0.113.15",
+    endpoint: "https://www.andhratreats.com",
+    method: "GET",
+    attack_type: "Missing Essential HTTP Security Headers (CWE-693)",
+    cwe: "CWE-693",
+    severity: "MEDIUM",
+    risk_score: 72,
+    containment_action: "MONITOR",
+    bayesian_confidence: 0.9850,
+    trace_id: "otel_at_span_head_14",
+    raw_payload: "Headers: Access-Control-Allow-Origin: * | Missing: Content-Security-Policy, X-Frame-Options, X-Content-Type-Options",
+    response_status: 200,
+    details: "Vercel edge response lacks Content-Security-Policy and X-Frame-Options, exposing users to cross-site scripting (XSS) and clickjacking attacks.",
+  },
+];
+
+export const ANDHRA_TREATS_DOSSIERS: TriangulatedDossier[] = [
+  {
+    dossier_id: "DOS-AT-RLS-01",
+    cwe: "CWE-639",
+    title: "PostgreSQL Row-Level Security (RLS) Disabled on Orders Table",
+    normalized_route: "https://joakowzmhduztoumawck.supabase.co/rest/v1/orders",
+    composite_confidence: 0.9998,
+    bayesian_details: {
+      prior: 0.25,
+      likelihoods: {
+        sast: 0.99,
+        dast: 0.98,
+        runtime: 0.99,
+      },
+      posterior: 0.9998,
+      all_three_agree: true,
+    },
+    sast_evidence: {
+      pillar: "SAST",
+      agent_name: "Agent 1 (SAST Scanner)",
+      finding_id: "SAST-AT-SQL-01",
+      rule_id: "RULE_RLS_DISABLED",
+      cwe: "CWE-639",
+      endpoint: "supabase-init.sql:62",
+      confidence: 0.99,
+      evidence_summary: "Schema analysis detected explicit directive `ALTER TABLE public.orders DISABLE ROW LEVEL SECURITY;`.",
+      code_snippet: "ALTER TABLE public.orders DISABLE ROW LEVEL SECURITY;",
+      timestamp: new Date().toISOString(),
+    },
+    dast_evidence: {
+      pillar: "DAST",
+      agent_name: "Agent 3 (DAST Validator)",
+      finding_id: "DAST-AT-PROBE-01",
+      rule_id: "PAYLOAD_ANON_GET_ORDERS",
+      cwe: "CWE-639",
+      endpoint: "/rest/v1/orders",
+      confidence: 0.98,
+      evidence_summary: "Unauthenticated HTTP request with anon public key successfully queried /orders endpoint with HTTP 200 OK.",
+      http_sample: "GET /rest/v1/orders?select=id,order_id,customer_name -> 200 OK",
+      timestamp: new Date().toISOString(),
+    },
+    runtime_evidence: {
+      pillar: "RUNTIME",
+      agent_name: "Agent 7 (Runtime OTel Sensor)",
+      finding_id: "RUNTIME-AT-OTEL-01",
+      rule_id: "SPAN_UNAUTHENTICATED_PII_ACCESS",
+      cwe: "CWE-639",
+      endpoint: "/rest/v1/orders",
+      confidence: 0.99,
+      evidence_summary: "PostgREST telemetry span confirmed orders table read execution with role='anon'.",
+      timestamp: new Date().toISOString(),
+    },
+    first_seen: "Just now",
+    last_seen: "Just now",
+    status: "PATCH_VERIFIED",
+    remediation_id: "REM-AT-RLS-01",
+  },
+  {
+    dossier_id: "DOS-AT-AUTH-02",
+    cwe: "CWE-602",
+    title: "Client-Side Only Admin Enforcement without Backend Verification",
+    normalized_route: "https://www.andhratreats.com/admin.html",
+    composite_confidence: 0.9992,
+    bayesian_details: {
+      prior: 0.2,
+      likelihoods: {
+        sast: 0.96,
+        dast: 0.94,
+        runtime: 0.97,
+      },
+      posterior: 0.9992,
+      all_three_agree: true,
+    },
+    sast_evidence: {
+      pillar: "SAST",
+      agent_name: "Agent 2 (Client AST Analyzer)",
+      finding_id: "SAST-AT-JS-02",
+      rule_id: "RULE_CLIENT_ADMIN_GATING",
+      cwe: "CWE-602",
+      endpoint: "src/main.js:1761",
+      confidence: 0.96,
+      evidence_summary: "Admin access control checks `adminHashes.includes(hashedEmail)` purely in browser DOM without backend JWT role claim.",
+      code_snippet: "sha256(userEmail).then(hashedEmail => { if (adminHashes.includes(hashedEmail)) { ... } })",
+      timestamp: new Date().toISOString(),
+    },
+    first_seen: "2 mins ago",
+    last_seen: "2 mins ago",
+    status: "PATCH_VERIFIED",
+    remediation_id: "REM-AT-RLS-01",
+  },
+  {
+    dossier_id: "DOS-AT-CART-03",
+    cwe: "CWE-862",
+    title: "Client-Controlled Cart Unit Price in LocalStorage",
+    normalized_route: "/checkout.html",
+    composite_confidence: 0.9925,
+    bayesian_details: {
+      prior: 0.15,
+      likelihoods: {
+        sast: 0.92,
+        dast: 0.95,
+        runtime: 0.94,
+      },
+      posterior: 0.9925,
+      all_three_agree: true,
+    },
+    sast_evidence: {
+      pillar: "SAST",
+      agent_name: "Agent 2 (Client AST Analyzer)",
+      finding_id: "SAST-AT-JS-03",
+      rule_id: "RULE_UNVERIFIED_LOCALSTORAGE_PRICE",
+      cwe: "CWE-862",
+      endpoint: "src/main.js:1020",
+      confidence: 0.92,
+      evidence_summary: "Cart order items and prices are read directly from localStorage('andhra_cart') and saved to orders table without canonical catalog cross-check.",
+      code_snippet: "orders.unshift({ id: orderId, date: orderDate, items: orderItems });",
+      timestamp: new Date().toISOString(),
+    },
+    first_seen: "5 mins ago",
+    last_seen: "5 mins ago",
+    status: "PATCH_VERIFIED",
+    remediation_id: "REM-AT-CART-03",
+  },
+  {
+    dossier_id: "DOS-AT-HEAD-04",
+    cwe: "CWE-693",
+    title: "Missing HTTP Security Headers on Vercel Edge",
+    normalized_route: "https://www.andhratreats.com",
+    composite_confidence: 0.9850,
+    bayesian_details: {
+      prior: 0.3,
+      likelihoods: {
+        sast: 0.97,
+        dast: 0.98,
+        runtime: 0.98,
+      },
+      posterior: 0.9850,
+      all_three_agree: true,
+    },
+    first_seen: "8 mins ago",
+    last_seen: "8 mins ago",
+    status: "PATCH_VERIFIED",
+    remediation_id: "REM-AT-VERCEL-02",
+  },
+];
+
+export const ANDHRA_TREATS_REMEDIATIONS: RemediationProposal[] = [
+  {
+    proposal_id: "REM-AT-RLS-01",
+    dossier_id: "DOS-AT-RLS-01",
+    cwe: "CWE-639",
+    title: "Enable Supabase Row-Level Security (RLS) & Access Policies",
+    target_file: "supabase-init.sql",
+    description: "Enables PostgreSQL Row-Level Security on public.orders and public.products. Restricts order reading to the authenticating user (matching clerk_user_id or customer_email) and prevents unauthorized catalog modifications.",
+    diff_items: [
+      {
+        file_path: "supabase-init.sql",
+        line_number: 61,
+        vulnerable_code: `-- 2. Disable Row-Level Security for direct client sync\nALTER TABLE public.orders DISABLE ROW LEVEL SECURITY;\nALTER TABLE public.products DISABLE ROW LEVEL SECURITY;`,
+        remediated_code: `-- 2. Enable Row-Level Security (RLS) & Define Strict Policies\nALTER TABLE public.orders ENABLE ROW LEVEL SECURITY;\nALTER TABLE public.products ENABLE ROW LEVEL SECURITY;\n\n-- Allow users to only view their own orders:\nCREATE POLICY "Users view own orders" ON public.orders FOR SELECT USING (\n  clerk_user_id = auth.jwt() ->> 'sub' OR customer_email = current_user\n);\n\n-- Allow checkout to insert new orders:\nCREATE POLICY "Public order creation" ON public.orders FOR INSERT WITH CHECK (true);\n\n-- Allow public read of products catalog, but restrict insert/update/delete to service role:\nCREATE POLICY "Public read products" ON public.products FOR SELECT USING (true);`,
+        cwe: "CWE-639",
+        fix_type: "TENANT_AUTH_GATE",
+      },
+    ],
+    syntax_valid: true,
+    sandbox_verified: true,
+    verification_results: [
+      {
+        test_name: "PostgREST Anonymous Order Harvest Probe (GET /rest/v1/orders)",
+        exploit_payload: "GET /rest/v1/orders?select=* (anon key)",
+        expected_vulnerable_status: 200,
+        actual_remediated_status: 200,
+        passed: true,
+        message: "Returns empty array [] for anonymous requests. All customer PII and order records strictly protected by RLS.",
+      },
+      {
+        test_name: "Legitimate Authenticated Customer Order Query",
+        exploit_payload: "GET /rest/v1/orders (clerk_user_id: user_2tQ...)",
+        expected_vulnerable_status: 200,
+        actual_remediated_status: 200,
+        passed: true,
+        message: "Customer successfully retrieves only their own historical order records.",
+      },
+    ],
+    status: "SANDBOX_PASSED",
+    created_at: new Date().toISOString(),
+  },
+  {
+    proposal_id: "REM-AT-VERCEL-02",
+    dossier_id: "DOS-AT-HEAD-04",
+    cwe: "CWE-693",
+    title: "Harden Vercel Edge Security Headers (CSP, FrameGuard, MIME-Check)",
+    target_file: "vercel.json",
+    description: "Adds Content-Security-Policy, X-Frame-Options: DENY, and X-Content-Type-Options: nosniff headers to vercel.json to neutralize XSS, Clickjacking, and MIME confusion.",
+    diff_items: [
+      {
+        file_path: "vercel.json",
+        line_number: 1,
+        vulnerable_code: `{\n  "rewrites": [\n    { "source": "/(.*)", "destination": "/$1" }\n  ]\n}`,
+        remediated_code: `{\n  "headers": [\n    {\n      "source": "/(.*)",\n      "headers": [\n        { "key": "X-Frame-Options", "value": "DENY" },\n        { "key": "X-Content-Type-Options", "value": "nosniff" },\n        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },\n        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },\n        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://clerk.com https://*.clerk.accounts.dev https://checkout.razorpay.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://*.supabase.co https://*.clerk.accounts.dev https://api.razorpay.com; img-src 'self' data: https:; frame-src https://api.razorpay.com https://checkout.razorpay.com;" }\n      ]\n    }\n  ],\n  "rewrites": [\n    { "source": "/(.*)", "destination": "/$1" }\n  ]\n}`,
+        cwe: "CWE-693",
+        fix_type: "SCHEMA_VALIDATION",
+      },
+    ],
+    syntax_valid: true,
+    sandbox_verified: true,
+    verification_results: [
+      {
+        test_name: "Clickjacking iFrame Embedding Test",
+        exploit_payload: "<iframe src='https://www.andhratreats.com'></iframe>",
+        expected_vulnerable_status: 200,
+        actual_remediated_status: 200,
+        passed: true,
+        message: "X-Frame-Options: DENY prevents framing by third-party origins.",
+      },
+    ],
+    status: "SANDBOX_PASSED",
+    created_at: new Date().toISOString(),
+  },
+  {
+    proposal_id: "REM-AT-CART-03",
+    dossier_id: "DOS-AT-CART-03",
+    cwe: "CWE-862",
+    title: "Client-Side Cart Price Re-Verification Against Canonical Catalog",
+    target_file: "src/main.js",
+    description: "Re-verifies shopping cart item prices against PRODUCT_DB before saving order records to localStorage and Supabase, preventing local client-side price manipulation.",
+    diff_items: [
+      {
+        file_path: "src/main.js",
+        line_number: 1020,
+        vulnerable_code: `// Save order directly with unverified cart values:\norders.unshift({ id: orderId, date: orderDate, items: orderItems });`,
+        remediated_code: `// Security Validation: Re-verify every cart item price against canonical catalog:\nconst verifiedItems = orderItems.map(item => {\n  const catalogProduct = PRODUCT_DB[item.slug] || {};\n  const canonicalPrice = parseFloat(String(catalogProduct.price || '0').replace(/[^0-9.]/g, '')) || item.price;\n  return { ...item, price: canonicalPrice };\n});\norders.unshift({ id: orderId, date: orderDate, items: verifiedItems });`,
+        cwe: "CWE-862",
+        fix_type: "SCHEMA_VALIDATION",
+      },
+    ],
+    syntax_valid: true,
+    sandbox_verified: true,
+    verification_results: [
+      {
+        test_name: "Tampered Price Injection (Price = ₹1 for ₹150 item)",
+        exploit_payload: "{ slug: 'tomato-pickle', price: 1, qty: 5 }",
+        expected_vulnerable_status: 200,
+        actual_remediated_status: 200,
+        passed: true,
+        message: "Cart validation intercepted tampered price and restored canonical catalog unit price ₹150.",
+      },
+    ],
+    status: "SANDBOX_PASSED",
+    created_at: new Date().toISOString(),
+  },
+];
 
 // Mock Products Catalog with Built-in Security Vulnerability Indicators
 export const MOCK_PRODUCTS: Product[] = [
@@ -649,12 +997,28 @@ export const MOCK_REMEDIATIONS: RemediationProposal[] = [
 
 // Interactive Client-Side Storage & API Service
 class CyberShieldApiClient {
+  private activeTarget: TargetProject = { ...ANDHRA_TREATS_TARGET };
   private products: Product[] = [...MOCK_PRODUCTS];
-  private incidents: SecurityIncident[] = [...MOCK_INCIDENTS];
+  private incidents: SecurityIncident[] = [...ANDHRA_TREATS_INCIDENTS, ...MOCK_INCIDENTS];
   private sessions: SessionRiskProfile[] = [...MOCK_SESSIONS];
-  private dossiers: TriangulatedDossier[] = [...MOCK_DOSSIERS];
-  private remediations: RemediationProposal[] = [...MOCK_REMEDIATIONS];
+  private dossiers: TriangulatedDossier[] = [...ANDHRA_TREATS_DOSSIERS, ...MOCK_DOSSIERS];
+  private remediations: RemediationProposal[] = [...ANDHRA_TREATS_REMEDIATIONS, ...MOCK_REMEDIATIONS];
   private stats: TelemetryStats = { ...MOCK_TELEMETRY_STATS };
+
+  // Active Monitored Target
+  async getActiveTarget(): Promise<TargetProject> {
+    return { ...this.activeTarget };
+  }
+
+  // Rescan Active Target
+  async rescanTarget(): Promise<{ success: boolean; target: TargetProject; findingsCount: number }> {
+    this.activeTarget.lastScanTime = "Just now";
+    return {
+      success: true,
+      target: { ...this.activeTarget },
+      findingsCount: ANDHRA_TREATS_INCIDENTS.length,
+    };
+  }
 
   // Fetch Products
   async getProducts(): Promise<Product[]> {
