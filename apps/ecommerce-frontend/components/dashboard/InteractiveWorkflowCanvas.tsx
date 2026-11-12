@@ -37,6 +37,7 @@ import {
   UserCheck,
   X,
   ChevronRight,
+  ChevronLeft,
   Sparkles,
   Info,
 } from "lucide-react";
@@ -882,7 +883,101 @@ export default function InteractiveWorkflowCanvas() {
     });
   };
 
-  // ESC key and native fullscreenchange listener
+  // Step-by-Step Interactive Navigation (Next & Previous Step)
+  const handleNextStep = useCallback(() => {
+    setIsPlaying(false);
+    const scenario = SCENARIOS[selectedScenario];
+    const nextIdx = currentStepIndex < 0 ? 0 : currentStepIndex + 1;
+    if (nextIdx >= scenario.steps.length) return;
+
+    const step = scenario.steps[nextIdx];
+    if (!step) return;
+
+    setActiveNodeIds((prev) => new Set([...prev, step.nodeId]));
+    if (step.edgeId) setActiveEdgeIds((prev) => new Set([...prev, step.edgeId!]));
+    if (step.edgeIds) setActiveEdgeIds((prev) => new Set([...prev, ...step.edgeIds!]));
+    setNodeStatuses((prev) => ({
+      ...prev,
+      [step.nodeId]: step.highlightStatus || "completed",
+    }));
+
+    setSelectedNodeId(step.nodeId);
+    if (isFullscreen) {
+      setIsSidePanelOpen(true);
+      setSidePanelTab("inspector");
+    }
+
+    const now = new Date();
+    const timeStr = `${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}.${String(
+      Math.floor(now.getMilliseconds() / 10)
+    ).padStart(2, "0")}`;
+
+    const logType: "info" | "alert" | "success" = step.highlightStatus === "quarantined"
+      ? "alert"
+      : step.highlightStatus === "completed"
+      ? "success"
+      : "info";
+
+    setLogs((prev) => [
+      {
+        id: `log-${Date.now()}-${Math.random()}`,
+        time: timeStr,
+        message: step.logMessage,
+        type: logType,
+      },
+      ...prev.slice(0, 49),
+    ]);
+
+    setCurrentStepIndex(nextIdx);
+  }, [selectedScenario, currentStepIndex, isFullscreen]);
+
+  const handlePrevStep = useCallback(() => {
+    setIsPlaying(false);
+    if (currentStepIndex <= 0) {
+      handleReset();
+      return;
+    }
+    const targetIdx = currentStepIndex - 1;
+    const scenario = SCENARIOS[selectedScenario];
+
+    const newActiveNodes = new Set<string>();
+    const newActiveEdges = new Set<string>();
+    const newStatuses: Record<string, NodeStatus> = {};
+    const newLogs: { id: string; time: string; message: string; type: "info" | "alert" | "success" }[] = [];
+
+    for (let i = 0; i <= targetIdx; i++) {
+      const step = scenario.steps[i];
+      if (!step) continue;
+      newActiveNodes.add(step.nodeId);
+      if (step.edgeId) newActiveEdges.add(step.edgeId);
+      if (step.edgeIds) {
+        for (const eId of step.edgeIds) newActiveEdges.add(eId);
+      }
+      newStatuses[step.nodeId] = step.highlightStatus || "completed";
+
+      const logType: "info" | "alert" | "success" = step.highlightStatus === "quarantined"
+        ? "alert"
+        : step.highlightStatus === "completed"
+        ? "success"
+        : "info";
+
+      newLogs.unshift({
+        id: `log-step-${i}`,
+        time: `00:${String(i * 2).padStart(2, "0")}.00`,
+        message: step.logMessage,
+        type: logType,
+      });
+    }
+
+    setActiveNodeIds(newActiveNodes);
+    setActiveEdgeIds(newActiveEdges);
+    setNodeStatuses(newStatuses);
+    setSelectedNodeId(scenario.steps[targetIdx].nodeId);
+    setLogs(newLogs);
+    setCurrentStepIndex(targetIdx);
+  }, [selectedScenario, currentStepIndex, handleReset]);
+
+  // ESC key and fullscreen navigation listeners (Arrows Left/Right)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isFullscreen) {
@@ -892,6 +987,14 @@ export default function InteractiveWorkflowCanvas() {
             document.exitFullscreen().catch(() => {});
           }
         } catch {}
+      } else if (isFullscreen) {
+        if (e.key === "ArrowRight") {
+          e.preventDefault();
+          handleNextStep();
+        } else if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          handlePrevStep();
+        }
       }
     };
 
@@ -907,7 +1010,7 @@ export default function InteractiveWorkflowCanvas() {
       window.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
     };
-  }, [isFullscreen]);
+  }, [isFullscreen, handleNextStep, handlePrevStep]);
 
   // Simulation execution loop
   useEffect(() => {
@@ -1860,6 +1963,32 @@ export default function InteractiveWorkflowCanvas() {
             >
               <RotateCcw className="w-3.5 h-3.5 text-black" />
             </button>
+
+            {/* Step-by-Step Interactive Navigation (Exclusive to Fullscreen Mode) */}
+            <div className="flex items-center gap-1 bg-[#FAF8F5] border border-[#E0DACF] rounded-full p-0.5 h-9 flex-shrink-0">
+              <button
+                onClick={handlePrevStep}
+                disabled={currentStepIndex <= 0}
+                className="w-7 h-7 rounded-full hover:bg-white text-black transition flex items-center justify-center disabled:opacity-25 disabled:hover:bg-transparent flex-shrink-0 cursor-pointer disabled:cursor-not-allowed"
+                title="Previous Step (Left Arrow)"
+              >
+                <ChevronLeft className="w-3.5 h-3.5 text-black" />
+              </button>
+
+              <span className="text-[11px] font-mono font-bold text-black px-2 select-none whitespace-nowrap">
+                Step {currentStepIndex < 0 ? 0 : currentStepIndex + 1} / {SCENARIOS[selectedScenario].steps.length}
+              </span>
+
+              <button
+                onClick={handleNextStep}
+                disabled={currentStepIndex >= SCENARIOS[selectedScenario].steps.length - 1}
+                className="h-7 px-3 rounded-full bg-black text-white hover:bg-[#222222] transition flex items-center gap-1 text-[11px] font-bold disabled:opacity-40 disabled:hover:bg-black flex-shrink-0 cursor-pointer disabled:cursor-not-allowed shadow-xs"
+                title="Next Step (Right Arrow)"
+              >
+                <span>Next</span>
+                <ChevronRight className="w-3 h-3 text-white" />
+              </button>
+            </div>
 
             {/* Zoom Controls: [- % +] */}
             <div className="flex items-center gap-0.5 bg-[#FAF8F5] border border-[#E0DACF] rounded-full p-0.5 h-9 flex-shrink-0">
