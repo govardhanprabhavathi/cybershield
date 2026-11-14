@@ -167,7 +167,7 @@ export default function SecurityCommandCenter() {
         </h1>
 
         <p className="text-base sm:text-lg text-[#333333] max-w-2xl mx-auto leading-relaxed">
-          CyberShield coordinates 11 specialized AI agents to inspect, contain, and automatically patch vulnerabilities in real time—with zero false alarms.
+          CyberShield coordinates 12 specialized AI agents to inspect, contain, and automatically patch vulnerabilities in real time—with zero false alarms.
         </p>
 
         {/* Quick Exploit Trigger Bar & Store Demo CTA */}
@@ -367,7 +367,7 @@ export default function SecurityCommandCenter() {
                 </h2>
 
                 <p className="text-sm sm:text-base text-[#333333] leading-relaxed">
-                  Rather than overwhelming developers with noisy alerts and manual triage, CyberShield coordinates 11 autonomous agents to continuously audit code, probe endpoints, and contain attacks without slowing down genuine shoppers.
+                  Rather than overwhelming developers with noisy alerts and manual triage, CyberShield coordinates 12 autonomous agents to continuously audit code, probe endpoints, and contain attacks without slowing down genuine shoppers.
                 </p>
 
                 {/* Big Clean Numbers (from Screenshot 3) */}
@@ -390,7 +390,7 @@ export default function SecurityCommandCenter() {
 
                   <div>
                     <div className="text-3xl sm:text-4xl font-extrabold text-[#141414] tracking-tight">
-                      11
+                      12
                     </div>
                     <div className="text-xs font-semibold text-[#141414] mt-1">Active Agents</div>
                     <div className="text-[11px] text-[#333333] mt-0.5">Autonomous background mesh</div>

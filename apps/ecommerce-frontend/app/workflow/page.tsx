@@ -23,7 +23,7 @@ export default function WorkflowPage() {
         </h1>
 
         <p className="text-sm sm:text-base text-[#333333] leading-relaxed">
-          Explore the dual-plane defense lifecycle. Client requests pass through our sub-2ms Fast-Path Gate, stream into Redis, and are verified by 11 specialized autonomous agents.
+          Explore the dual-plane defense lifecycle. Client requests pass through our sub-2ms Fast-Path Gate, stream into Redis, and are verified by 12 specialized autonomous agents.
         </p>
 
         <div className="flex items-center justify-center gap-4 pt-2">
@@ -69,9 +69,9 @@ export default function WorkflowPage() {
           <div className="w-12 h-12 rounded-2xl bg-[#EAE5DE] flex items-center justify-center text-black font-bold">
             03
           </div>
-          <h3 className="text-lg font-bold text-black">Automated AST Auto-Patching</h3>
+          <h3 className="text-lg font-bold text-black">Automated AST Auto-Patching &amp; Orchestration</h3>
           <p className="text-xs text-[#333333] leading-relaxed">
-            Agents 10 &amp; 11 generate syntactically verified code diffs in a sandboxed runtime, permanently eliminating vulnerabilities with zero human intervention.
+            Agents 10, 11 &amp; 12 generate syntactically verified code diffs in a sandboxed runtime and orchestrate canary rollouts, permanently eliminating vulnerabilities with zero human intervention.
           </p>
         </div>
       </section>

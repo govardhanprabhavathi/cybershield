@@ -21,17 +21,18 @@ interface ExecutiveKPIsProps {
 
 export default function ExecutiveKPIs({ stats }: ExecutiveKPIsProps) {
   const agents = [
-    { id: "A1", name: "Agent 1: SAST Code Scanner", role: "Static AST Analysis & Rule Matching", status: "Active", latency: "Offline", phase: "Pre-Commit" },
-    { id: "A2", name: "Agent 2: Schema Auditor", role: "Pydantic Schema & Type Constraints", status: "Active", latency: "Offline", phase: "Pre-Commit" },
-    { id: "A3", name: "Agent 3: DAST Validator", role: "Dynamic Vulnerability Validation", status: "Active", latency: "Staging", phase: "Staging" },
-    { id: "A4", name: "Agent 4: API Fuzzer", role: "Automated Endpoint Fuzzing", status: "Active", latency: "Staging", phase: "Staging" },
-    { id: "A5", name: "Agent 5: Rule Correlator", role: "Cross-Rule Finding De-duplication", status: "Active", latency: "Offline", phase: "Analysis" },
-    { id: "A6", name: "Agent 6: Policy Engine", role: "Security Policy Enforcement", status: "Active", latency: "Offline", phase: "Analysis" },
-    { id: "A7", name: "Agent 7: Runtime Sensor", role: "OTel Traces & Redis Stream Sinks", status: "Active", latency: "1.4ms", phase: "Runtime" },
-    { id: "A8", name: "Agent 8: Session Security", role: "0-100 Score & Graduated Containment", status: "Active", latency: "0.8ms", phase: "Runtime" },
-    { id: "A9", name: "Agent 9: Triangulation Correlator", role: "Bayesian 3-Pillar Cross-Validation", status: "Active", latency: "1.2s", phase: "Response" },
-    { id: "A10", name: "Agent 10: AST Patch Generator", role: "Syntactic Code Remediation", status: "Active", latency: "2.1s", phase: "Response" },
-    { id: "A11", name: "Agent 11: Sandbox Verifier", role: "Exploit Replay & Regression Check", status: "Active", latency: "3.4s", phase: "Response" },
+    { id: "A1", name: "Agent 1: Application Mapper", role: "AST & Router Reflection API Discovery", status: "Active", latency: "Offline", phase: "Pre-Commit" },
+    { id: "A2", name: "Agent 2: Code Security Agent", role: "Deterministic AST Injection & Auth Analysis", status: "Active", latency: "Offline", phase: "Pre-Commit" },
+    { id: "A3", name: "Agent 3: API Security DAST", role: "Dynamic Vulnerability Probe Validation", status: "Active", latency: "Staging", phase: "Staging" },
+    { id: "A4", name: "Agent 4: Dependency Security", role: "SBOM & CVE Advisory Auditing", status: "Active", latency: "Offline", phase: "Pre-Commit" },
+    { id: "A5", name: "Agent 5: Secret Security Agent", role: "Shannon Entropy & Credential Detection", status: "Active", latency: "Offline", phase: "Pre-Commit" },
+    { id: "A6", name: "Agent 6: Configuration Security", role: "CORS, Debug Flags & Env Auditing", status: "Active", latency: "Offline", phase: "Pre-Commit" },
+    { id: "A7", name: "Agent 7: Runtime Security Sensor", role: "OTel Traces & Redis Stream Sinks", status: "Active", latency: "1.4ms", phase: "Runtime" },
+    { id: "A8", name: "Agent 8: Session Security Agent", role: "0-100 Behavioral Risk Scoring & Containment", status: "Active", latency: "0.8ms", phase: "Runtime" },
+    { id: "A9", name: "Agent 9: Evidence Triangulator", role: "Bayesian 3-Pillar Cross-Validation (P ≥ 0.99)", status: "Active", latency: "1.2s", phase: "Response" },
+    { id: "A10", name: "Agent 10: AST Patch Generator", role: "Syntactic Code Remediation (LibCST)", status: "Active", latency: "2.1s", phase: "Response" },
+    { id: "A11", name: "Agent 11: Sandbox Verifier", role: "Exploit Replay & 0.0% Regression Check", status: "Active", latency: "3.4s", phase: "Response" },
+    { id: "A12", name: "Agent 12: Master AI Orchestrator", role: "Finite State Machine Incident Lifecycle & RCA", status: "Active", latency: "0.5s", phase: "Response" },
   ];
 
   return (

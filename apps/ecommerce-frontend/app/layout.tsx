@@ -30,7 +30,7 @@ export default function RootLayout({
             <div className="flex items-center gap-2.5">
               <span className="font-semibold text-[#141414]">cybershield</span>
               <span>•</span>
-              <span>11 Autonomous Agents</span>
+              <span>12 Autonomous Agents</span>
               <span>•</span>
               <span className="text-emerald-700 font-medium">0% False Positives</span>
             </div>
